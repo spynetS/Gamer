@@ -1,8 +1,10 @@
 import com.game.engine.GameEngine;
+import com.game.engine.GameObject;
 import com.game.engine.Input.Input;
 import com.game.engine.Input.InputComponent;
 import com.game.engine.Input.Keys;
 import com.game.engine.components.Component;
+import com.game.engine.components.RectangleGameObject;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
 
@@ -12,15 +14,23 @@ public class PlayerMovement extends Component {
     public void start(){
         Input.addContext("PlayerMovement");
         input.setContext("PlayerMovement");
-        Debug.log(transform.getGameObject());
-        GameEngine.getSelectedScene().getGameObjectHandler().addComponent(input, transform.getGameObject());
-        //transform.getGameObject().addComponent(input);
+
+
+        GameObject child = instantiate(new RectangleGameObject(), transform.getGameObject());
+        child.transform.setPosition(new Vector2(10,10));
+
+        transform.getGameObject().addComponent(input);
     }
 
     public void update(){
 
         if(input.isKeyPressed(Keys.A)){
             Debug.log("A was pressed");
+            transform.setPosition(transform.getPosition().add(Vector2.left.multiply(10)));
+        }
+        if(input.isKeyPressed(Keys.D)){
+            Debug.log("A was pressed");
+            transform.setPosition(transform.getPosition().add(Vector2.right.multiply(10)));
         }
 
         /*

@@ -1,5 +1,8 @@
 package com.game.engine.components;
 
+import com.game.engine.GameEngine;
+import com.game.engine.GameObject;
+import com.game.engine.Scene;
 import com.game.engine.msc.Debug;
 
 /**
@@ -15,4 +18,18 @@ public abstract class Component {
     public void update(){
     }
 
+    public void instantiate(GameObject gameObject) {
+        Scene selected = GameEngine.getSelectedScene();
+        if(selected != null){
+            selected.getGameObjectHandler().getAddGameObject().add(gameObject);
+        }
+    }
+
+    public GameObject instantiate(GameObject child, GameObject parent) {
+        Scene selected = GameEngine.getSelectedScene();
+        if (selected != null) {
+            selected.getGameObjectHandler().getAddChildren().put(parent, child);
+        }
+        return child;
+    }
 }

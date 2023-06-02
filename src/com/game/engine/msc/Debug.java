@@ -58,7 +58,10 @@ public class Debug {
         logPriv(String.valueOf((System.nanoTime()-a)/devide));
     }
     public static void log(Object ob){
-        logPriv(ob.toString());
+        if(ob == null)
+            logPriv("null");
+        else
+            logPriv(ob.toString());
     }
     private static void logPriv(String log)
     {

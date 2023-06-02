@@ -22,11 +22,20 @@ public class GameObject {
     public ArrayList<GameObject> gameObjects = new ArrayList<>();
 
     public void addComponent(Component component){
+        Scene selectedScene = GameEngine.getSelectedScene();
+        if(selectedScene !=null)
+            GameEngine.getSelectedScene().gameObjectHandler.addComponent(component, this);
+        else
+            addComp(component);
+    }
+    public void addComp(Component component){
         component.transform = this.transform;
         components.add(component);
     }
 
     public void addChild(GameObject gameObject){
+        Debug.log(gameObject.transform.getPosition());
+        gameObject.transform.setLocalPosition(gameObject.transform.getPosition().subtract(this.transform.getPosition()));
         gameObjects.add(gameObject);
         gameObject.transform.setParent(this);
     }

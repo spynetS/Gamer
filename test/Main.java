@@ -43,7 +43,7 @@ public class Main {
 
         text.addComponent(new ShapeRender());
 
-        gameObject1.addChild(text);
+       // gameObject1.addChild(text);
         text.transform.setPosition(new Vector2(10, -20));
 
         scene.add(gameObject1);

@@ -61,9 +61,18 @@ public class GameObjectHandler {
 
         if(addComponent.size() > 0){
             for (Map.Entry<GameObject, Component> entry : addComponent.entrySet()) {
-                entry.getKey().addComponent(entry.getValue());
+                entry.getKey().addComp(entry.getValue());
             }
+            addComponent.clear();
         }
+
+        if(addChildren.size() > 0){
+            for (Map.Entry<GameObject, GameObject> entry : addChildren.entrySet()) {
+                entry.getKey().addChild(entry.getValue());
+            }
+            addChildren.clear();
+        }
+
         return gameObjects;
     }
 
