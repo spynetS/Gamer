@@ -53,6 +53,7 @@ public class Scene extends JPanel {
         g.drawString("Mouse pos: "+Input.getMousePosition(),100,130);
         g.drawString(gameObjects.get(0).transform.toString(), 100, 140);
         g.drawString(gameObjects.get(0).getComponent(Rigidbody.class).toString(), 100, 155);
+        g.drawString(gameObjects.get(0).getChild(0).transform.getScale().toString(), 100, 170);
         //g.drawString("Mouse pos: "+gameObjects.get(0).gameObjects.get(0).transform,100,140);
     }
 

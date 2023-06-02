@@ -7,11 +7,20 @@ import com.game.engine.msc.Debug;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class GameObject {
 
     public String tag = "";
     public String name = "";
+
+    private boolean started = false;
+
+    //this is so we dont change the list we are updating
+    private LinkedList<GameObject> newGameObjects = new LinkedList<>();
+    private LinkedList<GameObject> removeGameObjects = new LinkedList<>();
+    private LinkedList<Component> newComponents = new LinkedList<>();
+    private LinkedList<Component> removeComponents = new LinkedList<>();
 
     public Transform transform = new Transform(this);
 
@@ -19,13 +28,13 @@ public class GameObject {
 
     public ArrayList<GameObject> gameObjects = new ArrayList<>();
 
+    public void removeComponent(Component component){
+        removeComponents.add(component);
+        if (!started) addObjects();
+    }
     public void addComponent(Component component){
-        Scene selectedScene = GameEngine.getSelectedScene();
-        if(selectedScene != null){
-            GameEngine.getSelectedScene().gameObjectHandler.addComponent(component, this);
-        }
-        else
-            addComp(component);
+        newComponents.add(component);
+        if (!started) addObjects();
     }
     public void addComp(Component component){
         component.transform = this.transform;
@@ -33,10 +42,34 @@ public class GameObject {
     }
 
     public void addChild(GameObject gameObject){
+        newGameObjects.add(gameObject);
+        if (!started) addObjects();
+    }
+    public void removeChild(GameObject gameObject){
+        removeGameObjects.add(gameObject);
+        if (!started) addObjects();
+    }
+    private void addChild__(GameObject gameObject){
         Debug.log(gameObject.transform.getPosition());
         gameObject.transform.setLocalPosition(gameObject.transform.getPosition().subtract(this.transform.getPosition()));
+
+
+        Debug.log(gameObject.transform.getLocalScale());
+
         gameObjects.add(gameObject);
         gameObject.transform.setParent(this);
+    }
+
+    public GameObject getChild(int index){
+        return gameObjects.get(index);
+    }
+    public <T extends GameObject> T getChild(Class<T> type){
+        for(GameObject c : gameObjects){
+            if(type.isInstance(c)){
+                return (T)c;
+            }
+        }
+        return null;
     }
 
     public <T extends Component> T getComponent(Class<T> type){
@@ -50,11 +83,34 @@ public class GameObject {
     }
 
     public void start(){
+        addObjects();
+        started = true;
+        transform.start();
         for(Component c : components){
             c.start();
         }
     }
+    private void addObjects(){
+        if(newGameObjects.size() > 0){
+            for(GameObject g : newGameObjects) addChild__(g);
+            newGameObjects.clear();
+        }
+        if(removeGameObjects.size() > 0){
+            for(GameObject g : removeGameObjects) gameObjects.remove(g);
+            removeGameObjects.clear();
+        }
+        if(newComponents.size() > 0){
+            for(Component g : newComponents) addComp(g);
+            newComponents.clear();
+        }
+        if(removeComponents.size() > 0 ){
+            for(Component c : removeComponents) components.remove(c);
+            removeComponents.clear();
+        }
+
+    }
     public void update(){
+        addObjects();
         for(Component c : components){
             c.update();
         }

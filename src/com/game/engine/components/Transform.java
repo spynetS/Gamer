@@ -49,14 +49,12 @@ public class Transform extends Component{
     }
 
     public Vector2 getGlobalScale() {
-        if(localScale.equals(Vector2.zero)) return Vector2.zero;
+        if(localScale.equals(Vector2.zero)) return new Vector2(1,1);
         return globalScale.add(localScale);
     }
 
     public Vector2 getScale(){
-        if(parent == null)
-            return globalScale;
-        return localScale;
+        return globalScale;
     }
     public void setScale(Vector2 scale){
         if(parent == null){
@@ -64,7 +62,7 @@ public class Transform extends Component{
             setScaleFactor(scale.divide(globalScale));
         }
         else{
-            if(localScale.getX() == 0 && localScale.getY() == 0){
+            if(localScale.containsZero()){
                 Debug.log("ues");
                 localScale = scale;
                 Debug.log(localScale);
@@ -75,15 +73,10 @@ public class Transform extends Component{
         }
     }
     public void setScaleFactor(Vector2 factor){
-        if(parent == null){
-            globalScale = globalScale.multiply(factor);
-            for(GameObject g : gameObject.gameObjects){
-                g.transform.setScaleFactor(factor);
-            }
-        }
-        else{
-            if(factor.getX() != 0)
-                globalScale = globalScale.multiply(factor);
+        globalScale = globalScale.multiply(factor);
+        //scale children
+        for(GameObject g : gameObject.gameObjects){
+            g.transform.setScaleFactor(factor);
         }
     }
 
@@ -107,11 +100,22 @@ public class Transform extends Component{
         //update parent values
         if(parent != null){
             globalPosition = parent.transform.getPosition();
+            globalScale = parent.transform.getScale().add(localScale);
 
-            if(localScale.getX() != 0 && localScale.getY() != 0)
+            //this is for parent scaling so the object moves when parent scales
+            if(!localScale.containsZero())
                 scalePositionThing = (globalScale.divide(localScale)).divide(10);
 
+            rotation = parent.transform.getRotation();
+
         }
+    }
+
+    @Override
+    public void start() {
+        if(parent != null) globalScale = parent.transform.getGlobalScale().add(localScale);
+        Debug.log(globalScale);
+        super.start();
     }
 
     @Override

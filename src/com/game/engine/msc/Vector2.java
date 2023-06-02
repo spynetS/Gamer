@@ -71,6 +71,10 @@ public class Vector2 {
         return new Vector2(x*vector2.x,y*vector2.y,z*vector2.z);
     }
 
+    public boolean containsZero(){
+        return x == 0 || y == 0;
+    }
+
     public float getMagnitude (){
         return (float) Math.sqrt((double) this.x * (double) this.x + (double) this.y * (double) this.y);
     }

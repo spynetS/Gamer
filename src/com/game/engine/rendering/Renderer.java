@@ -33,6 +33,8 @@ public class Renderer extends Component {
 
     private float rotation = 0f;
 
+    protected Vector2 scale = new Vector2(10,10);
+
     /**
      * rotates the localc vertices to by the angle
      * @param angle the angle to rate the vertice with
@@ -71,12 +73,32 @@ public class Renderer extends Component {
         super.update();
         rotateTo(transform.getRotation(), Vector2.zero);
 
+
+        Vector2 d = new Vector2(1,1);
+        if(transform.getParent() != null){
+            Debug.log(scale);
+            Debug.log(transform.getScale());
+            if(!transform.getScale().containsZero())
+                d = transform.getScale().divide(scale);
+        }
+        else{
+            if(!transform.getScale().containsZero())
+                d = transform.getScale().divide(scale);
+        }
+
+        LinkedList<Vector2> newVertices =new LinkedList<>();
+        for(Vector2 vertex : shape){
+            Vector2 newV = vertex.multiply(d);
+            newVertices.add(newV);
+        }
+        shape = newVertices;
+        scale = transform.getScale();
+
         LinkedList<Vector2> ver = new LinkedList<>();
         for(Vector2 vertex : shape){
-            ver.add(vertex.add(transform.getPosition()));
+            ver.add(vertex.add(transform.getGlobalPosition()));
         }
         shapeGlobal = ver;
-
     }
 
     public Polygon getShape(){
@@ -94,6 +116,11 @@ public class Renderer extends Component {
         return new Polygon(x,y,shapeGlobal.size());
     }
 
+    @Override
+    public void start() {
+        super.start();
+        scale = transform.getScale();
+    }
 
     public void render(Graphics2D g){
 

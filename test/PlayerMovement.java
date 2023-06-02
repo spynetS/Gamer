@@ -46,6 +46,7 @@ public class PlayerMovement extends Component {
 
     */
         if(input.isKeyPressed(Keys.UPARROW)){
+            Debug.log("scale up");
             transform.setScaleFactor(new Vector2(2,2));
         }
         else if(input.isKeyPressed(Keys.DOWNARROW)){
