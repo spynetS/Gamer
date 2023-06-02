@@ -77,8 +77,9 @@ public class Scene extends JPanel {
 
         // Your custom painting code goes here
         Graphics2D graphics2D = (Graphics2D) g;
+
         graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        //graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
         drawDebugStats(graphics2D);
 

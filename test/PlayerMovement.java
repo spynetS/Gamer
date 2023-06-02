@@ -24,13 +24,17 @@ public class PlayerMovement extends Component {
 
     public void update(){
 
-        if(input.isKeyPressed(Keys.A)){
-            Debug.log("A was pressed");
-            transform.setPosition(transform.getPosition().add(Vector2.left.multiply(10)));
+        if(input.isKeyDown(Keys.A)){
+            transform.setPosition(transform.getPosition().add(Vector2.left.multiply(1)));
         }
-        if(input.isKeyPressed(Keys.D)){
-            Debug.log("A was pressed");
-            transform.setPosition(transform.getPosition().add(Vector2.right.multiply(10)));
+        if(input.isKeyDown(Keys.D)){
+            transform.setPosition(transform.getPosition().add(Vector2.right.multiply(1)));
+        }
+        if(input.isKeyDown(Keys.W)){
+            transform.setPosition(transform.getPosition().add(Vector2.up.multiply(1)));
+        }
+        if(input.isKeyDown(Keys.S)){
+            transform.setPosition(transform.getPosition().add(Vector2.down.multiply(1)));
         }
 
         /*
