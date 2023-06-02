@@ -1,1 +1,4 @@
-1 unit =  millimeter
+1 unit = 1 millimeter
+
+make the game not crash if it should crash (try catches)
+

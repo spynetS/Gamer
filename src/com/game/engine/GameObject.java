@@ -5,6 +5,7 @@ import com.game.engine.components.Renderer;
 import com.game.engine.components.ShapeRender;
 import com.game.engine.components.Transform;
 import com.game.engine.msc.Debug;
+import lombok.NonNull;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class GameObject {
     public String tag = "";
     public String name = "";
 
+    @NonNull
     public Transform transform = new Transform(this);
 
     public ArrayList<Component> components = new ArrayList<>();
