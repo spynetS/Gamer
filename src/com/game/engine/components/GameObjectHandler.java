@@ -1,6 +1,7 @@
 package com.game.engine.components;
 
 import com.game.engine.GameObject;
+import com.game.engine.msc.Debug;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -61,6 +62,7 @@ public class GameObjectHandler {
 
         if(addComponent.size() > 0){
             for (Map.Entry<GameObject, Component> entry : addComponent.entrySet()) {
+
                 entry.getKey().addComp(entry.getValue());
             }
             addComponent.clear();

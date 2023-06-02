@@ -1,4 +1,4 @@
-package com.game.engine.components;
+package com.game.engine.rendering;
 
 import java.awt.*;
 

@@ -206,4 +206,11 @@ public class Vector2 {
     public Vector2 divide(int i) {
         return this.divide(new Vector2(i,i));
     }
+
+    public Vector2 adds(Vector2 with) {
+        this.x += with.getX();
+        this.y += with.getY();
+        this.z += with.getZ();
+        return this;
+    }
 }

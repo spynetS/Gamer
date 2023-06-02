@@ -1,11 +1,9 @@
 package com.game.engine;
 
 import com.game.engine.components.Component;
-import com.game.engine.components.Renderer;
-import com.game.engine.components.ShapeRender;
+import com.game.engine.rendering.Renderer;
 import com.game.engine.components.Transform;
 import com.game.engine.msc.Debug;
-import lombok.NonNull;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,8 +21,9 @@ public class GameObject {
 
     public void addComponent(Component component){
         Scene selectedScene = GameEngine.getSelectedScene();
-        if(selectedScene !=null)
+        if(selectedScene != null){
             GameEngine.getSelectedScene().gameObjectHandler.addComponent(component, this);
+        }
         else
             addComp(component);
     }

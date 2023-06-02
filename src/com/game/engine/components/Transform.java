@@ -21,7 +21,7 @@ public class Transform extends Component{
 
     @Getter
     @Setter
-    private Vector2 rotation = new Vector2();
+    private float rotation = 0f;
 
     @Getter
     @Setter

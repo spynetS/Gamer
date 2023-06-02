@@ -1,10 +1,8 @@
 package com.game.engine;
 
 import com.game.engine.Input.Input;
-import com.game.engine.Input.Keys;
 import com.game.engine.components.GameObjectHandler;
-import com.game.engine.components.ShapeRender;
-import com.game.engine.msc.Debug;
+import com.game.engine.components.Rigidbody;
 import com.game.engine.msc.Vector2;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,17 +45,21 @@ public class Scene extends JPanel {
     }
     long elapsedTime = 0;
     private void drawDebugStats(Graphics2D g){
+        g.drawString("Fps: "+GameEngine.fps,100,80);
+        g.drawString("Delta time: "+GameEngine.deltaTime+"ms",100,90);
         g.drawString("Render time: "+String.valueOf(elapsedTime)+"ms",100,100);
         g.drawString("Window height: "+GameEngine.game.getHeight(),100,110);
         g.drawString("Window height: "+prevScale,100,120);
         g.drawString("Mouse pos: "+Input.getMousePosition(),100,130);
+        g.drawString(gameObjects.get(0).transform.toString(), 100, 140);
+        g.drawString(gameObjects.get(0).getComponent(Rigidbody.class).toString(), 100, 155);
         //g.drawString("Mouse pos: "+gameObjects.get(0).gameObjects.get(0).transform,100,140);
     }
 
     Vector2 prevScale = new Vector2();
     AffineTransform transform = new AffineTransform();
 
-    float scaleFactor = 0.005f;
+    float scaleFactor = 0.001f;
 
 
     @Override

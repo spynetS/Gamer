@@ -1,24 +1,11 @@
 import com.game.engine.GameEngine;
-import com.game.engine.GameObject;
-import com.game.engine.Input.Input;
-import com.game.engine.Input.Keys;
 import com.game.engine.Scene;
-import com.game.engine.SceneHolder;
-import com.game.engine.components.RectangleGameObject;
-import com.game.engine.components.Renderer;
-import com.game.engine.components.ShapeRender;
-import com.game.engine.components.Transform;
-import com.game.engine.msc.Debug;
+import com.game.engine.components.*;
 import com.game.engine.msc.Vector2;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class Main {
 
     public static void main (String[] args){
-
-
 
         GameEngine gameEngine = new GameEngine();
 
@@ -26,25 +13,12 @@ public class Main {
 
 
         RectangleGameObject gameObject1 = new RectangleGameObject();
+        gameObject1.transform.setScale(new Vector2(100,100));
+        gameObject1.addComponent(new Rigidbody());
         gameObject1.addComponent(new PlayerMovement());
 
-        GameObject text = new GameObject(){
-            @Override
-            public void update() {
-                super.update();
-                if(Input.isKeyPressed(Keys.U)){
-                    transform.setScale(transform.getScale().add(1));
-                }
-                if(Input.isKeyPressed(Keys.J)){
-                    transform.setScale(transform.getScale().subtract(1));
-                }
-            }
-        };
-
-        text.addComponent(new ShapeRender());
-
-       // gameObject1.addChild(text);
-        text.transform.setPosition(new Vector2(10, -20));
+        gameObject1.getComponent(Rigidbody.class).addForce(new Vector2(1,0));
+        gameObject1.getComponent(Rigidbody.class).setMass(10);
 
         scene.add(gameObject1);
 
