@@ -2,9 +2,12 @@ package com.game.engine;
 
 import com.game.engine.Input.Input;
 import com.game.engine.Input.Keys;
+import com.game.engine.components.GameObjectHandler;
 import com.game.engine.components.ShapeRender;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,12 +19,25 @@ public class Scene extends JPanel {
     ArrayList<GameObject> gameObjects = new ArrayList<>();
     public boolean debug = true;
 
+    @Getter
+    @Setter
+    GameObjectHandler gameObjectHandler = new GameObjectHandler();
+
+    public void start(){
+        for(GameObject g : gameObjects){
+            g.start();
+        }
+    }
+
 
     public void add(GameObject gameObject){
         gameObjects.add(gameObject);
     }
 
     public void update(){
+
+        gameObjects = gameObjectHandler.update(gameObjects);
+
         for(GameObject gameObject : gameObjects)
             gameObject.update();
 
@@ -35,7 +51,7 @@ public class Scene extends JPanel {
         g.drawString("Window height: "+GameEngine.game.getHeight(),100,110);
         g.drawString("Window height: "+prevScale,100,120);
         g.drawString("Mouse pos: "+Input.getMousePosition(),100,130);
-        g.drawString("Mouse pos: "+gameObjects.get(0).gameObjects.get(0).transform,100,140);
+        //g.drawString("Mouse pos: "+gameObjects.get(0).gameObjects.get(0).transform,100,140);
     }
 
     Vector2 prevScale = new Vector2();

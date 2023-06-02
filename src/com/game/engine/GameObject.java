@@ -15,7 +15,6 @@ public class GameObject {
     public String tag = "";
     public String name = "";
 
-    @NonNull
     public Transform transform = new Transform(this);
 
     public ArrayList<Component> components = new ArrayList<>();
@@ -42,6 +41,11 @@ public class GameObject {
         return null;
     }
 
+    public void start(){
+        for(Component c : components){
+            c.start();
+        }
+    }
     public void update(){
         for(Component c : components){
             c.update();

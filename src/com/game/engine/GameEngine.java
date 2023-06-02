@@ -19,6 +19,7 @@ public class GameEngine extends JFrame {
 
     public static void setSelectedScene(Scene selectedScene) {
         GameEngine.selectedScene = selectedScene;
+        selectedScene.start();
         sceneHolder.add(selectedScene);
     }
     public static GameEngine game;
