@@ -76,8 +76,6 @@ public class Renderer extends Component {
 
         Vector2 d = new Vector2(1,1);
         if(transform.getParent() != null){
-            Debug.log(scale);
-            Debug.log(transform.getScale());
             if(!transform.getScale().containsZero())
                 d = transform.getScale().divide(scale);
         }

@@ -4,6 +4,9 @@ import com.game.engine.Scene;
 import com.game.engine.components.*;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
+import com.game.engine.rendering.ShapeRender;
+
+import java.awt.*;
 
 public class Main {
 
@@ -18,6 +21,9 @@ public class Main {
         gameObject1.addComponent(new Rigidbody());
         gameObject1.addComponent(new PlayerMovement());
 
+        gameObject1.getComponent(Rigidbody.class).setAngularVelocity(0);
+        gameObject1.transform.setRotation(45);
+
         gameObject1.transform.setScale(new Vector2(20,20));
 
         //gameObject1.getComponent(Rigidbody.class).addForce(new Vector2(1,0));
@@ -25,12 +31,17 @@ public class Main {
 
         RectangleGameObject ch = new RectangleGameObject();
         ch.transform.setPosition(new Vector2(0,20));
-
+        ch.getComponent(ShapeRender.class).setColor(Color.red);
+        Debug.showWhere = true;
 
         gameObject1.addChild(ch);
 
+        ch.transform.setLocalPosition(new Vector2(15,15));
+        ch.transform.setRotation(45);
 
         scene.add(gameObject1);
+
+        scene.add(new RectangleGameObject());
 
         Scene scene2 = new Scene();
 

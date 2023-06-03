@@ -18,10 +18,16 @@ public class Transform extends Component{
     @Getter
     @Setter
     private Vector2 localPosition = new Vector2();
+    @Getter
+
+    @Setter
+    private float localRotation = 0f;
 
     @Getter
     @Setter
     private float rotation = 0f;
+
+    private Vector2 rotationOffset = new Vector2();
 
     @Getter
     @Setter
@@ -45,7 +51,8 @@ public class Transform extends Component{
     }
 
     public Vector2 getGlobalPosition() {
-        return globalPosition.add(localPosition.multiply(scalePositionThing));
+        //rotationOffset.adds();
+        return globalPosition.add(rotationOffset.multiply(scalePositionThing));
     }
 
     public Vector2 getGlobalScale() {
@@ -94,19 +101,43 @@ public class Transform extends Component{
         }
     }
 
+    public float getRotation(){
+        return rotation + localRotation;
+    }
+    public void setRotation(float rotation){
+        if(parent!=null){
+            this.localRotation = rotation;
+        }
+        else
+            this.rotation = rotation;
+    }
+
     @Override
     public void update() {
         super.update();
         //update parent values
         if(parent != null){
+            //update position based on the parent
             globalPosition = parent.transform.getPosition();
+            //update scale based on parent
             globalScale = parent.transform.getScale().add(localScale);
 
             //this is for parent scaling so the object moves when parent scales
             if(!localScale.containsZero())
                 scalePositionThing = (globalScale.divide(localScale)).divide(10);
 
-            rotation = parent.transform.getRotation();
+            //calculate the rotation offset so the child rotates around the parent
+            double rotation = Math.toRadians(parent.transform.getRotation());
+            this.rotation = (float) rotation;
+
+            float x = localPosition.getX();
+            float y = localPosition.getY();
+
+            //rotationOffset is the localpostion based on the rotation
+            rotationOffset = new Vector2(
+                    (float) (x * Math.cos(rotation) - y * Math.sin(rotation)),
+                    (float) (x * Math.sin(rotation) + y * Math.cos(rotation))
+            );
 
         }
     }

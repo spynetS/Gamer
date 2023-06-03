@@ -45,12 +45,28 @@ public class PlayerMovement extends Component {
             transform.setPosition(transform.getPosition().add(new Vector2(-1f,0)));
 
     */
+
+        if(input.isKeyDown(Keys.A)){
+            //transform.setPosition(transform.getPosition().add(Vector2.left.multiply(1)));
+            getComponent(Rigidbody.class).addForce(Vector2.left);
+        }
+        if(input.isKeyDown(Keys.D)){
+            //transform.setPosition(transform.getPosition().add(Vector2.right.multiply(1)));
+            getComponent(Rigidbody.class).addForce(Vector2.right);
+        }
+
         if(input.isKeyPressed(Keys.UPARROW)){
             Debug.log("scale up");
             transform.setScaleFactor(new Vector2(2,2));
         }
         else if(input.isKeyPressed(Keys.DOWNARROW)){
             transform.setScaleFactor(new Vector2(0.5f,0.5f));
+        }
+        if(input.isKeyDown(Keys.E)){
+            transform.setRotation(transform.getRotation()+1);
+        }
+        if(input.isKeyDown(Keys.Q)){
+            transform.setRotation(transform.getRotation()-1);
         }
     }
 
