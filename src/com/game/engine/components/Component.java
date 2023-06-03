@@ -15,8 +15,12 @@ public abstract class Component {
 
     public void start(){}
 
-    public void update(){
+    public void update(){}
+
+    public void __update__(){
+
     }
+
 
     public <T extends Component> T getComponent(Class<T> tClass){
         return transform.getGameObject().getComponent(tClass);

@@ -70,10 +70,7 @@ public class Transform extends Component{
         }
         else{
             if(localScale.containsZero()){
-                Debug.log("ues");
                 localScale = scale;
-                Debug.log(localScale);
-
             }
             setScaleFactor(scale.divide(localScale));
             localScale = scale;
@@ -128,7 +125,7 @@ public class Transform extends Component{
 
             //calculate the rotation offset so the child rotates around the parent
             double rotation = Math.toRadians(parent.transform.getRotation());
-            this.rotation = (float) rotation;
+            this.rotation = parent.transform.getRotation();
 
             float x = localPosition.getX();
             float y = localPosition.getY();
@@ -145,7 +142,6 @@ public class Transform extends Component{
     @Override
     public void start() {
         if(parent != null) globalScale = parent.transform.getGlobalScale().add(localScale);
-        Debug.log(globalScale);
         super.start();
     }
 

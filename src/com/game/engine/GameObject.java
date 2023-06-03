@@ -50,11 +50,7 @@ public class GameObject {
         if (!started) addObjects();
     }
     private void addChild__(GameObject gameObject){
-        Debug.log(gameObject.transform.getPosition());
         gameObject.transform.setLocalPosition(gameObject.transform.getPosition().subtract(this.transform.getPosition()));
-
-
-        Debug.log(gameObject.transform.getLocalScale());
 
         gameObjects.add(gameObject);
         gameObject.transform.setParent(this);

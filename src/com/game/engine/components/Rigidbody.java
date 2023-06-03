@@ -76,8 +76,8 @@ public class Rigidbody extends Component{
         if(useGravity)
             velocity = velocity.add(PhysicsWorld.g.divide(gravitationalScale));
 
-
-        transform.setPosition(transform.getPosition().add(velocity));
+        //update transforms position based on velocity
+        transform.setPosition(transform.getPosition().add(velocity.multiply(GameEngine.deltaTime)));
     }
 
 

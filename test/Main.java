@@ -21,7 +21,7 @@ public class Main {
         gameObject1.addComponent(new Rigidbody());
         gameObject1.addComponent(new PlayerMovement());
 
-        gameObject1.getComponent(Rigidbody.class).setAngularVelocity(0);
+        //gameObject1.getComponent(Rigidbody.class).setAngularVelocity(0);
         gameObject1.transform.setRotation(45);
 
         gameObject1.transform.setScale(new Vector2(20,20));
