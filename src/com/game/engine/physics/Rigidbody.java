@@ -1,6 +1,7 @@
-package com.game.engine.components;
+package com.game.engine.physics;
 
 import com.game.engine.GameEngine;
+import com.game.engine.components.Component;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
 import com.game.engine.physics.PhysicsWorld;
@@ -8,8 +9,12 @@ import lombok.*;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor
-public class Rigidbody extends Component{
+public class Rigidbody extends Component {
 
+
+    @Getter
+    @Setter
+    private boolean isFreeze = false;
 
     @Getter
     @Setter
@@ -17,7 +22,7 @@ public class Rigidbody extends Component{
 
     @Getter
     @Setter
-    private float angularVelocity = 36f;
+    private float angularVelocity = 0f;
 
     @Getter
     @Setter
@@ -25,7 +30,7 @@ public class Rigidbody extends Component{
 
     @Getter
     @Setter
-    private float linerDrag = 0.01f;
+    private float linerDrag = 0.001f;
 
     @Getter
     @Setter
@@ -60,6 +65,32 @@ public class Rigidbody extends Component{
                          Math.pow(transform.getPosition().getY(),2)));
 
         setInertia(i);
+    }
+
+    public void resolveCollision(Rigidbody other){
+        Rigidbody me = this;
+
+        if(other == null){
+
+        }
+        else{
+
+            float m1 = getMass();
+            float m2 = other.getMass();
+
+            Vector2 v1i = getVelocity();
+            Vector2 v2i = other.getVelocity();
+
+            Vector2 p_initial = v1i.multiply(m1).add(v2i.multiply(m2));
+
+            Vector2 v1f = (p_initial.subtract (v2i.subtract(v1i).multiply(m2)).divide(m1 + m2));
+            Vector2 v2f = v1f.add(v2i).subtract(v1i);
+
+            //me.velocity    = (!me.isFreeze())    ? v1f:me.getVelocity();
+            //other.velocity = (!other.isFreeze()) ? v2f:other.getVelocity();
+            me.addForce(Vector2.left.multiply(10));
+
+        }
     }
 
     @Override

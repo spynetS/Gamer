@@ -34,7 +34,7 @@ public class Transform extends Component{
     private Vector2 localScale = new Vector2(1,1);
 
     @Setter
-    private Vector2 globalScale = new Vector2(10,10);
+    private Vector2 globalScale = new Vector2(100,100);
 
     @Getter
     @Setter
@@ -115,7 +115,7 @@ public class Transform extends Component{
         //update parent values
         if(parent != null){
             //update position based on the parent
-            globalPosition = parent.transform.getPosition();
+            globalPosition = parent.transform.getGlobalPosition();
             //update scale based on parent
             globalScale = parent.transform.getScale().add(localScale);
 

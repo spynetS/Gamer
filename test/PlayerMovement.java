@@ -1,11 +1,8 @@
-import com.game.engine.GameEngine;
-import com.game.engine.GameObject;
 import com.game.engine.Input.Input;
 import com.game.engine.Input.InputComponent;
 import com.game.engine.Input.Keys;
 import com.game.engine.components.Component;
-import com.game.engine.components.RectangleGameObject;
-import com.game.engine.components.Rigidbody;
+import com.game.engine.physics.Rigidbody;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
 
@@ -53,6 +50,14 @@ public class PlayerMovement extends Component {
         if(input.isKeyDown(Keys.D)){
             //transform.setPosition(transform.getPosition().add(Vector2.right.multiply(1)));
             getComponent(Rigidbody.class).addForce(Vector2.right);
+        }
+        if(input.isKeyDown(Keys.W)){
+            //transform.setPosition(transform.getPosition().add(Vector2.left.multiply(1)));
+            getComponent(Rigidbody.class).addForce(Vector2.up);
+        }
+        if(input.isKeyDown(Keys.S)){
+            //transform.setPosition(transform.getPosition().add(Vector2.right.multiply(1)));
+            getComponent(Rigidbody.class).addForce(Vector2.down);
         }
 
         if(input.isKeyPressed(Keys.UPARROW)){

@@ -1,8 +1,9 @@
 package com.game.engine;
 
 import com.game.engine.Input.Input;
+import com.game.engine.collision.CollisionDetector;
 import com.game.engine.components.GameObjectHandler;
-import com.game.engine.components.Rigidbody;
+import com.game.engine.physics.Rigidbody;
 import com.game.engine.msc.Vector2;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +16,14 @@ import java.util.ArrayList;
 public class Scene extends JPanel {
 
     ArrayList<GameObject> gameObjects = new ArrayList<>();
-    public boolean debug = true;
+
+    @Getter
+    @Setter
+    private boolean debug = true;
+
+    @Getter
+    @Setter
+    CollisionDetector detector = new CollisionDetector();
 
     @Getter
     @Setter
@@ -34,6 +42,8 @@ public class Scene extends JPanel {
 
     public void update(){
 
+        detector.checkCollision(gameObjects);
+
         gameObjects = gameObjectHandler.update(gameObjects);
 
         for(GameObject gameObject : gameObjects)
@@ -51,9 +61,11 @@ public class Scene extends JPanel {
         g.drawString("Window height: "+GameEngine.game.getHeight(),100,110);
         g.drawString("Window height: "+prevScale,100,120);
         g.drawString("Mouse pos: "+Input.getMousePosition(),100,130);
-        g.drawString(gameObjects.get(0).transform.toString(), 100, 140);
-        g.drawString(gameObjects.get(0).getComponent(Rigidbody.class).toString(), 100, 155);
-        g.drawString(gameObjects.get(0).getChild(0).transform.toString(), 100, 170);
+        try{
+            g.drawString(gameObjects.get(0).transform.toString(), 100, 140);
+            g.drawString(gameObjects.get(0).getComponent(Rigidbody.class).toString(), 100, 155);
+            g.drawString(gameObjects.get(0).getChild(0).transform.toString(), 100, 170);
+        }catch (Exception e){}
     }
 
     Vector2 prevScale = new Vector2();
