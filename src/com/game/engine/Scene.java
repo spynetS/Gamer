@@ -31,12 +31,15 @@ public class Scene extends JPanel {
     @Setter
     GameObjectHandler gameObjectHandler = new GameObjectHandler();
 
+    @Getter
+    @Setter
+    private Vector2 cameraOffset = new Vector2(0,0);
+
     public void start(){
         for(GameObject g : gameObjects){
             g.start();
         }
     }
-
 
     public void add(GameObject gameObject){
         gameObjects.add(gameObject);
@@ -95,13 +98,13 @@ public class Scene extends JPanel {
         // Your custom painting code goes here
         Graphics2D graphics2D = (Graphics2D) g;
 
-        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        //graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         //graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-
         drawDebugStats(graphics2D);
 
 
         graphics2D.translate(GameEngine.game.getWidth()/2, GameEngine.game.getHeight()/2);
+        graphics2D.translate(-cameraOffset.getX(), -cameraOffset.getY());
 
         if(prevScale.getX() != GameEngine.game.getHeight() &&
                 prevScale.getY() != GameEngine.game.getHeight()){

@@ -21,7 +21,7 @@ public class CollisionDetector {
             for (GameObject g2 : gameObjects){
                 Collider c1 = g1.getComponent(Collider.class);
                 Collider c2 = g2.getComponent(Collider.class);
-                if(g1 != g2 && !colliders.contains(c1) && !colliders.contains(c2) ){
+                if(g1 != g2 && c1 != null && c2!=null && !colliders.contains(c1) && !colliders.contains(c2) ){
                     colliders.add(c1);
                     colliders.add(c2);
 
