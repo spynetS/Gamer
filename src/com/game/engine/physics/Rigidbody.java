@@ -75,21 +75,6 @@ public class Rigidbody extends Component {
         }
         else{
 
-            float m1 = getMass();
-            float m2 = other.getMass();
-
-            Vector2 v1i = getVelocity();
-            Vector2 v2i = other.getVelocity();
-
-            Vector2 p_initial = v1i.multiply(m1).add(v2i.multiply(m2));
-
-            Vector2 v1f = (p_initial.subtract (v2i.subtract(v1i).multiply(m2)).divide(m1 + m2));
-            Vector2 v2f = v1f.add(v2i).subtract(v1i);
-
-            //me.velocity    = (!me.isFreeze())    ? v1f:me.getVelocity();
-            //other.velocity = (!other.isFreeze()) ? v2f:other.getVelocity();
-            me.addForce(Vector2.left.multiply(10));
-
         }
     }
 

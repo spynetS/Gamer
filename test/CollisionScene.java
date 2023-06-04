@@ -22,11 +22,16 @@ public class CollisionScene extends Scene {
         gameObject1.getComponent(Rigidbody.class).setMass(0.5f);
         gameObject1.getComponent(Rigidbody.class).setAngularVelocity(0);
 
+        gameObject1.transform.setPosition(new Vector2(200,-200));
+        gameObject1.getComponent(Rigidbody.class).setUseGravity(false);
+
+
         RectangleGameObject gameObject2 = new RectangleGameObject();
         gameObject2.addComponent(new Collider());
         gameObject2.transform.setPosition(new Vector2(200,0));
         gameObject2.addComponent(new Rigidbody());
-        gameObject2.getComponent(Rigidbody.class).setMass(1f);
+        gameObject2.getComponent(Rigidbody.class).setMass(100f);
+        gameObject2.getComponent(Rigidbody.class).setFreeze(false);
 
 
         add(gameObject1);

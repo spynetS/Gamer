@@ -4,6 +4,8 @@ import com.game.engine.GameEngine;
 import com.game.engine.GameObject;
 import com.game.engine.Scene;
 import com.game.engine.msc.Debug;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * The component class is the base of the component system. The component can be inharited
@@ -12,8 +14,12 @@ import com.game.engine.msc.Debug;
 public abstract class Component {
 
     public Transform transform;
-
-    public void start(){}
+    @Getter
+    @Setter
+    private boolean started = false;
+    public void start(){
+        started = true;
+    }
 
     public void update(){}
 

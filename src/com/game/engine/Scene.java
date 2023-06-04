@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 public class Scene extends JPanel {
 
+    @Setter
+    @Getter
     ArrayList<GameObject> gameObjects = new ArrayList<>();
 
     @Getter
@@ -42,7 +44,6 @@ public class Scene extends JPanel {
 
     public void update(){
 
-        detector.checkCollision(gameObjects);
 
         gameObjects = gameObjectHandler.update(gameObjects);
 
@@ -52,6 +53,8 @@ public class Scene extends JPanel {
         Toolkit.getDefaultToolkit().sync();
         validate();
         repaint();
+
+        detector.checkCollision(gameObjects);
     }
     long elapsedTime = 0;
     private void drawDebugStats(Graphics2D g){
