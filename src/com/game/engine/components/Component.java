@@ -46,4 +46,10 @@ public abstract class Component {
         }
         return child;
     }
+
+    public void updateSecond() {
+    }
+
+    public void updateMillisecond() {
+    }
 }
