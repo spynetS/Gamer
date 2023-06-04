@@ -30,6 +30,9 @@ public class Scene extends JPanel {
     @Getter
     @Setter
     GameObjectHandler gameObjectHandler = new GameObjectHandler();
+    private float time = 0;
+    private int lastSec = 0;
+    private int lastMili = 0;
 
     @Getter
     @Setter
@@ -47,6 +50,19 @@ public class Scene extends JPanel {
 
     public void update(){
 
+        time += GameEngine.deltaTime;
+        if ((int) time / 100 > lastSec) {
+            lastSec = (int) (time / 100);
+            for (GameObject g : gameObjects) {
+                g.updateSecond();
+            }
+        }
+        if ((int) time / 10 > lastMili) {
+            lastMili = (int) (time / 10);
+            for (GameObject g : gameObjects) {
+                g.updateMillisecond();
+            }
+        }
 
         gameObjects = gameObjectHandler.update(gameObjects);
 

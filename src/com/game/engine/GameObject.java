@@ -3,7 +3,6 @@ package com.game.engine;
 import com.game.engine.components.Component;
 import com.game.engine.rendering.Renderer;
 import com.game.engine.components.Transform;
-import com.game.engine.msc.Debug;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -128,4 +127,23 @@ public class GameObject {
         }
     }
 
+    public void updateSecond() {
+        for(Component c : components){
+            c.updateSecond();
+        }
+        transform.update();
+        for(GameObject c : gameObjects){
+            c.updateSecond();
+        }
+    }
+
+    public void updateMillisecond() {
+        for(Component c : components){
+            c.updateMillisecond();
+        }
+        transform.update();
+        for(GameObject c : gameObjects){
+            c.updateMillisecond();
+        }
+    }
 }
