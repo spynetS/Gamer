@@ -32,8 +32,9 @@ public class SpriteRenderer extends Renderer{
     }
 
     @Override
-    public void update() {
-        super.update();
+    public void updateMillisecond() {
+        super.updateMillisecond();
+        Debug.log("mili");
         if(timeOnLastSprite > timeOnEachSprite) {
             if(spriteIndex+1 == sprites.size()) spriteIndex = 0;
             else spriteIndex ++;

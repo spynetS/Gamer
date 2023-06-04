@@ -30,6 +30,7 @@ public class Main {
 
                 renderer.addSprite(tree);
                 renderer.addSprite(tree2);
+                renderer.setTimeOnEachSprite(100);
 
                 g.addComponent(renderer);
                 g.transform.setPosition(new Vector2(i*100,j*100));
@@ -53,6 +54,13 @@ public class Main {
                 if(Input.isKeyDown(Keys.S)){
                     scene.getCameraOffset().adds(Vector2.down);
                 }
+            }
+
+            @Override
+            public void updateMillisecond() {
+                super.updateMillisecond();
+                Debug.endCountMillSeconds();
+                Debug.startCount();
             }
         };
 

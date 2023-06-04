@@ -24,7 +24,7 @@ public class GameEngine extends JFrame {
     }
     public static GameEngine game;
 
-    public static double deltaTime = 0;
+    public static double deltaTime = 0; // time each second
     private static double prevTime = ((double)System.currentTimeMillis());
     private static double time = System.currentTimeMillis();
     /**
