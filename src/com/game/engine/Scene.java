@@ -3,6 +3,7 @@ package com.game.engine;
 import com.game.engine.Input.Input;
 import com.game.engine.collision.CollisionDetector;
 import com.game.engine.components.GameObjectHandler;
+import com.game.engine.msc.Debug;
 import com.game.engine.physics.Rigidbody;
 import com.game.engine.msc.Vector2;
 import lombok.Getter;
@@ -48,14 +49,14 @@ public class Scene extends JPanel {
     public void update(){
 
         time += GameEngine.deltaTime;
-        if ((int) time / 100 > lastSec) {
-            lastSec = (int) (time / 100);
+        if ((int) time > lastSec) {
+            lastSec = (int) (time);
             for (GameObject g : gameObjects) {
                 g.updateSecond();
             }
         }
-        if ((int) time / 10 > lastMili) {
-            lastMili = (int) (time / 10);
+        if ( time * 1000 > lastMili) {
+            lastMili = (int) (time);
             for (GameObject g : gameObjects) {
                 g.updateMillisecond();
             }
