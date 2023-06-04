@@ -50,31 +50,21 @@ public class Scene extends JPanel {
     }
 
     public void update(){
-
+        Debug.startCount();
         time += GameEngine.deltaTime;
-        if ((int) time > lastSec) {
-            lastSec = (int) (time);
-            for (GameObject g : gameObjects) {
-                g.updateSecond();
-            }
-        }
-        if ( time * 1000 > lastMili) {
-            lastMili = (int) (time);
-            for (GameObject g : gameObjects) {
-                g.updateMillisecond();
-            }
-        }
 
-        gameObjects = gameObjectHandler.update(gameObjects);
-
-        for(GameObject gameObject : gameObjects)
-            gameObject.update();
+        //gameObjects = gameObjectHandler.update(gameObjects);
+        Debug.startCount();
 
         Toolkit.getDefaultToolkit().sync();
-        validate();
+        //validate();
         repaint();
 
-        detector.checkCollision(gameObjects);
+        //for(GameObject g : gameObjects) g.update();
+
+
+        //detector.checkCollision(gameObjects);
+        //Debug.endCountMillSeconds();
     }
     long elapsedTime = 0;
     private void drawDebugStats(Graphics2D g){
@@ -110,6 +100,7 @@ public class Scene extends JPanel {
 
         long startTime = System.currentTimeMillis();
 
+
         super.paintComponent(g);
 
         // Your custom painting code goes here
@@ -136,18 +127,16 @@ public class Scene extends JPanel {
 
         //render gameobjects if they are inside the view
         for(GameObject gameObject : gameObjects) {
-
-            if(graphics2D.getClip().intersects(new Rectangle(
-                    (int) gameObject.transform.getPosition().getX(),
-                    (int) gameObject.transform.getPosition().getY(),
-                    (int) gameObject.transform.getScale().getX(),
-                    (int) gameObject.transform.getScale().getY()))){
+            float distance = (float) gameObject.transform.getPosition().getDistance(cameraOffset);
+            if(distance < 1500){
 
                 gameObject.render(graphics2D);
+                gameObject.update();
             }
         }
 
         long endTime = System.currentTimeMillis();
         elapsedTime = endTime - startTime;
+        //Debug.log(elapsedTime);
     }
 }

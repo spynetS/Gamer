@@ -9,7 +9,7 @@ public class SpriteObject extends GameObject {
 
     public SpriteObject(String src){
         SpriteRenderer renderer = new SpriteRenderer();
-        renderer.getSprites().add(new Sprite(src));
+        renderer.addSprite(new Sprite(src));
 
         addComponent(renderer);
     }
