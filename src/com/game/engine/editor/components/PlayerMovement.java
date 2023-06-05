@@ -1,3 +1,5 @@
+package com.game.engine.editor.components;
+
 import com.game.engine.Input.Input;
 import com.game.engine.Input.InputComponent;
 import com.game.engine.Input.Keys;
@@ -10,8 +12,8 @@ public class PlayerMovement extends Component {
 
     InputComponent input = new InputComponent();
     public void start(){
-        Input.addContext("PlayerMovement");
-        input.setContext("PlayerMovement");
+        Input.addContext("com.game.engine.editor.components.PlayerMovement");
+        input.setContext("com.game.engine.editor.components.PlayerMovement");
         transform.getGameObject().addComponent(input);
     }
 

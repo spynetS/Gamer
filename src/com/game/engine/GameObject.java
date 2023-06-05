@@ -1,6 +1,8 @@
 package com.game.engine;
 
 import com.game.engine.components.Component;
+import com.game.engine.editor.components.Vector2Ui;
+import com.game.engine.msc.Vector2;
 import com.game.engine.rendering.Renderer;
 import com.game.engine.components.Transform;
 import lombok.Getter;
@@ -16,6 +18,9 @@ public class GameObject {
     public String name = "";
 
     private boolean started = false;
+
+    public GameObject() {
+    }
 
     //this is so we dont change the list we are updating
     private LinkedList<GameObject> newGameObjects = new LinkedList<>();
@@ -36,6 +41,11 @@ public class GameObject {
         removeComponents.add(component);
         if (!started) addObjects();
     }
+
+    public GameObject(Vector2 position) {
+        transform.setPosition(position);
+    }
+
     public void addComponent(Component component){
         newComponents.add(component);
         if (!started) addObjects();

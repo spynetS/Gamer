@@ -2,6 +2,8 @@ package com.game.engine;
 
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,9 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameEngine extends JFrame {
-    public static int DELAY = 10;
+    public static int DELAY = 2;
     private static Scene selectedScene;
-    private static SceneHolder sceneHolder = new SceneHolder();
+    @Getter @Setter private static SceneHolder sceneHolder = new SceneHolder();
 
     public static Scene getSelectedScene() {
         return selectedScene;
@@ -24,7 +26,7 @@ public class GameEngine extends JFrame {
     }
     public static GameEngine game;
 
-    public static double deltaTime = 0;
+    public static double deltaTime = 0; // time each second
     private static double prevTime = ((double)System.currentTimeMillis());
     private static double time = System.currentTimeMillis();
     /**
@@ -36,7 +38,7 @@ public class GameEngine extends JFrame {
      * This caps the amount of frames drawn in a second (0 = uncapped)
      */
     public static float fpsCap = 60;
-    private void update(){
+    public void update(){
 
 
         double now = ((double) System.currentTimeMillis());
