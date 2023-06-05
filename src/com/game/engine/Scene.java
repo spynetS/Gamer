@@ -23,7 +23,7 @@ public class Scene extends JPanel {
     @Getter @Setter private boolean debug = true;
     @Getter @Setter CollisionDetector detector = new CollisionDetector();
     @Getter @Setter GameObjectHandler gameObjectHandler = new GameObjectHandler();
-    @Getter @Setter private boolean isEditing = true;
+    @Getter @Setter private boolean isEditing = false;
     @Getter @Setter private GameObject selectedGameObject = null;
     @Getter @Setter private GameObject mouseOverGameObject = null;
     Vector2 prevScale = new Vector2();

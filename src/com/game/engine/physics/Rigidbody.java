@@ -11,46 +11,16 @@ import lombok.*;
 @NoArgsConstructor
 public class Rigidbody extends Component {
 
-
-    @Getter
-    @Setter
-    private boolean isFreeze = false;
-
-    @Getter
-    @Setter
-    private Vector2 velocity = new Vector2();
-
-    @Getter
-    @Setter
-    private float angularVelocity = 0f;
-
-    @Getter
-    @Setter
-    private float inertia = 0f;
-
-    @Getter
-    @Setter
-    private float linerDrag = 0.001f;
-
-    @Getter
-    @Setter
-    private float angularDrag = 0f;
-
-    @Getter
-    @Setter
-    private Vector2 centerOfMass  = new Vector2(); //point where the center of mass is
-
-    @Getter
-    @Setter
-    private float mass = 1f; // 1 is one kg
-
-    @Getter
-    @Setter
-    private float gravitationalScale = 10f;
-
-    @Getter
-    @Setter
-    private boolean useGravity = false;
+    @Getter @Setter private boolean isFreeze = false;
+    @Getter @Setter private Vector2 velocity = new Vector2();
+    @Getter @Setter private float angularVelocity = 0f;
+    @Getter @Setter private float inertia = 0f;
+    @Getter @Setter private float linerDrag = 0.001f;
+    @Getter @Setter private float angularDrag = 0f;
+    @Getter @Setter private Vector2 centerOfMass  = new Vector2(); //point where the center of mass is
+    @Getter @Setter private float mass = 1f; // 1 is one kg
+    @Getter @Setter private float gravitationalScale = 10f;
+    @Getter @Setter private boolean useGravity = false;
 
 
     public void addForce(Vector2 force){
