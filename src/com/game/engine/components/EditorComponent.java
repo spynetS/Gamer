@@ -21,6 +21,7 @@ public class EditorComponent extends Component{
     @Override
     public void start() {
         super.start();
+        Input.addContext("all");
         i.setContext("all");
         transform.getGameObject().addComponent(i);
     }
