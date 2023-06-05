@@ -8,6 +8,7 @@ import com.game.engine.msc.Vector2;
 import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.Field;
+import java.time.temporal.ValueRange;
 
 public class GeneretedComponentUI extends ComponentUi{
     public GeneretedComponentUI(String name, Component component) {
@@ -22,13 +23,13 @@ public class GeneretedComponentUI extends ComponentUi{
      * @param name
      * @return the component with name
      */
-    public VariableUi getVariable(String name){
+    public <T extends VariableUi> T getVariable(String name, VariableUi i){
         for(java.awt.Component c : getComponents()){
             if(c instanceof VariableUi as){
-                if(as.title.getText() == name)  return (VariableUi) c;
+                if(as.title.getText() == name)  return (T) c;
             }
         }
-        return null;
+        return (T) i;
     }
 
     /**
@@ -41,7 +42,7 @@ public class GeneretedComponentUI extends ComponentUi{
                 f.setAccessible(true);
 
                 if(f.getType() == float.class){
-                    FloatUi floatUi = (FloatUi) getVariable(f.getName());
+                    FloatUi floatUi = getVariable(f.getName(), new FloatUi(f.getName()));
                     float fs = (float) f.get(component);
                     floatUi.value.setValue(fs);
 
@@ -50,7 +51,7 @@ public class GeneretedComponentUI extends ComponentUi{
                 }
 
                 if(f.getType() == Vector2.class){
-                    Vector2Ui vec2 = (Vector2Ui) getVariable(f.getName());
+                    Vector2Ui vec2 = (Vector2Ui) getVariable(f.getName(), new Vector2Ui(f.getName()));
                     if(Editor.editor.getFocusOwner() != vec2){
                         Vector2 c = (Vector2) f.get(component);
                         vec2.x.setValue(c.getX());
@@ -58,18 +59,19 @@ public class GeneretedComponentUI extends ComponentUi{
                     }
                     if(add) add(vec2);
                 }
-                Debug.log(f.getType());
                 if(f.getType() == Color.class){
                     ColorUi colorUi = new ColorUi(f.getName());
 
-                    colorUi.colorChooser.setColor((Color) f.get(component));
+                    colorUi.color.setBackground((Color) f.get(component));
 
                     if(add) add(colorUi);
                 }
             }
 
         }
-        catch (Exception e){}
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 }

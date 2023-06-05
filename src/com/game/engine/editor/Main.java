@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args){
 
-        //FlatDarculaLaf.setup();
+        FlatDarculaLaf.setup();
         //FlatDarkLaf.setup();
 
         EditorWindow window = new EditorWindow();
