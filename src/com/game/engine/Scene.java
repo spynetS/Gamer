@@ -71,7 +71,7 @@ public class Scene extends JPanel {
         validate();
         repaint();
 
-        detector.checkCollision(gameObjects);
+        //detector.checkCollision(gameObjects);
     }
     long elapsedTime = 0;
     private void drawDebugStats(Graphics2D g){
@@ -112,7 +112,7 @@ public class Scene extends JPanel {
         // Your custom painting code goes here
         Graphics2D graphics2D = (Graphics2D) g;
 
-        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        //graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         //graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
         drawDebugStats(graphics2D);
@@ -126,8 +126,9 @@ public class Scene extends JPanel {
             graphics2D.scale(GameEngine.game.getHeight()*scaleFactor, GameEngine.game.getHeight()*scaleFactor);
         }
 
-        int x = (int) ((int) (Input.getMousePositionOnCanvas().getX() /*camera scale was here*/) + graphics2D.getClip().getBounds().getX());
-        int y = (int) ((int) (Input.getMousePositionOnCanvas().getY() /*camera scale was here*/) + graphics2D.getClip().getBounds().getY() );
+        int x = (int) ((int) (Input.getMousePositionOnCanvas().getX() / (GameEngine.game.getHeight()*scaleFactor) + graphics2D.getClip().getBounds().getX()));
+        int y = (int) ((int) (Input.getMousePositionOnCanvas().getY() / (GameEngine.game.getHeight()*scaleFactor) + graphics2D.getClip().getBounds().getY() ));
+
         Input.setMousePosition(new Vector2(x,y));
 
 
