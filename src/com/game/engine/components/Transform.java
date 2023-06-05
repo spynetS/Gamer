@@ -55,10 +55,12 @@ public class Transform extends Component{
         }
     }
     public void setScaleFactor(Vector2 factor){
-        globalScale = globalScale.multiply(factor);
-        //scale children
-        for(GameObject g : gameObject.gameObjects){
-            g.transform.setScaleFactor(factor);
+        if(factor.getX() > 0 && factor.getY() > 0){
+            globalScale = globalScale.multiply(factor);
+            //scale children
+            for(GameObject g : gameObject.gameObjects){
+                g.transform.setScaleFactor(factor);
+            }
         }
     }
 
@@ -100,6 +102,7 @@ public class Transform extends Component{
             //this is for parent scaling so the object moves when parent scales
             if(!localScale.containsZero())
                 scalePositionThing = (globalScale.divide(localScale)).divide(10);
+            scalePositionThing = new Vector2(1,1);
 
             //calculate the rotation offset so the child rotates around the parent
             double rotation = Math.toRadians(parent.transform.getRotation());

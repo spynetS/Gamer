@@ -1,5 +1,6 @@
 import com.game.engine.GameEngine;
 import com.game.engine.GameObject;
+import com.game.engine.Input.Input;
 import com.game.engine.Scene;
 import com.game.engine.components.*;
 import com.game.engine.msc.Debug;
@@ -16,6 +17,7 @@ public class Main {
         GameEngine gameEngine = new GameEngine();
 
         Scene scene = new Scene();
+        Input.addContext("all");
         /*
          * change a scene and then save it to a load file
          * when it starts we load in that load file
@@ -23,10 +25,13 @@ public class Main {
         RectangleGameObject g = new RectangleGameObject();
         RectangleGameObject g2 = new RectangleGameObject();
 
-        g2.transform.setLocalPosition(new Vector2(200,200));
         g.addChild(g2);
+        g2.transform.setPosition(new Vector2(200,200));
 
         scene.add(g);
+        g.transform.setPosition(new Vector2(100,0));
+
+        scene.add(new RectangleGameObject());
 
         GameEngine.setSelectedScene(scene);
 
