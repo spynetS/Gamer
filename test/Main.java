@@ -7,6 +7,7 @@ import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
 import com.game.engine.physics.Rigidbody;
 import com.game.engine.rendering.ShapeRender;
+import com.game.engine.rendering.Sprite;
 import com.game.engine.rendering.SpriteRenderer;
 
 import java.awt.*;
@@ -22,7 +23,9 @@ public class Main {
         GameObject player = new GameObject();
 
         SpriteRenderer spriteRenderer = new SpriteRenderer();
-        
+        spriteRenderer.addSprite(new Sprite("/tiles/GrassTile.png"));
+
+        player.addComponent(spriteRenderer);
 
         player.addComponent(new Rigidbody());
         player.addComponent(new PlayerMovement());
