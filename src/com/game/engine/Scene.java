@@ -3,9 +3,9 @@ package com.game.engine;
 import com.game.engine.Input.Input;
 import com.game.engine.collision.CollisionDetector;
 import com.game.engine.components.GameObjectHandler;
-import com.game.engine.msc.Debug;
 import com.game.engine.physics.Rigidbody;
 import com.game.engine.msc.Vector2;
+import com.game.engine.rendering.Renderer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class Scene extends JPanel {
 
@@ -68,17 +69,25 @@ public class Scene extends JPanel {
 
         gameObjects = gameObjectHandler.update(gameObjects);
 
-        for(GameObject gameObject : gameObjects)
+        boolean entered = false;
+        for(GameObject gameObject : gameObjects){
+            if(!entered)
+                entered = checkMouseOverObject(gameObject);
+
             gameObject.update();
+        }
+        //if no object had mouse over set over to null
+        if(!entered) mouseOverGameObject = null;
 
         Toolkit.getDefaultToolkit().sync();
         validate();
         repaint();
 
-        detector.checkCollision(gameObjects);
+        //detector.checkCollision(gameObjects);
     }
     long elapsedTime = 0;
     private void drawDebugStats(Graphics2D g){
+        g.drawString("Over: "+ mouseOverGameObject,100,70);
         g.drawString("Fps: "+GameEngine.fps,100,80);
         g.drawString("Delta time: "+GameEngine.deltaTime+"ms",100,90);
         g.drawString("Render time: "+String.valueOf(elapsedTime)+"ms",100,100);
@@ -96,7 +105,25 @@ public class Scene extends JPanel {
     AffineTransform transform = new AffineTransform();
 
     float scaleFactor = 0.001f;
+    @Getter @Setter private GameObject mouseOverGameObject = null;
+    public boolean checkMouseOverObject(GameObject gameObject){
+        Renderer renderer = gameObject.getComponent(com.game.engine.rendering.Renderer.class);
+        if(renderer != null){
+            Point p = new Point((int) Input.getMousePosition().getX(), (int) Input.getMousePosition().getY());
+            if(renderer.getShape().contains(p)){
 
+                if(mouseOverGameObject != null) mouseOverGameObject.onMouseLeft( );
+                gameObject.onMouseOver();
+
+                mouseOverGameObject =gameObject;
+
+                return true;
+            }else if(gameObject.isMouseInside()){
+                gameObject.onMouseLeft();
+            }
+        }
+        return false;
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -116,7 +143,7 @@ public class Scene extends JPanel {
         // Your custom painting code goes here
         Graphics2D graphics2D = (Graphics2D) g;
 
-        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        //graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         //graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
         drawDebugStats(graphics2D);
@@ -130,19 +157,25 @@ public class Scene extends JPanel {
             graphics2D.scale(GameEngine.game.getHeight()*scaleFactor, GameEngine.game.getHeight()*scaleFactor);
         }
 
-        int x = (int) ((int) (Input.getMousePositionOnCanvas().getX() /*camera scale was here*/) + graphics2D.getClip().getBounds().getX());
-        int y = (int) ((int) (Input.getMousePositionOnCanvas().getY() /*camera scale was here*/) + graphics2D.getClip().getBounds().getY() );
+        int x = (int) ((int) (Input.getMousePositionOnCanvas().getX() / (GameEngine.game.getHeight()*scaleFactor) + graphics2D.getClip().getBounds().getX()));
+        int y = (int) ((int) (Input.getMousePositionOnCanvas().getY() / (GameEngine.game.getHeight()*scaleFactor) + graphics2D.getClip().getBounds().getY() ));
+
         Input.setMousePosition(new Vector2(x,y));
 
 
         //render gameobjects if they are inside the view
-        for(GameObject gameObject : gameObjects) {
+        boolean entered = false;
+        ListIterator li = gameObjects.listIterator(gameObjects.size());
 
+        while (li.hasPrevious()){
+        GameObject gameObject = (GameObject) li.previous();
+        //for(GameObject gameObject : gameObjects){
             if(graphics2D.getClip().intersects(new Rectangle(
                     (int) gameObject.transform.getPosition().getX(),
                     (int) gameObject.transform.getPosition().getY(),
                     (int) gameObject.transform.getScale().getX(),
                     (int) gameObject.transform.getScale().getY()))){
+
 
                 gameObject.render(graphics2D);
             }

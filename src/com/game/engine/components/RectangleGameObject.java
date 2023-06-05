@@ -16,4 +16,5 @@ public class RectangleGameObject extends GameObject {
         getComponent(ShapeRender.class).setColor(c);
     }
 
+    Color def = Color.darkGray;
 }

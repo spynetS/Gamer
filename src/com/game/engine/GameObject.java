@@ -3,6 +3,8 @@ package com.game.engine;
 import com.game.engine.components.Component;
 import com.game.engine.rendering.Renderer;
 import com.game.engine.components.Transform;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -24,8 +26,11 @@ public class GameObject {
     public Transform transform = new Transform(this);
 
     public ArrayList<Component> components = new ArrayList<>();
-
     public ArrayList<GameObject> gameObjects = new ArrayList<>();
+
+    @Getter
+    @Setter
+    private boolean isMouseInside = false;
 
     public void removeComponent(Component component){
         removeComponents.add(component);
@@ -145,5 +150,18 @@ public class GameObject {
         for(GameObject c : gameObjects){
             c.updateMillisecond();
         }
+    }
+
+    public void onMouseOver() {
+        if(!isMouseInside)
+            onMouseEnter();
+        isMouseInside = true;
+
+    }
+    public void onMouseEnter(){
+
+    }
+    public void onMouseLeft(){
+        setMouseInside(false);
     }
 }
