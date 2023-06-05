@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameEngine extends JFrame {
-    public static int DELAY = 10;
+    public static int DELAY = 2;
     private static Scene selectedScene;
     private static SceneHolder sceneHolder = new SceneHolder();
 
@@ -24,7 +24,7 @@ public class GameEngine extends JFrame {
     }
     public static GameEngine game;
 
-    public static double deltaTime = 0;
+    public static double deltaTime = 0; // time each second
     private static double prevTime = ((double)System.currentTimeMillis());
     private static double time = System.currentTimeMillis();
     /**

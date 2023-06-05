@@ -127,7 +127,9 @@ public class Vector2 {
      */
     public double getDistance(Vector2 vector2)
     {
-        return Math.sqrt(Math.pow(Math.abs(vector2.getY()-y),2)+Math.pow(Math.abs(vector2.getX()-x),2));
+        double deltaX = vector2.getX() - getX();
+        double deltaY = vector2.getY() - getY();
+        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     }
 
     public float getAngle()
