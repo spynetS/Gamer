@@ -5,7 +5,9 @@ import com.game.engine.Scene;
 import com.game.engine.components.*;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
+import com.game.engine.physics.Rigidbody;
 import com.game.engine.rendering.ShapeRender;
+import com.game.engine.rendering.SpriteRenderer;
 
 import java.awt.*;
 
@@ -17,13 +19,17 @@ public class Main {
 
         Scene scene = new Scene();
 
-        GameObject g = new RectangleGameObject(Color.black);
-        g.transform.setPosition(new Vector2(50,0));
-        scene.add(g);
-        scene.add(new RectangleGameObject());
+        GameObject player = new GameObject();
+
+        SpriteRenderer spriteRenderer = new SpriteRenderer();
+        
+
+        player.addComponent(new Rigidbody());
+        player.addComponent(new PlayerMovement());
+
+        scene.add(player);
 
         GameEngine.setSelectedScene(scene);
-
         gameEngine.start();
     }
 }
