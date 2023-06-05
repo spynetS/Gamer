@@ -12,38 +12,16 @@ import lombok.Setter;
  */
 public class Transform extends Component{
 
-    @Setter
-    private Vector2 globalPosition = new Vector2();
+    @Setter private Vector2 globalPosition = new Vector2();
 
-    @Getter
-    @Setter
-    private Vector2 localPosition = new Vector2();
-    @Getter
-
-    @Setter
-    private float localRotation = 0f;
-
-    @Getter
-    @Setter
-    private float rotation = 0f;
-
+    @Getter @Setter private Vector2 localPosition = new Vector2();
+    @Getter @Setter private float localRotation = 0f;
+    @Getter @Setter private float rotation = 0f;
     private Vector2 rotationOffset = new Vector2();
-
-    @Getter
-    @Setter
-    private Vector2 localScale = new Vector2(1,1);
-
-    @Setter
-    private Vector2 globalScale = new Vector2(100,100);
-
-    @Getter
-    @Setter
-    private GameObject gameObject;
-
-    @Getter
-    @Setter
-    private GameObject parent;
-
+    @Getter @Setter private Vector2 localScale = new Vector2(1,1);
+    @Setter private Vector2 globalScale = new Vector2(100,100);
+    @Getter @Setter private GameObject gameObject;
+    @Getter @Setter private GameObject parent;
     private Vector2 scalePositionThing = new Vector2(0,0);
 
     public Transform(GameObject gameObject) {
@@ -94,7 +72,7 @@ public class Transform extends Component{
         if(parent == null)
             globalPosition = position;
         else{
-            localPosition = position;
+            localPosition = position.subtract(parent.transform.getPosition());
         }
     }
 
