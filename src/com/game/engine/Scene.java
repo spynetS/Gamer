@@ -70,7 +70,7 @@ public class Scene extends JPanel {
                 if(!entered){
                     for(GameObject child : gameObject.gameObjects){
                         entered = checkMouseOverObject(child);
-                        if(child.isMouseInside() && Input.isMouseDown()){
+                        if(child.isMouseInside() && Input.isMousePressed()){
                             setSelectedGameObject(child);
                         }
                     }
@@ -78,7 +78,7 @@ public class Scene extends JPanel {
             }
 
             gameObject.update();
-            if(gameObject.isMouseInside() && Input.isMouseDown()){
+            if(gameObject.isMouseInside() && Input.isMousePressed()){
                 setSelectedGameObject(gameObject);
             }
         }
