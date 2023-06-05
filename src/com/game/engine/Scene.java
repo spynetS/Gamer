@@ -31,6 +31,10 @@ public class Scene extends JPanel {
     @Getter
     @Setter
     GameObjectHandler gameObjectHandler = new GameObjectHandler();
+
+    @Getter @Setter private boolean isEditing = true;
+    @Getter @Setter private GameObject selectedGameObject = null;
+
     private float time = 0;
     private int lastSec = 0;
     private int lastMili = 0;

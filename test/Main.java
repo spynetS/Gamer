@@ -14,9 +14,17 @@ public class Main {
 
         GameEngine gameEngine = new GameEngine();
 
+        Scene scene = new Scene();
+
+        /*
+         * change a scene and then save it to a load file
+         * when it starts we load in that load file
+         */
 
 
-        GameEngine.setSelectedScene(new CollisionScene());
+
+
+        GameEngine.setSelectedScene(scene);
 
         gameEngine.start();
     }
