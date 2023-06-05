@@ -1,7 +1,7 @@
 package com.game.engine;
 
 import com.game.engine.components.Component;
-import com.game.engine.editor.components.Vector2Ui;
+import com.game.engine.components.EditorComponent;
 import com.game.engine.msc.Vector2;
 import com.game.engine.rendering.Renderer;
 import com.game.engine.components.Transform;
@@ -16,11 +16,8 @@ public class GameObject {
 
     public String tag = "";
     public String name = "";
-
+    private EditorComponent editorComponent = new EditorComponent();
     private boolean started = false;
-
-    public GameObject() {
-    }
 
     //this is so we dont change the list we are updating
     private LinkedList<GameObject> newGameObjects = new LinkedList<>();
@@ -33,19 +30,12 @@ public class GameObject {
     public ArrayList<Component> components = new ArrayList<>();
     public ArrayList<GameObject> gameObjects = new ArrayList<>();
 
-    @Getter
-    @Setter
-    private boolean isMouseInside = false;
+    @Getter @Setter private boolean isMouseInside = false;
 
     public void removeComponent(Component component){
         removeComponents.add(component);
         if (!started) addObjects();
     }
-
-    public GameObject(Vector2 position) {
-        transform.setPosition(position);
-    }
-
     public void addComponent(Component component){
         newComponents.add(component);
         if (!started) addObjects();
@@ -96,9 +86,12 @@ public class GameObject {
         addObjects();
         started = true;
         transform.start();
+        editorComponent.transform = transform;
+        editorComponent.start();
         for(Component c : components){
             c.start();
         }
+        for(GameObject child : gameObjects) child.start();
     }
     private void addObjects(){
         if(newGameObjects.size() > 0){
@@ -140,6 +133,8 @@ public class GameObject {
         for(GameObject c : gameObjects){
             c.render(g);
         }
+        if(GameEngine.getSelectedScene().isDebug() && editorComponent.isStarted())
+            editorComponent.render(g);
     }
 
     public void updateSecond() {
