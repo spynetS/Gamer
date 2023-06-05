@@ -2,12 +2,10 @@ import com.game.engine.GameObject;
 import com.game.engine.Scene;
 import com.game.engine.collision.Collider;
 import com.game.engine.components.RectangleGameObject;
+import com.game.engine.editor.components.PlayerMovement;
 import com.game.engine.msc.Vector2;
 import com.game.engine.physics.Rigidbody;
-import com.game.engine.rendering.Renderer;
 import com.game.engine.rendering.ShapeRender;
-
-import java.awt.*;
 
 public class CollisionScene extends Scene {
 

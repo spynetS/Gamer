@@ -53,7 +53,7 @@ public class Scene extends JPanel {
         Debug.startCount();
         time += GameEngine.deltaTime;
 
-        //gameObjects = gameObjectHandler.update(gameObjects);
+        gameObjects = gameObjectHandler.update(gameObjects);
         Debug.startCount();
 
         Toolkit.getDefaultToolkit().sync();
