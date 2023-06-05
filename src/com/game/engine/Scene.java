@@ -1,8 +1,10 @@
 package com.game.engine;
 
 import com.game.engine.Input.Input;
+import com.game.engine.Input.Keys;
 import com.game.engine.collision.CollisionDetector;
 import com.game.engine.components.GameObjectHandler;
+import com.game.engine.msc.Debug;
 import com.game.engine.physics.Rigidbody;
 import com.game.engine.msc.Vector2;
 import com.game.engine.rendering.Renderer;
@@ -17,31 +19,26 @@ import java.util.ListIterator;
 
 public class Scene extends JPanel {
 
-    @Setter
-    @Getter
-    ArrayList<GameObject> gameObjects = new ArrayList<>();
-
-    @Getter
-    @Setter
-    private boolean debug = true;
-
-    @Getter
-    @Setter
-    CollisionDetector detector = new CollisionDetector();
-
-    @Getter
-    @Setter
-    GameObjectHandler gameObjectHandler = new GameObjectHandler();
+    @Setter @Getter ArrayList<GameObject> gameObjects = new ArrayList<>();
+    @Getter @Setter private boolean debug = true;
+    @Getter @Setter CollisionDetector detector = new CollisionDetector();
+    @Getter @Setter GameObjectHandler gameObjectHandler = new GameObjectHandler();
+    @Getter @Setter private boolean isEditing = true;
+    @Getter @Setter private GameObject selectedGameObject = null;
+    @Getter @Setter private GameObject mouseOverGameObject = null;
+    Vector2 prevScale = new Vector2();
+    AffineTransform transform = new AffineTransform();
+    float scaleFactor = 0.001f;
     private float time = 0;
     private int lastSec = 0;
     private int lastMili = 0;
+    long elapsedTime = 0;
 
     public void start(){
         for(GameObject g : gameObjects){
             g.start();
         }
     }
-
 
     public void add(GameObject gameObject){
         gameObjects.add(gameObject);
@@ -68,12 +65,27 @@ public class Scene extends JPanel {
         boolean entered = false;
         for(GameObject gameObject : gameObjects){
             if(!entered)
+            {
                 entered = checkMouseOverObject(gameObject);
+                if(!entered){
+                    for(GameObject child : gameObject.gameObjects){
+                        entered = checkMouseOverObject(child);
+                        if(child.isMouseInside() && Input.isMousePressed()){
+                            setSelectedGameObject(child);
+                        }
+                    }
+                }
+            }
 
             gameObject.update();
+            if(gameObject.isMouseInside() && Input.isMousePressed()){
+                setSelectedGameObject(gameObject);
+            }
         }
         //if no object had mouse over set over to null
         if(!entered) mouseOverGameObject = null;
+
+
 
         Toolkit.getDefaultToolkit().sync();
         validate();
@@ -81,7 +93,6 @@ public class Scene extends JPanel {
 
         //detector.checkCollision(gameObjects);
     }
-    long elapsedTime = 0;
     private void drawDebugStats(Graphics2D g){
         g.drawString("Over: "+ mouseOverGameObject,100,70);
         g.drawString("Fps: "+GameEngine.fps,100,80);
@@ -97,11 +108,7 @@ public class Scene extends JPanel {
         }catch (Exception e){}
     }
 
-    Vector2 prevScale = new Vector2();
-    AffineTransform transform = new AffineTransform();
 
-    float scaleFactor = 0.001f;
-    @Getter @Setter private GameObject mouseOverGameObject = null;
     public boolean checkMouseOverObject(GameObject gameObject){
         Renderer renderer = gameObject.getComponent(com.game.engine.rendering.Renderer.class);
         if(renderer != null){
@@ -111,7 +118,7 @@ public class Scene extends JPanel {
                 if(mouseOverGameObject != null) mouseOverGameObject.onMouseLeft( );
                 gameObject.onMouseOver();
 
-                mouseOverGameObject =gameObject;
+                mouseOverGameObject = gameObject;
 
                 return true;
             }else if(gameObject.isMouseInside()){
@@ -123,14 +130,6 @@ public class Scene extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        /*
-        if(Input.isKeyDown(Keys.DOWNARROW)) {
-            scaleFactor -= 0.0001f;
-        }
-        if(Input.isKeyDown(Keys.UPARROW)) {
-            scaleFactor += 0.0001f;
-        }
-        */
 
         long startTime = System.currentTimeMillis();
 
@@ -171,7 +170,6 @@ public class Scene extends JPanel {
                     (int) gameObject.transform.getPosition().getY(),
                     (int) gameObject.transform.getScale().getX(),
                     (int) gameObject.transform.getScale().getY()))){
-
 
                 gameObject.render(graphics2D);
             }
