@@ -17,7 +17,7 @@ public class EditorComponent extends Component{
     private boolean moveAll = false;
     InputComponent i = new InputComponent();
     private int mode = 1; // 0 pos 1 rot, 2 scale
-
+    private float scale = 0;
     @Override
     public void start() {
         super.start();
@@ -57,7 +57,10 @@ public class EditorComponent extends Component{
             moveAll = false;
         }
 
-        if(!moveX && !moveY) offset = 0;
+        if(!moveX && !moveY){
+            offset = 0;
+            scale = 0;
+        }
 
         g.setColor(new Color(255, 186, 116));
 
@@ -77,13 +80,12 @@ public class EditorComponent extends Component{
 
         if(moveX){
             g.setColor(Color.orange);
-            float x = Input.getMousePosition().subtract(transform.getPosition()).getX();
 
-
+            if(scale == 0) scale = transform.getScale().getX();
             if(offset == 0)
                 offset = Input.getMousePosition().subtract(transform.getGlobalPosition()).getX();
 
-            x += (-offset);
+            float x = Input.getMousePosition().subtract(transform.getPosition()).getX()+scale-offset;
 
             transform.setScale(new Vector2(x,transform.getScale().getY()));
         }
@@ -107,11 +109,13 @@ public class EditorComponent extends Component{
 
         if(moveY){
             g.setColor(new Color(246, 255, 0));
-            Vector2 x = transform.getGlobalPosition().removeY();
+            if(scale == 0) scale = transform.getGlobalScale().getY();
             if(offset == 0)
                 offset = Input.getMousePosition().subtract(transform.getGlobalPosition()).getY();
 
-            transform.setScale(new Vector2(transform.getScale().getX(),Input.getMousePosition().subtract(transform.getPosition()).getY()));
+            float x = -Input.getMousePosition().add(transform.getGlobalPosition()).getY()+scale+offset;
+
+            transform.setScale(new Vector2(transform.getScale().getX(), x));
         }
 
         g.fill(yLed);

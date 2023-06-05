@@ -12,38 +12,16 @@ import lombok.Setter;
  */
 public class Transform extends Component{
 
-    @Setter
-    private Vector2 globalPosition = new Vector2();
+    @Setter private Vector2 globalPosition = new Vector2();
 
-    @Getter
-    @Setter
-    private Vector2 localPosition = new Vector2();
-    @Getter
-
-    @Setter
-    private float localRotation = 0f;
-
-    @Getter
-    @Setter
-    private float rotation = 0f;
-
+    @Getter @Setter private Vector2 localPosition = new Vector2();
+    @Getter @Setter private float localRotation = 0f;
+    @Getter @Setter private float rotation = 0f;
     private Vector2 rotationOffset = new Vector2();
-
-    @Getter
-    @Setter
-    private Vector2 localScale = new Vector2(1,1);
-
-    @Setter
-    private Vector2 globalScale = new Vector2(100,100);
-
-    @Getter
-    @Setter
-    private GameObject gameObject;
-
-    @Getter
-    @Setter
-    private GameObject parent;
-
+    @Getter @Setter private Vector2 localScale = new Vector2(1,1);
+    @Setter private Vector2 globalScale = new Vector2(100,100);
+    @Getter @Setter private GameObject gameObject;
+    @Getter @Setter private GameObject parent;
     private Vector2 scalePositionThing = new Vector2(0,0);
 
     public Transform(GameObject gameObject) {
@@ -77,10 +55,12 @@ public class Transform extends Component{
         }
     }
     public void setScaleFactor(Vector2 factor){
-        globalScale = globalScale.multiply(factor);
-        //scale children
-        for(GameObject g : gameObject.gameObjects){
-            g.transform.setScaleFactor(factor);
+        if(factor.getX() > 0 && factor.getY() > 0){
+            globalScale = globalScale.multiply(factor);
+            //scale children
+            for(GameObject g : gameObject.gameObjects){
+                g.transform.setScaleFactor(factor);
+            }
         }
     }
 
@@ -94,7 +74,7 @@ public class Transform extends Component{
         if(parent == null)
             globalPosition = position;
         else{
-            localPosition = position;
+            localPosition = position.subtract(parent.transform.getPosition());
         }
     }
 
@@ -122,6 +102,7 @@ public class Transform extends Component{
             //this is for parent scaling so the object moves when parent scales
             if(!localScale.containsZero())
                 scalePositionThing = (globalScale.divide(localScale)).divide(10);
+            scalePositionThing = new Vector2(1,1);
 
             //calculate the rotation offset so the child rotates around the parent
             double rotation = Math.toRadians(parent.transform.getRotation());
