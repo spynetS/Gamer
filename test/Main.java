@@ -1,5 +1,6 @@
 import com.game.engine.GameEngine;
 import com.game.engine.GameObject;
+import com.game.engine.Input.Input;
 import com.game.engine.Scene;
 import com.game.engine.components.*;
 import com.game.engine.msc.Debug;
@@ -14,9 +15,14 @@ public class Main {
 
         GameEngine gameEngine = new GameEngine();
 
+        Scene scene = new Scene();
 
+        GameObject g = new RectangleGameObject(Color.black);
+        g.transform.setPosition(new Vector2(50,0));
+        scene.add(g);
+        scene.add(new RectangleGameObject());
 
-        GameEngine.setSelectedScene(new CollisionScene());
+        GameEngine.setSelectedScene(scene);
 
         gameEngine.start();
     }
