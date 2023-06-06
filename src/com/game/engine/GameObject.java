@@ -133,7 +133,7 @@ public class GameObject {
         for(GameObject c : gameObjects){
             c.render(g);
         }
-        if(GameEngine.getSelectedScene().isDebug() && editorComponent.isStarted())
+        if(GameEngine.getSelectedScene().isEditing() && editorComponent.isStarted())
             editorComponent.render(g);
     }
 
