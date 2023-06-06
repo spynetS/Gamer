@@ -6,6 +6,7 @@ import com.game.engine.Scene
 import com.game.engine.msc.Debug
 import com.game.engine.msc.Vector2
 import com.game.engine.physics.Rigidbody
+import com.game.engine.rendering.ShapeRender
 import com.game.engine.rendering.Sprite
 import com.game.engine.rendering.SpriteRenderer
 import java.awt.Color
@@ -39,6 +40,7 @@ fun main(){
     earth.getComponent(Rigidbody::class.java).velocity = Vector2(0f,550f)
 
     var sun = Planet(Sprite("/PLANETS/Sun.png"),1000000f);
+    sun.getComponent(Rigidbody::class.java).angularVelocity = 100f;
 
     val scene = object : Scene(){
         override fun update(){
@@ -56,6 +58,7 @@ fun main(){
         }
     }
     scene.background = Color(50,50,50)
+    scene.isEditing = true;
 
     scene.add(earth)
     scene.add(earth2)

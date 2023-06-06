@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameEngine extends JFrame {
-    public static int DELAY = 15;
+    public static int DELAY = 2;
     private static Scene selectedScene;
     private static SceneHolder sceneHolder = new SceneHolder();
 
