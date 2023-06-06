@@ -25,8 +25,6 @@ class PlayerMovement : Component {
         if(input.isKeyDown(Keys.D))
             getComponent(Rigidbody::class.java).addForce(Vector2.right)
 
-        if(input.isKeyDown(Keys.W))
-            transform.position += Vector2.up;
 
     }
 

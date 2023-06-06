@@ -1,5 +1,6 @@
 package com.game.engine.components;
 
+import com.game.engine.GameEngine;
 import com.game.engine.GameObject;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
@@ -62,6 +63,15 @@ public class Transform extends Component{
                 g.transform.setScaleFactor(factor);
             }
         }
+    }
+
+    /**
+     * Translates (changes postion) with delta time (takes in to account framerate)
+     * @param translation the amount to change
+     */
+    public void translate(Vector2 translation){
+        float factor = 100;
+        setPosition(getPosition().add(translation.multiply(GameEngine.deltaTime).multiply(factor)));
     }
 
     public Vector2 getPosition() {
