@@ -52,4 +52,5 @@ public abstract class Component {
 
     public void updateMillisecond() {
     }
+
 }
