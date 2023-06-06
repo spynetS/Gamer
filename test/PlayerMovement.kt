@@ -15,7 +15,6 @@ class PlayerMovement : Component {
 
     override fun start() {
         super.start()
-        getComponent(Rigidbody::class.java).isUseGravity = true;
     }
     override fun update() {
         super.update()

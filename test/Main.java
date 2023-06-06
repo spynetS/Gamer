@@ -19,7 +19,7 @@ public class Main {
         GameEngine gameEngine = new GameEngine();
 
         Scene scene = new Scene();
-        scene.setScaleFactor(0.01f);
+        scene.setScaleFactor(0.001f);
 
         GameObject player = new GameObject(){
             @Override
@@ -32,6 +32,7 @@ public class Main {
             public void update() {
                 super.update();
                 if(transform.getPosition().getY() > 100){
+                    Debug.log(getComponent(Rigidbody.class).getVelocity());
                     Debug.endCountMillSeconds();
                 }
             }
@@ -42,9 +43,8 @@ public class Main {
 
         player.addComponent(spriteRenderer);
 
-        player.addComponent(new Rigidbody());
+        player.addComponent(new Rigidbody(false));
 
-        player.getComponent(Rigidbody.class).setUseGravity(false);
 
         player.addComponent(new PlayerMovement());
 

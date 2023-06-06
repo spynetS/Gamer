@@ -7,7 +7,7 @@ import com.game.engine.msc.Vector2;
 import com.game.engine.physics.PhysicsWorld;
 import lombok.*;
 
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor
 public class Rigidbody extends Component {
 
@@ -19,8 +19,12 @@ public class Rigidbody extends Component {
     @Getter @Setter private float   angularDrag        = 0f;
     @Getter @Setter private Vector2 centerOfMass       = new Vector2(); //point where the center of mass is
     @Getter @Setter private float   mass               = 1f; // 1 is one kg
-    @Getter @Setter private float   gravitationalScale = 1f;
     @Getter @Setter private boolean useGravity         = false;
+    @Getter @Setter private float   gravitationalScale = 1f;
+
+    public Rigidbody(boolean useGravity) {
+        this.useGravity = useGravity;
+    }
 
     public void addForce(Vector2 force){
         Vector2 a = force.divide(mass);
@@ -46,7 +50,6 @@ public class Rigidbody extends Component {
     }
     @Override
     public void update() {
-
         updateInertia();
 
         //rotate by angular velocity
