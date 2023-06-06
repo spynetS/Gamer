@@ -19,7 +19,7 @@ public class Main {
         GameEngine gameEngine = new GameEngine();
 
         Scene scene = new Scene();
-        scene.setScaleFactor(0.001f);
+        scene.setScaleFactor(0.01f);
 
         GameObject player = new GameObject(){
             @Override
