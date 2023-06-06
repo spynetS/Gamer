@@ -1,4 +1,4 @@
-1 unit = 1 millimeter
+1 unit = 1 cm
 
 make the game not crash if it should crash (try catches)
 

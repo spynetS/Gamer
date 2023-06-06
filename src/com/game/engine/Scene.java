@@ -26,9 +26,9 @@ public class Scene extends JPanel {
     @Getter @Setter private boolean isEditing = false;
     @Getter @Setter private GameObject selectedGameObject = null;
     @Getter @Setter private GameObject mouseOverGameObject = null;
+    @Getter @Setter float scaleFactor = 0.001f;
     Vector2 prevScale = new Vector2();
     AffineTransform transform = new AffineTransform();
-    float scaleFactor = 0.001f;
     private float time = 0;
     private int lastSec = 0;
     private int lastMili = 0;

@@ -19,15 +19,13 @@ public class Rigidbody extends Component {
     @Getter @Setter private float angularDrag = 0f;
     @Getter @Setter private Vector2 centerOfMass  = new Vector2(); //point where the center of mass is
     @Getter @Setter private float mass = 1f; // 1 is one kg
-    @Getter @Setter private float gravitationalScale = 10f;
+    @Getter @Setter private float gravitationalScale = 1f;
     @Getter @Setter private boolean useGravity = false;
-
 
     public void addForce(Vector2 force){
         Vector2 a = force.divide(mass);
-        velocity.adds(a);
+        velocity.adds(a.multiply(GameEngine.deltaTime).multiply(100));
     }
-
     private void updateInertia(){
         float i = (float) ((1/12) *
                         mass *
@@ -36,7 +34,6 @@ public class Rigidbody extends Component {
 
         setInertia(i);
     }
-
     public void resolveCollision(Rigidbody other){
         Rigidbody me = this;
 
@@ -47,7 +44,6 @@ public class Rigidbody extends Component {
 
         }
     }
-
     @Override
     public void update() {
 
@@ -60,13 +56,11 @@ public class Rigidbody extends Component {
         addForce(velocity.multiply(-linerDrag));
 
         if(useGravity)
-            velocity = velocity.add(PhysicsWorld.g.divide(gravitationalScale));
+            velocity = velocity.add(PhysicsWorld.g.divide(gravitationalScale).multiply(GameEngine.deltaTime));
 
         //update transforms position based on velocity
         transform.setPosition(transform.getPosition().add(velocity.multiply(GameEngine.deltaTime)));
     }
-
-
     @Override
     public String toString() {
         return "Rigidbody{" +

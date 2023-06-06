@@ -19,8 +19,23 @@ public class Main {
         GameEngine gameEngine = new GameEngine();
 
         Scene scene = new Scene();
+        scene.setScaleFactor(0.001f);
 
-        GameObject player = new GameObject();
+        GameObject player = new GameObject(){
+            @Override
+            public void start() {
+                super.start();
+                Debug.startCount();
+            }
+
+            @Override
+            public void update() {
+                super.update();
+                if(transform.getPosition().getY() > 100){
+                    Debug.endCountMillSeconds();
+                }
+            }
+        };
 
         SpriteRenderer spriteRenderer = new SpriteRenderer();
         spriteRenderer.addSprite(new Sprite("/tiles/GrassTile.png"));
@@ -28,7 +43,12 @@ public class Main {
         player.addComponent(spriteRenderer);
 
         player.addComponent(new Rigidbody());
+
+        player.getComponent(Rigidbody.class).setUseGravity(false);
+
         player.addComponent(new PlayerMovement());
+
+        player.transform.setScale(new Vector2(100,100));
 
         scene.add(player);
 

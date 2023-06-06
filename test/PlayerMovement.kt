@@ -19,13 +19,15 @@ class PlayerMovement : Component {
     }
     override fun update() {
         super.update()
-        if(input.isKeyDown(Keys.SPACE))
-            getComponent(Rigidbody::class.java).velocity += Vector2.up * 10f;
+        if(input.isKeyPressed(Keys.SPACE))
+            getComponent(Rigidbody::class.java).addForce(Vector2.up)
         if(input.isKeyDown(Keys.A))
-            getComponent(Rigidbody::class.java).velocity += Vector2.left * 10f;
+            getComponent(Rigidbody::class.java).addForce(Vector2.left)
         if(input.isKeyDown(Keys.D))
-            getComponent(Rigidbody::class.java).velocity += Vector2.right * 10f;
+            getComponent(Rigidbody::class.java).addForce(Vector2.right)
 
+        if(input.isKeyDown(Keys.W))
+            transform.position += Vector2.up;
 
     }
 
