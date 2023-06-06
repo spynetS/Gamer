@@ -21,7 +21,6 @@ fun getForce (gameObject:GameObject, gameObject2: GameObject): Vector2 {
         return Vector2.zero
     direction = direction.multiply (G*((m1*m2)/(r*r)));
 
-    Debug.log(direction)
     return direction
 
 }
@@ -34,6 +33,8 @@ fun main(){
     var earth2 = Planet(Sprite("/PLANETS/Earth.png"),2000f);
     earth2.transform.position = Vector2(-800f,0f)
     earth2.getComponent(Rigidbody::class.java).velocity = Vector2(0f,-550f)
+    earth2.getComponent(Rigidbody::class.java).angularVelocity = 70f;
+
 
     var earth = Planet(Sprite("/PLANETS/Earth.png"),1000f);
     earth.transform.position = Vector2(400f,0f)
@@ -58,7 +59,6 @@ fun main(){
         }
     }
     scene.background = Color(50,50,50)
-    scene.isEditing = true;
 
     scene.add(earth)
     scene.add(earth2)

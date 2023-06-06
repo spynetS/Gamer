@@ -2,11 +2,13 @@ package com.game.engine.rendering;
 
 import com.game.engine.GameEngine;
 import com.game.engine.msc.Debug;
+import com.game.engine.msc.Vector2;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
@@ -65,10 +67,21 @@ public class SpriteRenderer extends Renderer{
     public void render(Graphics2D g) {
         Sprite currentSprite = getCurrentSprite();
         if(currentSprite!=null){
+            AffineTransform backup = g.getTransform();
+            AffineTransform trans = new AffineTransform();
+            Vector2 pivot = new Vector2();
+
+            trans.rotate( Math.toRadians(transform.getRotation()), transform.getPosition().getX() + pivot.getX(), transform.getPosition().getY() + pivot.getY()); // the points to rotate around (the center in my example, your left side for your problem)
+            g.transform( trans );
+
             if(!isInverted())
                 g.drawImage(currentSprite.getImage(), (int) getPos().getX(), (int) getPos().getY(), (int) transform.getGlobalScale().getX(), (int) transform.getGlobalScale().getY(), null);
             else
                 g.drawImage(currentSprite.getImage(), (int) (getPos().getX()+transform.getGlobalScale().getX()), (int) getPos().getY(), -(int) transform.getGlobalScale().getX(), (int) transform.getGlobalScale().getY(), null);
+
+            g.setTransform( backup ); // restore previous transform
+
+
         }
         g.drawRect((int) getPos().getX(), (int) getPos().getY(), (int) transform.getGlobalScale().getX(), (int) transform.getGlobalScale().getY());
     }
