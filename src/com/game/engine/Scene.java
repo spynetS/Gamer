@@ -26,7 +26,8 @@ public class Scene extends JPanel {
     @Getter @Setter private boolean isEditing = false;
     @Getter @Setter private GameObject selectedGameObject = null;
     @Getter @Setter private GameObject mouseOverGameObject = null;
-    @Getter @Setter float scaleFactor = 0.0001f;
+    @Getter @Setter private Vector2 cameraOffset = new Vector2();
+    @Getter @Setter float scaleFactor = 0.001f;
     Vector2 prevScale = new Vector2();
     AffineTransform transform = new AffineTransform();
     private float time = 0;
@@ -146,11 +147,13 @@ public class Scene extends JPanel {
 
         graphics2D.translate(GameEngine.game.getWidth()/2, GameEngine.game.getHeight()/2);
 
+
         if(prevScale.getX() != GameEngine.game.getHeight() &&
                 prevScale.getY() != GameEngine.game.getHeight()){
 
             graphics2D.scale(GameEngine.game.getHeight()*scaleFactor, GameEngine.game.getHeight()*scaleFactor);
         }
+        graphics2D.translate(-cameraOffset.getX(), -cameraOffset.getY());
 
         int x = (int) ((int) (Input.getMousePositionOnCanvas().getX() / (GameEngine.game.getHeight()*scaleFactor) + graphics2D.getClip().getBounds().getX()));
         int y = (int) ((int) (Input.getMousePositionOnCanvas().getY() / (GameEngine.game.getHeight()*scaleFactor) + graphics2D.getClip().getBounds().getY() ));
