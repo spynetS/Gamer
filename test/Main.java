@@ -1,3 +1,4 @@
+import com.formdev.flatlaf.FlatDarculaLaf;
 import com.game.engine.GameEngine;
 import com.game.engine.GameObject;
 import com.game.engine.Input.Input;
@@ -22,6 +23,8 @@ public class Main {
 
         Scene scene = new Scene();
 
+        FlatDarculaLaf.setup();
+
         JPanel panel = new JPanel();
 
         panel.setLayout(new GridLayout());
@@ -38,7 +41,7 @@ public class Main {
 
         panel.add(text);
         panel.add(button);
-
+        
 
 
         GameEngine.getCanvas().add(panel);
