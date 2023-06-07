@@ -36,6 +36,7 @@ public class Scene extends JPanel {
     long elapsedTime = 0;
 
     public void start(){
+        setLayout(null);
         for(GameObject g : gameObjects){
             g.start();
         }

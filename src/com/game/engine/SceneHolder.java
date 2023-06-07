@@ -10,10 +10,11 @@ import java.awt.event.*;
 /**
  * SceneHolder is a holder for the scenes. It is also responsible to send all user inputs to the input class
  */
-public class SceneHolder extends JPanel {
+public class SceneHolder extends JLayeredPane {
 
     public SceneHolder(){
-        setLayout(new GridLayout(0, 1));
+        //setLayout(new GridLayout(1, 0));
+        setLayout(null);
         setBackground(Color.WHITE);
         setFocusable(true);
 

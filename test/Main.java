@@ -10,7 +10,9 @@ import com.game.engine.rendering.ShapeRender;
 import com.game.engine.rendering.Sprite;
 import com.game.engine.rendering.SpriteRenderer;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class Main {
 
@@ -19,38 +21,38 @@ public class Main {
         GameEngine gameEngine = new GameEngine();
 
         Scene scene = new Scene();
-        scene.setScaleFactor(0.001f);
 
-        GameObject player = new GameObject(){
+        JPanel panel = new JPanel();
+
+        panel.setLayout(new GridLayout());
+
+
+        JTextField text = new JTextField();
+        JButton button = new JButton("Submit");
+        button.addActionListener(new AbstractAction() {
             @Override
-            public void start() {
-                super.start();
-                Debug.startCount();
+            public void actionPerformed(ActionEvent e) {
+                Debug.log(text.getText());
             }
+        });
 
-            @Override
-            public void update() {
-                super.update();
-                if(transform.getPosition().getY() > 100){
-                    Debug.log(getComponent(Rigidbody.class).getVelocity());
-                    Debug.endCountMillSeconds();
-                }
-            }
-        };
-
-        SpriteRenderer spriteRenderer = new SpriteRenderer();
-        spriteRenderer.addSprite(new Sprite("/tiles/GrassTile.png"));
-
-        player.addComponent(spriteRenderer);
-
-        player.addComponent(new Rigidbody(false));
+        panel.add(text);
+        panel.add(button);
 
 
-        player.addComponent(new PlayerMovement());
 
-        player.transform.setScale(new Vector2(100,100));
+        GameEngine.getCanvas().add(panel);
 
-        scene.add(player);
+        GameEngine.getCanvas().setBackground(new Color(0,0,0,0));
+
+        RectangleGameObject r = new RectangleGameObject();
+        r.addComponent(new Rigidbody());
+        r.addComponent(new PlayerMovement());
+
+        scene.add(r);
+
+
+
 
         GameEngine.setSelectedScene(scene);
         gameEngine.start();

@@ -2,6 +2,8 @@ package com.game.engine;
 
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +13,10 @@ import java.awt.event.ActionListener;
 public class GameEngine extends JFrame {
     public static int DELAY = 2;
     private static Scene selectedScene;
-    private static SceneHolder sceneHolder = new SceneHolder();
+
+    @Getter @Setter private static SceneHolder sceneHolder = new SceneHolder();
+
+    @Getter @Setter private static JPanel canvas = new JPanel();
 
     public static Scene getSelectedScene() {
         return selectedScene;
@@ -19,8 +24,16 @@ public class GameEngine extends JFrame {
 
     public static void setSelectedScene(Scene selectedScene) {
         GameEngine.selectedScene = selectedScene;
+        try{
+            selectedScene.setSize(game.getWidth(), game.getHeight());
+        }catch (Exception e){
+            selectedScene.setSize(500,400);
+        }
         selectedScene.start();
         sceneHolder.add(selectedScene);
+        sceneHolder.setLayer(selectedScene,0);
+        sceneHolder.setLayer(canvas, 1);
+
     }
     public static GameEngine game;
 
@@ -38,6 +51,14 @@ public class GameEngine extends JFrame {
     public static float fpsCap = 60;
     private void update(){
 
+
+        if(getSelectedScene().getSize() != game.getSize()){
+            selectedScene.setSize(game.getWidth(), game.getHeight());
+        }
+        if(canvas.getSize() != game.getSize()){
+            // minus otherwise it will not render the scene
+            canvas.setSize(game.getWidth()-1, game.getHeight()-1);
+        }
 
         double now = ((double) System.currentTimeMillis());
         //Increases counter every tick but when a 1/10 of a second we reset the counter
@@ -67,6 +88,9 @@ public class GameEngine extends JFrame {
         System.setProperty("sun.java2d.opengl", "true");
         game = this;
         game.add(sceneHolder);
+
+
+        sceneHolder.add(canvas);
 
 
         game.setSize(1920/2,1080/2);
