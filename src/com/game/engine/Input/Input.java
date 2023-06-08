@@ -13,7 +13,7 @@ public class Input {
 
     private static  LinkedList<Integer> keyDowns = new LinkedList<>();
     private static boolean isPressed = false;
-    private static int mouseIsPressed = 1000;
+    public static int mouseIsPressed = 1000;
     private static final LinkedList<Integer> mouseButtonDowns = new LinkedList<>();
     private static Vector2 mousePosition = new Vector2(0, 0);
     private static float scrollValue = 0;

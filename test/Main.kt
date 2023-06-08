@@ -43,8 +43,13 @@ fun main(){
     var sun = Planet(Sprite("/PLANETS/Sun.png"),1000000f);
     sun.getComponent(Rigidbody::class.java).angularVelocity = 100f;
 
+
     val scene = object : Scene(){
         override fun update(){
+            if(Input.isMouseDown()){
+                var g = gameObjectHandler.instantiate(Planet(Sprite("/PLANETS/Earth.png"),10000f))
+                g.transform.position = Input.getMousePosition();
+            }
             super.update()
             //cameraOffset = sun.transform.position;
 
@@ -53,9 +58,18 @@ fun main(){
             if(Input.isKeyDown(Keys.DOWNARROW)) scaleFactor -= 0.00001f
             if(Input.isKeyDown(Keys.UPARROW)) scaleFactor += 0.00001f
 
-            earth.getComponent(Rigidbody::class.java).addForce(getForce(earth, sun)*1000f)
-            earth2.getComponent(Rigidbody::class.java).addForce(getForce(earth2, sun)*1000f)
-            sun.getComponent(Rigidbody::class.java).addForce(getForce(sun, earth)*1000f)
+            //earth.getComponent(Rigidbody::class.java).addForce(getForce(earth, sun)*1000f)
+            //h2.getComponent(Rigidbody::class.java).addForce(getForce(earth2, sun)*1000f)
+            //getComponent(Rigidbody::class.java).addForce(getForce(sun, earth)*1000f)
+
+            for (g1 in this.gameObjects){
+                for (g2 in this.gameObjects){
+                    g1.getComponent(Rigidbody::class.java).addForce(getForce(g1,g2)*1000f)
+                }
+            }
+
+            Debug.log(gameObjects.size)
+
         }
     }
     scene.background = Color(50,50,50)

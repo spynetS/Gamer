@@ -41,12 +41,14 @@ public class GameObjectHandler {
     @Setter
     LinkedList<GameObject> removeGameObject = new LinkedList<>();
 
-    public void instantiate(GameObject gameObject) {
+    public GameObject instantiate(GameObject gameObject) {
         addGameObject.add(gameObject);
+        return gameObject;
     }
 
-    public void instantiate(GameObject child, GameObject parent){
+    public GameObject instantiate(GameObject child, GameObject parent){
         addChildren.put(parent,child);
+        return child;
     }
 
     public void addComponent(Component component, GameObject gameObject){

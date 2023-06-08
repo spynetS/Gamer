@@ -93,6 +93,9 @@ public class Scene extends JPanel {
         repaint();
 
         //detector.checkCollision(gameObjects);
+
+        Input.setMousePressed(1000);
+
     }
     private void drawDebugStats(Graphics2D g){
         g.drawString("Over: "+ mouseOverGameObject,100,70);
