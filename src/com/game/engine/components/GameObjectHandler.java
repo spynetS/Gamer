@@ -77,6 +77,11 @@ public class GameObjectHandler {
             addChildren.clear();
         }
 
+        if(removeGameObject.size() > 0){
+            gameObjects.removeAll(removeGameObject);
+            removeGameObject.clear();
+        }
+
         return gameObjects;
     }
 

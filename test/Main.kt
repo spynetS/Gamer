@@ -3,6 +3,8 @@ import com.game.engine.GameObject
 import com.game.engine.Input.Input
 import com.game.engine.Input.Keys
 import com.game.engine.Scene
+import com.game.engine.collision.CircleCollider
+import com.game.engine.collision.Collider
 import com.game.engine.msc.Debug
 import com.game.engine.msc.Vector2
 import com.game.engine.physics.Rigidbody
@@ -47,7 +49,7 @@ fun main(){
     val scene = object : Scene(){
         override fun update(){
             if(Input.isMouseDown()){
-                var g = gameObjectHandler.instantiate(Planet(Sprite("/PLANETS/Earth.png"),10000f))
+                var g = gameObjectHandler.instantiate(Planet(Sprite("/PLANETS/Earth.png"),1000f))
                 g.transform.position = Input.getMousePosition();
             }
             super.update()
@@ -55,8 +57,8 @@ fun main(){
 
             GameEngine.game.title = GameEngine.fps.toString()
 
-            if(Input.isKeyDown(Keys.DOWNARROW)) scaleFactor -= 0.00001f
-            if(Input.isKeyDown(Keys.UPARROW)) scaleFactor += 0.00001f
+            if(Input.isKeyDown(Keys.DOWNARROW)) scaleFactor -= (0.001f*GameEngine.deltaTime.toFloat())
+            if(Input.isKeyDown(Keys.UPARROW)) scaleFactor += (0.001f*GameEngine.deltaTime.toFloat())
 
             //earth.getComponent(Rigidbody::class.java).addForce(getForce(earth, sun)*1000f)
             //h2.getComponent(Rigidbody::class.java).addForce(getForce(earth2, sun)*1000f)
@@ -68,9 +70,15 @@ fun main(){
                 }
             }
 
-            Debug.log(gameObjects.size)
 
         }
+    }
+
+
+    for(x in 1..98) {
+        println("instans")
+        //var g = scene.add(Planet(Sprite("/PLANETS/Earth.png"),1000f))
+        //g.transform.position = Vector2(x*100f,x*200f)
     }
     scene.background = Color(50,50,50)
 
@@ -94,11 +102,24 @@ class Planet : GameObject {
         addComponent(renderer)
         var rigidbody = Rigidbody();
         rigidbody.mass = mass;
+        rigidbody.linerDrag = 0f;
         addComponent(rigidbody)
         addComponent(PlayerMovement())
+        addComponent(CircleCollider())
 
     }
 
+    override fun onCollisionEnter(collider: Collider) {
+
+        val vel1 = collider.getComponent(Rigidbody::class.java).velocity;
+
+        if(vel1.magnitude > 1000){
+            collider.transform.gameObject.destroy();
+            this.transform.setScale(this.transform.getScale()+5f)
+            //this.getComponent(Rigidbody::class.java).mass += collider.getComponent(Rigidbody::class.java).mass;
+        }
+
+    }
     override fun update() {
         super.update()
     }

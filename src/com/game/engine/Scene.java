@@ -2,6 +2,7 @@ package com.game.engine;
 
 import com.game.engine.Input.Input;
 import com.game.engine.Input.Keys;
+import com.game.engine.collision.Collider;
 import com.game.engine.collision.CollisionDetector;
 import com.game.engine.components.GameObjectHandler;
 import com.game.engine.msc.Debug;
@@ -35,33 +36,39 @@ public class Scene extends JPanel {
     private int lastMili = 0;
     long elapsedTime = 0;
 
+    public Scene() {
+        setBackground(new Color(30,30,30));
+    }
+
     public void start(){
         for(GameObject g : gameObjects){
             g.start();
         }
     }
 
-    public void add(GameObject gameObject){
+    public GameObject add(GameObject gameObject){
         gameObjects.add(gameObject);
+        return gameObject;
     }
 
     public void update(){
 
-        time += GameEngine.deltaTime;
-        if ((int) time > lastSec) {
-            lastSec = (int) (time);
-            for (GameObject g : gameObjects) {
-                g.updateSecond();
-            }
-        }
-        if ( time * 1000 > lastMili) {
-            lastMili = (int) (time);
-            for (GameObject g : gameObjects) {
-                g.updateMillisecond();
-            }
-        }
-
         gameObjects = gameObjectHandler.update(gameObjects);
+
+        //time += GameEngine.deltaTime;
+        //if ((int) time > lastSec) {
+        //    lastSec = (int) (time);
+        //    for (GameObject g : gameObjects) {
+        //        g.updateSecond();
+        //    }
+        //}
+        //if ( time * 1000 > lastMili) {
+        //    lastMili = (int) (time);
+        //    for (GameObject g : gameObjects) {
+        //        g.updateMillisecond();
+        //    }
+        //}
+
 
         boolean entered = false;
         for(GameObject gameObject : gameObjects){
@@ -82,6 +89,8 @@ public class Scene extends JPanel {
             if(gameObject.isMouseInside() && Input.isMousePressed()){
                 setSelectedGameObject(gameObject);
             }
+            if(gameObject.getComponent(Collider.class) != null)
+                detector.checkCollision(gameObject, gameObjects);
         }
         //if no object had mouse over set over to null
         if(!entered) mouseOverGameObject = null;
@@ -92,12 +101,13 @@ public class Scene extends JPanel {
         validate();
         repaint();
 
-        //detector.checkCollision(gameObjects);
 
         Input.setMousePressed(1000);
 
     }
     private void drawDebugStats(Graphics2D g){
+        Color c = g.getColor();
+        g.setColor(Color.WHITE);
         g.drawString("Over: "+ mouseOverGameObject,100,70);
         g.drawString("Fps: "+GameEngine.fps,100,80);
         g.drawString("Delta time: "+GameEngine.deltaTime+"ms",100,90);
@@ -110,6 +120,7 @@ public class Scene extends JPanel {
             g.drawString(gameObjects.get(0).getComponent(Rigidbody.class).toString(), 100, 155);
             g.drawString(gameObjects.get(0).getChild(0).transform.toString(), 100, 170);
         }catch (Exception e){}
+        g.setColor(c);
     }
 
 
@@ -178,6 +189,11 @@ public class Scene extends JPanel {
                     (int) gameObject.transform.getScale().getY()))){
 
                 gameObject.render(graphics2D);
+
+                try{
+                    gameObject.getComponent(Collider.class).render(graphics2D);
+                }catch (Exception e){}
+
             }
         }
 

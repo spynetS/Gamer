@@ -8,6 +8,7 @@ import com.game.engine.physics.Rigidbody
 class PlayerMovement : Component {
 
     var input: InputComponent = InputComponent();
+    val speed = 1f;
     constructor() {
         Input.addContext("Movement")
         input.context = "Movement";
@@ -21,9 +22,14 @@ class PlayerMovement : Component {
         if(input.isKeyPressed(Keys.SPACE))
             getComponent(Rigidbody::class.java).addForce(Vector2.up)
         if(input.isKeyDown(Keys.A))
-            getComponent(Rigidbody::class.java).addForce(Vector2.left)
+            getComponent(Rigidbody::class.java).addForce(Vector2.left * speed)
+        if(input.isKeyDown(Keys.D))
+            getComponent(Rigidbody::class.java).addForce(Vector2.right * speed)
+        if(input.isKeyDown(Keys.W))
+            getComponent(Rigidbody::class.java).addForce(Vector2.up * speed)
 
-
+        if(input.isKeyDown(Keys.S))
+            getComponent(Rigidbody::class.java).addForce(Vector2.down * speed)
     }
 
 

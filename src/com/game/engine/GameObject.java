@@ -1,5 +1,6 @@
 package com.game.engine;
 
+import com.game.engine.collision.Collider;
 import com.game.engine.components.Component;
 import com.game.engine.components.EditorComponent;
 import com.game.engine.msc.Vector2;
@@ -168,5 +169,12 @@ public class GameObject {
     }
     public void onMouseLeft(){
         setMouseInside(false);
+    }
+
+    public void onCollisionEnter(Collider collider) {
+    }
+
+    public void destroy() {
+        GameEngine.getSelectedScene().getGameObjectHandler().getRemoveGameObject().add(this);
     }
 }

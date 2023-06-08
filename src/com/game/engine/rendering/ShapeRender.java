@@ -11,7 +11,14 @@ public class ShapeRender extends Renderer{
 
     @Getter
     @Setter
-    private Color color = Color.darkGray;
+    private Color color = Color.WHITE;
+
+    public ShapeRender(Color white) {
+        setColor(white);
+    }
+
+    public ShapeRender() {
+    }
 
     @Override
     public void start() {
@@ -22,15 +29,9 @@ public class ShapeRender extends Renderer{
     @Override
     public void render(Graphics2D g) {
 
-        if(transform.getParent() != null){
-            Rectangle r = new Rectangle((int) getPos().getX(), (int) getPos().getY(), (int) transform.getGlobalScale().getX(), (int) transform.getGlobalScale().getY());
-            //g.fill(r);
-        }
         Color colorBuffet = g.getColor();
-
         g.setColor(color);
         g.fill(getShape());
-
         g.setColor(colorBuffet);
     }
 }

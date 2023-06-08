@@ -239,4 +239,8 @@ public class Vector2 {
     public Vector2 times(Vector2 vec) {
         return this.multiply(vec);
     }
+
+    public Vector2 plus(float fl) {
+        return new Vector2(x+fl,y+fl);
+    }
 }

@@ -27,6 +27,10 @@ public class Rigidbody extends Component {
     }
 
     public void addForce(Vector2 force){
+        float mass = this.mass;
+        if(mass == 0){
+            mass = 1;
+        }
         Vector2 a = force.divide(mass);
         velocity.adds(a.multiply(GameEngine.deltaTime).multiply(100));
     }
@@ -40,13 +44,20 @@ public class Rigidbody extends Component {
     }
     public void resolveCollision(Rigidbody other){
         Rigidbody me = this;
+        float cor = 1;
 
-        if(other == null){
+        Vector2 newb = ((me.getVelocity().multiply(me.mass).add
+                ( other.getVelocity().multiply(other.mass) ).add
+                ( (other.getVelocity().subtract(me.getVelocity()) ).multiply(other.mass))).divide
+                (me.mass+other.mass));
 
-        }
-        else{
+        Vector2 newCb =((me.getVelocity().multiply(me.mass)).add
+                (other.getVelocity().multiply(other.mass).add
+                        ((me.getVelocity().subtract(other.getVelocity()).multiply(me.mass)))).divide
+                (me.mass+other.mass));
 
-        }
+        me.velocity    = (!me.isFreeze())    ? newb:me.getVelocity();
+        other.velocity = (!other.isFreeze()) ? newCb:other.getVelocity();
     }
     @Override
     public void update() {

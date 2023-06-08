@@ -2,13 +2,12 @@ package com.game.engine.rendering;
 
 
 import com.game.engine.components.Component;
-import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.awt.geom.Ellipse2D;
 import java.util.LinkedList;
 
 public class Renderer extends Component {
@@ -73,7 +72,6 @@ public class Renderer extends Component {
         super.update();
         rotateTo(transform.getRotation(), Vector2.zero);
 
-
         Vector2 d = new Vector2(1,1);
         if(transform.getParent() != null){
             if(!transform.getScale().containsZero())
@@ -92,14 +90,16 @@ public class Renderer extends Component {
         shape = newVertices;
         scale = transform.getScale();
 
+
         LinkedList<Vector2> ver = new LinkedList<>();
         for(Vector2 vertex : shape){
             ver.add(vertex.add(transform.getGlobalPosition()));
         }
         shapeGlobal = ver;
+
     }
 
-    public Polygon getShape(){
+    public Shape getShape(){
 
         int[] x = new int[shapeGlobal.size()];
         int[] y = new int[shapeGlobal.size()];
