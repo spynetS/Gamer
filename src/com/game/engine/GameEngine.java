@@ -16,6 +16,9 @@ public class GameEngine extends JFrame {
 
     @Getter @Setter private static SceneHolder sceneHolder = new SceneHolder();
 
+    /**
+     * The canvas is the root ui element. Add your panels and ui element to it
+     */
     @Getter @Setter private static JPanel canvas = new JPanel();
 
     public static Scene getSelectedScene() {

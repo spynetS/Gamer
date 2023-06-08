@@ -26,8 +26,8 @@ public class Main {
         FlatDarculaLaf.setup();
 
         JPanel panel = new JPanel();
-
-        panel.setLayout(new GridLayout());
+        panel.setSize(500,500);
+        //panel.setLayout(new GridLayout());
 
 
         JTextField text = new JTextField();
@@ -43,7 +43,7 @@ public class Main {
         panel.add(button);
         
 
-
+        GameEngine.getCanvas().setLayout(null);
         GameEngine.getCanvas().add(panel);
 
         GameEngine.getCanvas().setBackground(new Color(0,0,0,0));
