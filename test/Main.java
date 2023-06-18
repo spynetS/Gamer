@@ -25,7 +25,17 @@ public class Main {
 
         RectangleGameObject stationary = new RectangleGameObject(Color.RED){
 
+            @Override
+            public void onCollisionEnter(Collider collider) {
+                super.onCollisionEnter(collider);
+                getComponent(ShapeRender.class).setColor(Color.black);
+            }
 
+            @Override
+            public void onCollisionLeft(Collider collide) {
+                super.onCollisionLeft(collide);
+                getComponent(ShapeRender.class).setColor(Color.RED);
+            }
         };
         stationary.addComponent(new Rigidbody(){
             @Override

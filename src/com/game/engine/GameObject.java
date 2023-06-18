@@ -19,18 +19,15 @@ public class GameObject {
     public String name = "";
     private EditorComponent editorComponent = new EditorComponent();
     private boolean started = false;
-
-    //this is so we dont change the list we are updating
+    private Collider colliding = null;
+    //this is so we don't change the list we are updating
     private LinkedList<GameObject> newGameObjects = new LinkedList<>();
     private LinkedList<GameObject> removeGameObjects = new LinkedList<>();
     private LinkedList<Component> newComponents = new LinkedList<>();
     private LinkedList<Component> removeComponents = new LinkedList<>();
-
     public Transform transform = new Transform(this);
-
     public ArrayList<Component> components = new ArrayList<>();
     public ArrayList<GameObject> gameObjects = new ArrayList<>();
-
     @Getter @Setter private boolean isMouseInside = false;
 
     public void removeComponent(Component component){
@@ -45,7 +42,6 @@ public class GameObject {
         component.transform = this.transform;
         components.add(component);
     }
-
     public void addChild(GameObject gameObject){
         newGameObjects.add(gameObject);
         if (!started) addObjects();
@@ -60,7 +56,6 @@ public class GameObject {
         gameObjects.add(gameObject);
         gameObject.transform.setParent(this);
     }
-
     public GameObject getChild(int index){
         return gameObjects.get(index);
     }
@@ -72,7 +67,6 @@ public class GameObject {
         }
         return null;
     }
-
     public <T extends Component> T getComponent(Class<T> type){
 
         for(Component c : components){
@@ -82,7 +76,6 @@ public class GameObject {
         }
         return null;
     }
-
     public void start(){
         addObjects();
         started = true;
@@ -114,6 +107,7 @@ public class GameObject {
 
     }
     public void update(){
+        if(colliding != null) onCollisionLeft(colliding);
         addObjects();
         for(Component c : components){
             c.update();
@@ -123,7 +117,6 @@ public class GameObject {
             c.update();
         }
     }
-
     public void render(Graphics2D g){
         Renderer renderer = this.getComponent(Renderer.class);
 
@@ -137,7 +130,6 @@ public class GameObject {
         if(GameEngine.getSelectedScene().isEditing() && editorComponent.isStarted())
             editorComponent.render(g);
     }
-
     public void updateSecond() {
         for(Component c : components){
             c.updateSecond();
@@ -147,7 +139,6 @@ public class GameObject {
             c.updateSecond();
         }
     }
-
     public void updateMillisecond() {
         for(Component c : components){
             c.updateMillisecond();
@@ -157,7 +148,6 @@ public class GameObject {
             c.updateMillisecond();
         }
     }
-
     public void onMouseOver() {
         if(!isMouseInside)
             onMouseEnter();
@@ -165,15 +155,16 @@ public class GameObject {
 
     }
     public void onMouseEnter(){
-
     }
     public void onMouseLeft(){
         setMouseInside(false);
     }
-
     public void onCollisionEnter(Collider collider) {
+        colliding = collider;
     }
-
+    public void onCollisionLeft(Collider collide){
+        colliding = null;
+    }
     public void destroy() {
         GameEngine.getSelectedScene().getGameObjectHandler().getRemoveGameObject().add(this);
     }
