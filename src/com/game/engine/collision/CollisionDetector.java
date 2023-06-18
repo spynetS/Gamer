@@ -48,12 +48,13 @@ public class CollisionDetector {
         Vector2 old   = c1.transform.getGlobalPosition();
         Vector2 direction = c1.transform.getPosition().lookAt(c2.transform.getPosition());
 
-
-        while (c1.collides(c2)){
+        if(!direction.containsZero()){
+            while (c1.collides(c2)){
+                c1.transform.setPosition(c1.transform.getPosition().subtract(direction));
+                c1.update();
+            }
             c1.transform.setPosition(c1.transform.getPosition().subtract(direction));
-            c1.update();
         }
-        c1.transform.setPosition(c1.transform.getPosition().subtract(direction));
         //c1.update();
     }
 

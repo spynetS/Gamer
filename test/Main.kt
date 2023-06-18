@@ -42,7 +42,7 @@ fun main(){
     earth.transform.position = Vector2(400f,0f)
     earth.getComponent(Rigidbody::class.java).velocity = Vector2(0f,550f)
 
-    var sun = Planet(Sprite("/PLANETS/Sun.png"),1000000f);
+    var sun = Planet(Sprite("/PLANETS/Sun.png"),100000000f);
     sun.getComponent(Rigidbody::class.java).angularVelocity = 100f;
 
 
@@ -113,10 +113,10 @@ class Planet : GameObject {
 
         val vel1 = collider.getComponent(Rigidbody::class.java).velocity;
 
-        if(vel1.magnitude > 1000){
+        if(vel1.magnitude > 2000){
             collider.transform.gameObject.destroy();
-            this.transform.setScale(this.transform.getScale()+5f)
-            //this.getComponent(Rigidbody::class.java).mass += collider.getComponent(Rigidbody::class.java).mass;
+            this.transform.setScale(this.transform.getScale()+collider.transform.scale.divide(10))
+            this.getComponent(Rigidbody::class.java).mass += collider.getComponent(Rigidbody::class.java).mass;
         }
 
     }

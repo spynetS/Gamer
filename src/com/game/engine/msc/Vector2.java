@@ -243,4 +243,9 @@ public class Vector2 {
     public Vector2 plus(float fl) {
         return new Vector2(x+fl,y+fl);
     }
+
+    @Nullable
+    public Vector2 plus( Vector2 scale) {
+        return this.add(scale);
+    }
 }

@@ -7,6 +7,7 @@ import com.game.engine.components.*;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
 import com.game.engine.physics.Rigidbody;
+import com.game.engine.rendering.Renderer;
 import com.game.engine.rendering.ShapeRender;
 import com.game.engine.rendering.Sprite;
 import com.game.engine.rendering.SpriteRenderer;
@@ -22,7 +23,10 @@ public class Main {
         Scene scene = new Scene();
 
 
-        RectangleGameObject stationary = new RectangleGameObject();
+        RectangleGameObject stationary = new RectangleGameObject(Color.RED){
+
+
+        };
         stationary.addComponent(new Rigidbody(){
             @Override
             public void start() {
