@@ -8,7 +8,7 @@ import java.awt.*;
 public class RectangleGameObject extends GameObject {
 
     public RectangleGameObject(){
-        addComponent(new ShapeRender(new Color(255,255,255)));
+        addComponent(new ShapeRender(new Color(211, 211, 211)));
     }
 
     public RectangleGameObject(Color c){

@@ -4,6 +4,7 @@ import com.game.engine.Input.Input;
 import com.game.engine.Scene;
 import com.game.engine.collision.Collider;
 import com.game.engine.components.*;
+import com.game.engine.components.Component;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
 import com.game.engine.physics.Rigidbody;
@@ -49,8 +50,13 @@ public class Main {
 
         RectangleGameObject player = new RectangleGameObject();
         player.addComponent(new Collider());
-        player.addComponent(new Rigidbody());
-        player.addComponent(new PlayerMovement());
+        player.addComponent(new Component() {
+            @Override
+            public void update() {
+                super.update();
+                transform.translate(Vector2.left);
+            }
+        });
 
         player.transform.setPosition(new Vector2(200,0));
 
