@@ -97,7 +97,7 @@ public class Scene extends JPanel {
         //if no object had mouse over set over to null
         if(!entered) mouseOverGameObject = null;
 
-        physicsWorld.step(GameEngine.deltaTime, );
+        physicsWorld.step((float) GameEngine.deltaTime, 8,3);
 
 
         Toolkit.getDefaultToolkit().sync();
