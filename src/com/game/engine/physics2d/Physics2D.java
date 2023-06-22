@@ -31,6 +31,7 @@ public class Physics2D {
             bodyDef.angularDamping = rb.getAngularDamping();
             bodyDef.linearDamping = rb.getLinearDamping();
             bodyDef.fixedRotation = rb.isFreeze();
+            bodyDef.gravityScale = rb.getGravitationalScale();
             bodyDef.bullet = world.isContinuousPhysics();
             bodyDef.type = rb.getBodyType();
 

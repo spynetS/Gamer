@@ -102,7 +102,7 @@ public class Scene extends JPanel {
         validate();
         repaint();
 
-        scaleFactor += Input.getScrollValue()/1000;
+        scaleFactor += Input.getScrollValue()*scaleFactor/10;
 
         Input.setScrollValue(0);
         Input.setMousePressed(1000);

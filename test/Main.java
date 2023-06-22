@@ -56,16 +56,14 @@ public class Main {
         });
 
         Rigidbody2D rigidbody1 = new Rigidbody2D();
-        stationary.transform.setScale(new Vector2(5,1));
+        stationary.transform.setScale(new Vector2(5,0.9f));
+        rigidbody1.setGravitationalScale(0);
+        rigidbody1.setBodyType(BodyType.DYNAMIC);
 
-        stationary.transform.setRotation(45);
-
-        rigidbody1.setBodyType(BodyType.STATIC);
 
         stationary.addComponent(rigidbody1);
-        Debug.log("before add");
+
         scene.getPhysics2D().add(rigidbody1);
-        Debug.log("after add");
 
 
         RectangleGameObject player = new RectangleGameObject();
@@ -84,10 +82,10 @@ public class Main {
                 Rigidbody2D r2 = getComponent(Rigidbody2D.class);
                 if(Input.isKeyDown(Keys.D)){
                     //r2.getRawBody().setLinearVelocity(new Vec2(10,0));
-                    r2.getRawBody().applyForce(new Vec2(50,0), new Vec2(0,0));
+                    r2.getRawBody().applyForce(new Vec2(50,0), r2.getRawBody().getWorldCenter());
                 }
                 if(Input.isKeyDown(Keys.A)){
-                    r2.getRawBody().applyForce(new Vec2(-50,0), new Vec2(0,0));
+                    r2.getRawBody().applyForce(new Vec2(-50,0), r2.getRawBody().getWorldCenter());
                     //r2.getRawBody().getPosition().set(transform.getPosition().getX()+1,transform.getPosition().getY());
                 }
                 if(Input.isKeyDown(Keys.SPACE)){
@@ -95,6 +93,11 @@ public class Main {
                 }
             }
 
+            /**
+             * snaps
+             * platta
+             *
+             */
             @Override
             public void start() {
                 super.start();
@@ -106,8 +109,8 @@ public class Main {
 
 
 
-        scene.add(player);
         scene.add(stationary);
+        //scene.add(player);
 
 
 

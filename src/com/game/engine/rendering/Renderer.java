@@ -2,6 +2,7 @@ package com.game.engine.rendering;
 
 
 import com.game.engine.components.Component;
+import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import java.util.LinkedList;
 
 public class Renderer extends Component {
 
-    @Setter @Getter private LinkedList<Vector2> shape = new Rect(10,10);
+    @Setter @Getter protected LinkedList<Vector2> shape = new Rect(10,10);
 
     @Getter @Setter protected LinkedList<Vector2> shapeGlobal = new Rect(10,10);
 
@@ -67,15 +68,15 @@ public class Renderer extends Component {
     public void update() {
         super.update();
         rotateTo(transform.getRotation(), Vector2.zero);
-
         Vector2 d = new Vector2(1,1);
         if(transform.getParent() != null){
             if(!transform.getScale().containsZero())
                 d = transform.getScale().multiply(1).divide(scale);
         }
         else{
-            if(!transform.getScale().containsZero())
+            if(!transform.getScale().containsZero()){
                 d = transform.getScale().multiply(1).divide(scale);
+            }
         }
 
         LinkedList<Vector2> newVertices =new LinkedList<>();
@@ -92,7 +93,7 @@ public class Renderer extends Component {
             ver.add(vertex.add(transform.getGlobalPosition().multiply(100)));
         }
         shapeGlobal = ver;
-
+        Debug.log(ver);
     }
 
     public Shape getShape(){
@@ -106,7 +107,6 @@ public class Renderer extends Component {
             y[i] = (int) point.getY();
             i++;
         }
-
         return new Polygon(x,y,shapeGlobal.size());
     }
 
