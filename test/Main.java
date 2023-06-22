@@ -56,9 +56,9 @@ public class Main {
         });
 
         Rigidbody2D rigidbody1 = new Rigidbody2D();
-        stationary.transform.setScale(new Vector2(5,0.9f));
+        stationary.transform.setScale(new Vector2(5,0.1f));
         rigidbody1.setGravitationalScale(0);
-        rigidbody1.setBodyType(BodyType.DYNAMIC);
+        rigidbody1.setBodyType(BodyType.STATIC);
 
 
         stationary.addComponent(rigidbody1);
@@ -88,8 +88,11 @@ public class Main {
                     r2.getRawBody().applyForce(new Vec2(-50,0), r2.getRawBody().getWorldCenter());
                     //r2.getRawBody().getPosition().set(transform.getPosition().getX()+1,transform.getPosition().getY());
                 }
-                if(Input.isKeyDown(Keys.SPACE)){
-                    r2.getRawBody().applyForceToCenter(new Vec2(0,10));
+                //if(Input.isKeyDown(Keys.SPACE)){
+                //    r2.getRawBody().applyForce(new Vec2(0,9.82f*10), r2.getRawBody().getWorldCenter());
+                //}
+                if(Input.isKeyPressed(Keys.SPACE)){
+                    r2.getRawBody().applyLinearImpulse(new Vec2(0,10),r2.getRawBody().getWorldCenter());
                 }
             }
 
@@ -110,7 +113,7 @@ public class Main {
 
 
         scene.add(stationary);
-        //scene.add(player);
+        scene.add(player);
 
 
 

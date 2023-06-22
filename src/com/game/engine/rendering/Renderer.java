@@ -93,7 +93,6 @@ public class Renderer extends Component {
             ver.add(vertex.add(transform.getGlobalPosition().multiply(100)));
         }
         shapeGlobal = ver;
-        Debug.log(ver);
     }
 
     public Shape getShape(){
@@ -103,6 +102,7 @@ public class Renderer extends Component {
         int i = 0;
 
         for(Vector2 point : shapeGlobal){
+
             x[i] = (int) point.getX();
             y[i] = (int) point.getY();
             i++;

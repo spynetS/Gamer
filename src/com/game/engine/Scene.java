@@ -189,8 +189,8 @@ public class Scene extends JPanel {
             if(graphics2D.getClip().intersects(new Rectangle(
                     (int) gameObject.transform.getPosition().getX(),
                     (int) gameObject.transform.getPosition().getY(),
-                    (int) gameObject.transform.getScale().getX(),
-                    (int) gameObject.transform.getScale().getY()))){
+                    (int) gameObject.transform.getScale().multiply(100).getX(),
+                    (int) gameObject.transform.getScale().multiply(100).getY()))){
 
                 gameObject.render(graphics2D);
 

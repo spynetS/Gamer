@@ -34,7 +34,6 @@ public class ShapeRender extends Renderer{
         Color colorBuffet = g.getColor();
         g.setColor(color);
         //Debug.log(getShape().getBounds());
-        g.fillRect(0,0, (int) 1000, (int) 1000);
         g.fill(getShape());
         g.setColor(colorBuffet);
     }
