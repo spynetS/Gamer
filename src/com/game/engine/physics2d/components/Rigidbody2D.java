@@ -54,7 +54,7 @@ public class Rigidbody2D extends Body implements Comp {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(transform.getScale().getX()/2,transform.getScale().getY()/2);
 
-        setTransform(new Vec2(transform.getPosition().getX(), transform.getPosition().getY()), transform.getRotation());
+        setTransform(new Vec2(transform.getPosition().getX(), transform.getPosition().getY()), (float) Math.toRadians(transform.getRotation()));
 
 
         createFixture(shape, getMass());
@@ -62,7 +62,7 @@ public class Rigidbody2D extends Body implements Comp {
     }
     @Override
     public void update() {
-        transform.setRotation(getAngle());
+        transform.setRotation((float) Math.toDegrees(getAngle()));
         transform.setPosition(new Vector2(getPosition().x, getPosition().y));
     }
     @Override
