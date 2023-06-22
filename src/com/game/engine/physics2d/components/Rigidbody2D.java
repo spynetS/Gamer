@@ -6,6 +6,7 @@ import com.game.engine.Scene;
 import com.game.engine.components.Comp;
 import com.game.engine.components.Component;
 import com.game.engine.components.Transform;
+import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
 import lombok.*;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -29,22 +30,18 @@ public class Rigidbody2D extends Body implements Comp {
 
         //def.type = BodyType.DYNAMIC;
 
-        Body b = new Body(def, world);
+        Rigidbody2D b = new Rigidbody2D(def,world);
         b.m_prev = null;
         b.m_next = world.getBodyList();
         if (world.getBodyList() != null) {
             world.getBodyList().m_prev = b;
         }
 
-        world.m_bodyList = b;
-        ++world.m_bodyCount;
-
-        Body body = world.createBody(def);
-
-        Rigidbody2D body2 = new Rigidbody2D(body);
+        world.setBodyList(b);
+        world.setBodyCount(world.getBodyCount()+1);
 
 
-        return body2;
+        return b;
     }
 
     @Override
@@ -56,17 +53,17 @@ public class Rigidbody2D extends Body implements Comp {
     public void start() {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(transform.getScale().getX()/2,transform.getScale().getY()/2);
-        bodyDef.position.set(transform.getPosition().getX(), transform.getPosition().getY());
 
-        shape.setAsBox(50,50);
+        setTransform(new Vec2(transform.getPosition().getX(), transform.getPosition().getY()), transform.getRotation());
+
 
         createFixture(shape, getMass());
 
     }
     @Override
     public void update() {
-        //transform.setRotation(getAngle());
-        //transform.setPosition(new Vector2(getPosition().x, getPosition().y));
+        transform.setRotation(getAngle());
+        transform.setPosition(new Vector2(getPosition().x, getPosition().y));
     }
     @Override
     public void __update__() {

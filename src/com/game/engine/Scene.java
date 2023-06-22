@@ -31,13 +31,13 @@ public class Scene extends JPanel {
     @Getter @Setter private Vector2 cameraOffset = new Vector2();
     @Getter @Setter float scaleFactor = 0.001f;
     @Getter @Setter private Physics2D physics2D = new Physics2D();
+    @Getter @Setter private boolean started = false;
     Vector2 prevScale = new Vector2();
     AffineTransform transform = new AffineTransform();
     private float time = 0;
     private int lastSec = 0;
     private int lastMili = 0;
     long elapsedTime = 0;
-
     public Scene() {
         setBackground(new Color(30,30,30));
     }
@@ -46,6 +46,7 @@ public class Scene extends JPanel {
         for(GameObject g : gameObjects){
             g.start();
         }
+        started = true;
     }
 
     public GameObject add(GameObject gameObject){

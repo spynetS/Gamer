@@ -20,26 +20,34 @@ public class Main {
     public static void main (String[] args){
 
         GameEngine gameEngine = new GameEngine();
-
         Scene scene = new Scene(){
             @Override
             public void update() {
                 super.update();
-                getPhysics2D().update((float) GameEngine.deltaTime);
+                if(isStarted()){
+                    getPhysics2D().update((float) GameEngine.deltaTime);
+                }
             }
         };
+         Rigidbody2D r1 = Rigidbody2D.create(scene);
 
         scene.setScaleFactor(0.001f);
         GameEngine.fpsCap = 60;
 
         RectangleGameObject stationary = new RectangleGameObject(Color.RED);
 
-        Rigidbody2D r1 = Rigidbody2D.create(scene);
+        stationary.transform.setScale(new Vector2(1,1));
+        stationary.transform.setPosition(new Vector2(0.6f,-2));
 
         stationary.addComponent(r1);
 
 
         RectangleGameObject player = new RectangleGameObject();
+        Rigidbody2D r2 = Rigidbody2D.create(scene);
+
+        r2.setType(BodyType.DYNAMIC);
+
+        player.addComponent(r2);
 
 
         //player.addComponent(new Component() {
