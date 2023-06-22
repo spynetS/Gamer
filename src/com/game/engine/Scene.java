@@ -160,6 +160,7 @@ public class Scene extends JPanel {
 
 
         graphics2D.translate(GameEngine.game.getWidth()/2, GameEngine.game.getHeight()/2);
+        graphics2D.scale(1,-1);
 
 
         if(prevScale.getX() != GameEngine.game.getHeight() &&
