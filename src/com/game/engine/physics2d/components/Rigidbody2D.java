@@ -2,9 +2,7 @@ package com.game.engine.physics2d.components;
 
 import com.game.engine.GameEngine;
 import com.game.engine.components.Component;
-import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
-import com.game.engine.physics.PhysicsWorld;
 import lombok.*;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
@@ -15,14 +13,14 @@ public class Rigidbody2D extends Component {
     @Getter @Setter private Vector2 velocity           = new Vector2();
     @Getter @Setter private float   angularVelocity    = 0f;
     @Getter @Setter private float   inertia            = 0f;
-    @Getter @Setter private float   linerDrag          = 0.001f;
-    @Getter @Setter private float   angularDrag        = 0f;
+    @Getter @Setter private float   linearDamping      = 0.9f;
+    @Getter @Setter private float   angularDamping     = 0.8f;
     @Getter @Setter private Vector2 centerOfMass       = new Vector2(); //point where the center of mass is
     @Getter @Setter private float   mass               = 1f; // 1 is one kg
     @Getter @Setter private boolean useGravity         = false;
     @Getter @Setter private float   gravitationalScale = 1f;
 
-    private BodyType bodyType;
+    private transient BodyType bodyType;
 
     @Getter @Setter private Body rawBody = null;
 
@@ -81,8 +79,8 @@ public class Rigidbody2D extends Component {
                 "velocity=" + velocity +
                 ", angularVelocity=" + angularVelocity +
                 ", inertia=" + inertia +
-                ", linerDrag=" + linerDrag +
-                ", angularDrag=" + angularDrag +
+                ", linerDrag=" + linearDamping +
+                ", angularDrag=" + angularDamping +
                 ", centerOfMass=" + centerOfMass +
                 ", mass=" + mass +
                 ", gravitationalScale=" + gravitationalScale +

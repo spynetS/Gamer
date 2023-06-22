@@ -4,6 +4,7 @@ import com.game.engine.Input.Input;
 import com.game.engine.collision.Collider;
 import com.game.engine.collision.CollisionDetector;
 import com.game.engine.components.GameObjectHandler;
+import com.game.engine.msc.Debug;
 import com.game.engine.physics2d.Physics2D;
 import com.game.engine.physics2d.components.Rigidbody2D;
 import com.game.engine.msc.Vector2;
@@ -101,7 +102,9 @@ public class Scene extends JPanel {
         validate();
         repaint();
 
+        scaleFactor += Input.getScrollValue()/1000;
 
+        Input.setScrollValue(0);
         Input.setMousePressed(1000);
 
     }
@@ -153,8 +156,8 @@ public class Scene extends JPanel {
         // Your custom painting code goes here
         Graphics2D graphics2D = (Graphics2D) g;
 
-        //graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        //graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
         drawDebugStats(graphics2D);
 
@@ -197,6 +200,7 @@ public class Scene extends JPanel {
 
             }
         }
+
 
         long endTime = System.currentTimeMillis();
         elapsedTime = endTime - startTime;

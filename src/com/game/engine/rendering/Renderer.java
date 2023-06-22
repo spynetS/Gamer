@@ -12,17 +12,13 @@ import java.util.LinkedList;
 
 public class Renderer extends Component {
 
-    @Setter
-    @Getter
-    private LinkedList<Vector2> shape = new Rect(10,10);
+    @Setter @Getter private LinkedList<Vector2> shape = new Rect(10,10);
 
-    @Getter
-    @Setter
-    protected LinkedList<Vector2> shapeGlobal = new Rect(10,10);
+    @Getter @Setter protected LinkedList<Vector2> shapeGlobal = new Rect(10,10);
 
     protected Vector2 getPos(){
         if(transform.getParent() == null)
-            return transform.getPosition().subtract(transform.getScale().divide(2));
+            return transform.getPosition().subtract(transform.getScale().multiply(1).divide(2));
         else{
             Vector2 scale = transform.getGlobalPosition().subtract(transform.getGlobalScale().divide(2));
 
@@ -75,11 +71,11 @@ public class Renderer extends Component {
         Vector2 d = new Vector2(1,1);
         if(transform.getParent() != null){
             if(!transform.getScale().containsZero())
-                d = transform.getScale().divide(scale);
+                d = transform.getScale().multiply(1).divide(scale);
         }
         else{
             if(!transform.getScale().containsZero())
-                d = transform.getScale().divide(scale);
+                d = transform.getScale().multiply(1).divide(scale);
         }
 
         LinkedList<Vector2> newVertices =new LinkedList<>();
@@ -88,12 +84,12 @@ public class Renderer extends Component {
             newVertices.add(newV);
         }
         shape = newVertices;
-        scale = transform.getScale();
+        scale = transform.getScale().multiply(1);
 
 
         LinkedList<Vector2> ver = new LinkedList<>();
         for(Vector2 vertex : shape){
-            ver.add(vertex.add(transform.getGlobalPosition()));
+            ver.add(vertex.add(transform.getGlobalPosition().multiply(100)));
         }
         shapeGlobal = ver;
 

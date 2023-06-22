@@ -29,6 +29,8 @@ public class Main {
             }
         };
 
+        scene.setScaleFactor(0.001f);
+        GameEngine.fpsCap = 60;
 
         RectangleGameObject stationary = new RectangleGameObject(Color.RED){
 
@@ -54,13 +56,12 @@ public class Main {
         });
 
         Rigidbody2D rigidbody1 = new Rigidbody2D();
-        stationary.transform.setScale(new Vector2(500,100));
+        stationary.transform.setScale(new Vector2(5,1));
 
-        //stationary.transform.setRotation(45);
+        stationary.transform.setRotation(45);
 
         rigidbody1.setBodyType(BodyType.STATIC);
 
-        rigidbody1.setMass(50000000);
         stationary.addComponent(rigidbody1);
         Debug.log("before add");
         scene.getPhysics2D().add(rigidbody1);
@@ -71,9 +72,10 @@ public class Main {
 
         Rigidbody2D rigidbody2D = new Rigidbody2D();
         player.addComponent(rigidbody2D);
+        //rigidbody2D.setBodyType(BodyType.KINEMATIC);
 
-        player.transform.setScale(new Vector2(100,200));
-        player.transform.setPosition(new Vector2(0,500));
+        player.transform.setScale(new Vector2(1,2));
+        player.transform.setPosition(new Vector2(0,3));
 
         player.addComponent(new Component() {
             @Override
@@ -82,16 +84,21 @@ public class Main {
                 Rigidbody2D r2 = getComponent(Rigidbody2D.class);
                 if(Input.isKeyDown(Keys.D)){
                     //r2.getRawBody().setLinearVelocity(new Vec2(10,0));
-                    r2.getRawBody().applyForce(new Vec2(100,0), r2.getRawBody().getWorldCenter());
+                    r2.getRawBody().applyForce(new Vec2(50,0), new Vec2(0,0));
                 }
                 if(Input.isKeyDown(Keys.A)){
-                    r2.getRawBody().setLinearVelocity(new Vec2(-10,0));
-                    r2.getRawBody().getPosition().set(transform.getPosition().getX()+1,transform.getPosition().getY());
+                    r2.getRawBody().applyForce(new Vec2(-50,0), new Vec2(0,0));
+                    //r2.getRawBody().getPosition().set(transform.getPosition().getX()+1,transform.getPosition().getY());
                 }
                 if(Input.isKeyDown(Keys.SPACE)){
-                    r2.getRawBody().applyForceToCenter(new Vec2(0,-100000));
+                    r2.getRawBody().applyForceToCenter(new Vec2(0,10));
                 }
-                Debug.log(r2.getRawBody().m_linearVelocity);
+            }
+
+            @Override
+            public void start() {
+                super.start();
+                //rigidbody2D.getRawBody().applyForceToCenter(new Vec2(1000,0));
             }
         });
 

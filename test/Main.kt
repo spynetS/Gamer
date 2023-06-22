@@ -100,7 +100,7 @@ class Planet : GameObject {
         addComponent(renderer)
         var rigidbody = Rigidbody2D();
         rigidbody.mass = mass;
-        rigidbody.linerDrag = 0f;
+        rigidbody.linearDamping = 0f;
         addComponent(rigidbody)
         addComponent(PlayerMovement())
         addComponent(CircleCollider())
