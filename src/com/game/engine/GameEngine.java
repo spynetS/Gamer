@@ -45,7 +45,7 @@ public class GameEngine extends JFrame {
         // To cap the fps we just increase the delay if our fps is too high
         // and decrease it when it is too low
         if (now - time >= 100) {
-            fps = counter * 10;
+            fps = counter * 1.3f;
             if (fpsCap > 0 && fps > fpsCap) DELAY++;
             if (fpsCap > 0 && fps < fpsCap && DELAY > 5) DELAY--;
 

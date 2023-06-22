@@ -1,12 +1,11 @@
 package com.game.engine;
 
 import com.game.engine.Input.Input;
-import com.game.engine.Input.Keys;
 import com.game.engine.collision.Collider;
 import com.game.engine.collision.CollisionDetector;
 import com.game.engine.components.GameObjectHandler;
-import com.game.engine.msc.Debug;
-import com.game.engine.physics.Rigidbody;
+import com.game.engine.physics2d.Physics2D;
+import com.game.engine.physics2d.components.Rigidbody2D;
 import com.game.engine.msc.Vector2;
 import com.game.engine.rendering.Renderer;
 import lombok.Getter;
@@ -29,6 +28,7 @@ public class Scene extends JPanel {
     @Getter @Setter private GameObject mouseOverGameObject = null;
     @Getter @Setter private Vector2 cameraOffset = new Vector2();
     @Getter @Setter float scaleFactor = 0.001f;
+    @Getter @Setter private Physics2D physics2D = new Physics2D();
     Vector2 prevScale = new Vector2();
     AffineTransform transform = new AffineTransform();
     private float time = 0;
@@ -117,7 +117,7 @@ public class Scene extends JPanel {
         g.drawString("Mouse pos: "+Input.getMousePosition(),100,130);
         try{
             g.drawString(gameObjects.get(0).transform.toString(), 100, 140);
-            g.drawString(gameObjects.get(0).getComponent(Rigidbody.class).toString(), 100, 155);
+            g.drawString(gameObjects.get(0).getComponent(Rigidbody2D.class).toString(), 100, 155);
             g.drawString(gameObjects.get(0).getChild(0).transform.toString(), 100, 170);
         }catch (Exception e){}
         g.setColor(c);

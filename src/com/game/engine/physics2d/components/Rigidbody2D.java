@@ -2,13 +2,14 @@ package com.game.engine.physics2d.components;
 
 import com.game.engine.GameEngine;
 import com.game.engine.components.Component;
+import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
 import com.game.engine.physics.PhysicsWorld;
 import lombok.*;
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyType;
 
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
-@NoArgsConstructor
-public class Rigidbody extends Component {
+public class Rigidbody2D extends Component {
 
     @Getter @Setter private boolean isFreeze           = false;
     @Getter @Setter private Vector2 velocity           = new Vector2();
@@ -21,8 +22,16 @@ public class Rigidbody extends Component {
     @Getter @Setter private boolean useGravity         = false;
     @Getter @Setter private float   gravitationalScale = 1f;
 
-    public Rigidbody(boolean useGravity) {
+    private BodyType bodyType;
+
+    @Getter @Setter private Body rawBody = null;
+
+    public Rigidbody2D(boolean useGravity) {
         this.useGravity = useGravity;
+        bodyType = BodyType.DYNAMIC;
+    }
+    public Rigidbody2D() {
+        bodyType = BodyType.DYNAMIC;
     }
 
     public void addForce(Vector2 force){
@@ -41,8 +50,8 @@ public class Rigidbody extends Component {
 
         setInertia(i);
     }
-    public void resolveCollision(Rigidbody other){
-        Rigidbody me = this;
+    public void resolveCollision(Rigidbody2D other){
+        Rigidbody2D me = this;
         float cor = 1;
 
         Vector2 newb = ((me.getVelocity().multiply(me.mass).add
@@ -60,20 +69,11 @@ public class Rigidbody extends Component {
     }
     @Override
     public void update() {
-        updateInertia();
+        if(rawBody != null){
+            this.transform.setPosition(new Vector2(rawBody.getPosition().x, rawBody.getPosition().y));
+            this.transform.setRotation((float) Math.toDegrees(rawBody.getAngle()));
 
-        //rotate by angular velocity
-        transform.setRotation((float) (transform.getRotation() + (angularVelocity *GameEngine.deltaTime)));
-
-        //add linerdrag force
-        addForce(velocity.multiply(-linerDrag));
-
-        if(useGravity){
-            velocity = velocity.add(PhysicsWorld.g.divide(gravitationalScale).multiply(GameEngine.deltaTime));
         }
-
-        //update transforms position based on velocity
-        transform.setPosition(transform.getPosition().add(velocity.multiply(GameEngine.deltaTime)));
     }
     @Override
     public String toString() {
@@ -87,5 +87,13 @@ public class Rigidbody extends Component {
                 ", mass=" + mass +
                 ", gravitationalScale=" + gravitationalScale +
                 '}';
+    }
+
+    public BodyType getBodyType() {
+        return bodyType;
+    }
+
+    public void setBodyType(BodyType bodyType) {
+        this.bodyType = bodyType;
     }
 }

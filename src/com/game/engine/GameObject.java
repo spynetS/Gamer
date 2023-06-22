@@ -4,6 +4,7 @@ import com.game.engine.collision.Collider;
 import com.game.engine.components.Component;
 import com.game.engine.components.EditorComponent;
 import com.game.engine.msc.Vector2;
+import com.game.engine.physics2d.components.Rigidbody2D;
 import com.game.engine.rendering.Renderer;
 import com.game.engine.components.Transform;
 import lombok.Getter;
@@ -129,6 +130,9 @@ public class GameObject {
         }
         if(GameEngine.getSelectedScene().isEditing() && editorComponent.isStarted())
             editorComponent.render(g);
+
+        Rigidbody2D e = getComponent(Rigidbody2D.class);
+
     }
     public void updateSecond() {
         for(Component c : components){

@@ -1,19 +1,19 @@
 import com.game.engine.GameEngine;
-import com.game.engine.GameObject;
 import com.game.engine.Input.Input;
+import com.game.engine.Input.Keys;
 import com.game.engine.Scene;
 import com.game.engine.collision.Collider;
 import com.game.engine.components.*;
 import com.game.engine.components.Component;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
-import com.game.engine.physics.Rigidbody;
-import com.game.engine.rendering.Renderer;
+import com.game.engine.physics2d.components.Rigidbody2D;
 import com.game.engine.rendering.ShapeRender;
-import com.game.engine.rendering.Sprite;
-import com.game.engine.rendering.SpriteRenderer;
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.BodyType;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 public class Main {
 
@@ -21,7 +21,13 @@ public class Main {
 
         GameEngine gameEngine = new GameEngine();
 
-        Scene scene = new Scene();
+        Scene scene = new Scene(){
+            @Override
+            public void update() {
+                super.update();
+                getPhysics2D().update((float) GameEngine.deltaTime);
+            }
+        };
 
 
         RectangleGameObject stationary = new RectangleGameObject(Color.RED){
@@ -38,7 +44,7 @@ public class Main {
                 getComponent(ShapeRender.class).setColor(Color.RED);
             }
         };
-        stationary.addComponent(new Rigidbody(){
+        stationary.addComponent(new Rigidbody2D(){
             @Override
             public void start() {
                 super.start();
@@ -46,19 +52,52 @@ public class Main {
                 setFreeze(true);
             }
         });
-        stationary.addComponent(new Collider());
+
+        Rigidbody2D rigidbody1 = new Rigidbody2D();
+        stationary.transform.setScale(new Vector2(500,100));
+
+        //stationary.transform.setRotation(45);
+
+        rigidbody1.setBodyType(BodyType.STATIC);
+
+        rigidbody1.setMass(50000000);
+        stationary.addComponent(rigidbody1);
+        Debug.log("before add");
+        scene.getPhysics2D().add(rigidbody1);
+        Debug.log("after add");
+
 
         RectangleGameObject player = new RectangleGameObject();
-        player.addComponent(new Collider());
+
+        Rigidbody2D rigidbody2D = new Rigidbody2D();
+        player.addComponent(rigidbody2D);
+
+        player.transform.setScale(new Vector2(100,200));
+        player.transform.setPosition(new Vector2(0,500));
+
         player.addComponent(new Component() {
             @Override
             public void update() {
                 super.update();
-                transform.translate(Vector2.left);
+                Rigidbody2D r2 = getComponent(Rigidbody2D.class);
+                if(Input.isKeyDown(Keys.D)){
+                    //r2.getRawBody().setLinearVelocity(new Vec2(10,0));
+                    r2.getRawBody().applyForce(new Vec2(100,0), r2.getRawBody().getWorldCenter());
+                }
+                if(Input.isKeyDown(Keys.A)){
+                    r2.getRawBody().setLinearVelocity(new Vec2(-10,0));
+                    r2.getRawBody().getPosition().set(transform.getPosition().getX()+1,transform.getPosition().getY());
+                }
+                if(Input.isKeyDown(Keys.SPACE)){
+                    r2.getRawBody().applyForceToCenter(new Vec2(0,-100000));
+                }
+                Debug.log(r2.getRawBody().m_linearVelocity);
             }
         });
 
-        player.transform.setPosition(new Vector2(200,0));
+        scene.getPhysics2D().add(rigidbody2D);
+
+
 
         scene.add(player);
         scene.add(stationary);
