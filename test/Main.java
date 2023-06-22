@@ -58,7 +58,7 @@ public class Main {
             }
         });
 
-        player.transform.setPosition(new Vector2(200,0));
+        player.transform.setPosition(new Vector2(200,90));
 
         scene.add(player);
         scene.add(stationary);
