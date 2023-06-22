@@ -25,20 +25,13 @@ public class Rigidbody2D extends Body implements Comp {
     }
 
     public static Rigidbody2D create(Scene scene){
-        World world = scene.getPhysics2D().getWorld();
+        World world = scene.getPhysicsWorld();
         BodyDef def = new BodyDef();
 
         //def.type = BodyType.DYNAMIC;
 
         Rigidbody2D b = new Rigidbody2D(def,world);
-        b.m_prev = null;
-        b.m_next = world.getBodyList();
-        if (world.getBodyList() != null) {
-            world.getBodyList().m_prev = b;
-        }
-
-        world.setBodyList(b);
-        world.setBodyCount(world.getBodyCount()+1);
+        world.addBody(b);
 
 
         return b;

@@ -20,15 +20,7 @@ public class Main {
     public static void main (String[] args){
 
         GameEngine gameEngine = new GameEngine();
-        Scene scene = new Scene(){
-            @Override
-            public void update() {
-                super.update();
-                if(isStarted()){
-                    getPhysics2D().update((float) GameEngine.deltaTime);
-                }
-            }
-        };
+        Scene scene = new Scene();
          Rigidbody2D r1 = Rigidbody2D.create(scene);
 
         scene.setScaleFactor(0.001f);
@@ -44,7 +36,7 @@ public class Main {
 
         RectangleGameObject player = new RectangleGameObject();
         Rigidbody2D r2 = Rigidbody2D.create(scene);
-
+        player.transform.setPosition(new Vector2(0,2));
         r2.setType(BodyType.DYNAMIC);
 
         player.addComponent(r2);
