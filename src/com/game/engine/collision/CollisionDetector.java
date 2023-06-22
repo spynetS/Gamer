@@ -3,6 +3,7 @@ package com.game.engine.collision;
 import com.game.engine.GameObject;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
+import com.game.engine.physics.Rigidbody;
 import com.game.engine.physics2d.components.Rigidbody2D;
 
 import java.util.ArrayList;
@@ -22,8 +23,8 @@ public class CollisionDetector {
                 //colliders.add(c2);
 
                 if (c1.collides(c2)) {
-                    Rigidbody2D rigid1 = c1.getComponent(Rigidbody2D.class);
-                    Rigidbody2D rigid2 = c2.getComponent(Rigidbody2D.class);
+                    Rigidbody rigid1 = c1.getComponent(Rigidbody.class);
+                    Rigidbody rigid2 = c2.getComponent(Rigidbody.class);
                     Debug.startCount();
 
                     c1.transform.getGameObject().onCollisionEnter(c2);

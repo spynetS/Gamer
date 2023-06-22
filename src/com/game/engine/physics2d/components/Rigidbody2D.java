@@ -1,97 +1,88 @@
 package com.game.engine.physics2d.components;
 
 import com.game.engine.GameEngine;
+import com.game.engine.GameObject;
+import com.game.engine.Scene;
+import com.game.engine.components.Comp;
 import com.game.engine.components.Component;
+import com.game.engine.components.Transform;
 import com.game.engine.msc.Vector2;
 import lombok.*;
+import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.World;
 
-public class Rigidbody2D extends Component {
+public class Rigidbody2D extends Body implements Comp {
 
-    @Getter @Setter private boolean isFreeze           = false;
-    @Getter @Setter private Vector2 velocity           = new Vector2();
-    @Getter @Setter private float   angularVelocity    = 0f;
-    @Getter @Setter private float   inertia            = 0f;
-    @Getter @Setter private float   linearDamping      = 0.9f;
-    @Getter @Setter private float   angularDamping     = 0.8f;
-    @Getter @Setter private Vector2 centerOfMass       = new Vector2(); //point where the center of mass is
-    @Getter @Setter private float   mass               = 1f; // 1 is one kg
-    @Getter @Setter private boolean useGravity         = false;
-    @Getter @Setter private float   gravitationalScale = 1f;
-
-    private transient BodyType bodyType;
-
-    @Getter @Setter private Body rawBody = null;
-
-    public Rigidbody2D(boolean useGravity) {
-        this.useGravity = useGravity;
-        bodyType = BodyType.DYNAMIC;
-    }
-    public Rigidbody2D() {
-        bodyType = BodyType.DYNAMIC;
+    @Setter Transform transform;
+    @Getter @Setter BodyDef bodyDef = new BodyDef();
+    public Rigidbody2D(BodyDef bd, World world) {
+        super(bd, world);
     }
 
-    public void addForce(Vector2 force){
-        float mass = this.mass;
-        if(mass == 0){
-            mass = 1;
+    public static Rigidbody2D create(Scene scene){
+        World world = scene.getPhysics2D().getWorld();
+        BodyDef def = new BodyDef();
+
+        //def.type = BodyType.DYNAMIC;
+
+        Body b = new Body(def, world);
+        b.m_prev = null;
+        b.m_next = world.getBodyList();
+        if (world.getBodyList() != null) {
+            world.getBodyList().m_prev = b;
         }
-        Vector2 a = force.divide(mass);
-        velocity.adds(a.multiply(GameEngine.deltaTime).multiply(100));
+
+        world.m_bodyList = b;
+        ++world.m_bodyCount;
+
+        Body body = world.createBody(def);
+
+        Rigidbody2D body2 = new Rigidbody2D(body);
+
+
+        return body2;
     }
-    private void updateInertia(){
-        float i = (float) ((1/12) *
-                        mass *
-                        (Math.pow(transform.getScale().getX(),2) +
-                         Math.pow(transform.getPosition().getY(),2)));
 
-        setInertia(i);
+    @Override
+    public Transform transform() {
+        return this.transform;
     }
-    public void resolveCollision(Rigidbody2D other){
-        Rigidbody2D me = this;
-        float cor = 1;
 
-        Vector2 newb = ((me.getVelocity().multiply(me.mass).add
-                ( other.getVelocity().multiply(other.mass) ).add
-                ( (other.getVelocity().subtract(me.getVelocity()) ).multiply(other.mass))).divide
-                (me.mass+other.mass));
+    @Override
+    public void start() {
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(transform.getScale().getX()/2,transform.getScale().getY()/2);
+        bodyDef.position.set(transform.getPosition().getX(), transform.getPosition().getY());
 
-        Vector2 newCb =((me.getVelocity().multiply(me.mass)).add
-                (other.getVelocity().multiply(other.mass).add
-                        ((me.getVelocity().subtract(other.getVelocity()).multiply(me.mass)))).divide
-                (me.mass+other.mass));
+        shape.setAsBox(50,50);
 
-        me.velocity    = (!me.isFreeze())    ? newb:me.getVelocity();
-        other.velocity = (!other.isFreeze()) ? newCb:other.getVelocity();
+        createFixture(shape, getMass());
+
     }
     @Override
     public void update() {
-        if(rawBody != null){
-            this.transform.setPosition(new Vector2(rawBody.getPosition().x, rawBody.getPosition().y));
-            this.transform.setRotation((float) Math.toDegrees(rawBody.getAngle()));
-
-        }
+        //transform.setRotation(getAngle());
+        //transform.setPosition(new Vector2(getPosition().x, getPosition().y));
     }
     @Override
-    public String toString() {
-        return "Rigidbody{" +
-                "velocity=" + velocity +
-                ", angularVelocity=" + angularVelocity +
-                ", inertia=" + inertia +
-                ", linerDrag=" + linearDamping +
-                ", angularDrag=" + angularDamping +
-                ", centerOfMass=" + centerOfMass +
-                ", mass=" + mass +
-                ", gravitationalScale=" + gravitationalScale +
-                '}';
+    public void __update__() {
+
+    }
+    @Override
+    public <T extends Component> T getComponent(Class<T> tClass) {
+        return null;
+    }
+    @Override
+    public void instantiate(GameObject gameObject) {
+
+    }
+    @Override
+    public GameObject instantiate(GameObject child, GameObject parent) {
+        return null;
     }
 
-    public BodyType getBodyType() {
-        return bodyType;
-    }
-
-    public void setBodyType(BodyType bodyType) {
-        this.bodyType = bodyType;
-    }
 }

@@ -5,6 +5,7 @@ import com.game.engine.collision.Collider;
 import com.game.engine.collision.CollisionDetector;
 import com.game.engine.components.GameObjectHandler;
 import com.game.engine.msc.Debug;
+import com.game.engine.physics.Rigidbody;
 import com.game.engine.physics2d.Physics2D;
 import com.game.engine.physics2d.components.Rigidbody2D;
 import com.game.engine.msc.Vector2;
@@ -120,7 +121,7 @@ public class Scene extends JPanel {
         g.drawString("Mouse pos: "+Input.getMousePosition(),100,130);
         try{
             g.drawString(gameObjects.get(0).transform.toString(), 100, 140);
-            g.drawString(gameObjects.get(0).getComponent(Rigidbody2D.class).toString(), 100, 155);
+            g.drawString(gameObjects.get(0).getComponent(Rigidbody.class).toString(), 100, 155);
             g.drawString(gameObjects.get(0).getChild(0).transform.toString(), 100, 170);
         }catch (Exception e){}
         g.setColor(c);
