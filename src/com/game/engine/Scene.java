@@ -1,8 +1,6 @@
 package com.game.engine;
 
 import com.game.engine.Input.Input;
-import com.game.engine.collision.Collider;
-import com.game.engine.collision.CollisionDetector;
 import com.game.engine.components.GameObjectHandler;
 import com.game.engine.physics.Rigidbody;
 import com.game.engine.msc.Vector2;
@@ -22,7 +20,6 @@ public class Scene extends JPanel {
 
     @Setter @Getter ArrayList<GameObject> gameObjects = new ArrayList<>();
     @Getter @Setter private boolean debug = true;
-    @Getter @Setter CollisionDetector detector = new CollisionDetector();
     @Getter @Setter GameObjectHandler gameObjectHandler = new GameObjectHandler();
     @Getter @Setter private boolean isEditing = false;
     @Getter @Setter private GameObject selectedGameObject = null;
@@ -91,8 +88,6 @@ public class Scene extends JPanel {
             if(gameObject.isMouseInside() && Input.isMousePressed()){
                 setSelectedGameObject(gameObject);
             }
-            if(gameObject.getComponent(Collider.class) != null)
-                detector.checkCollision(gameObject, gameObjects);
         }
         //if no object had mouse over set over to null
         if(!entered) mouseOverGameObject = null;
@@ -195,10 +190,6 @@ public class Scene extends JPanel {
                     (int) gameObject.transform.getScale().multiply(100).getY()))){
 
                 gameObject.render(graphics2D);
-
-                try{
-                    gameObject.getComponent(Collider.class).render(graphics2D);
-                }catch (Exception e){}
 
             }
         }

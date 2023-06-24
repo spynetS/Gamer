@@ -1,6 +1,5 @@
 package com.game.engine;
 
-import com.game.engine.collision.Collider;
 import com.game.engine.components.Comp;
 import com.game.engine.components.Component;
 import com.game.engine.components.EditorComponent;
@@ -23,7 +22,6 @@ public class GameObject {
     public String name = "";
     private EditorComponent editorComponent = new EditorComponent();
     private boolean started = false;
-    private Collider colliding = null;
     //this is so we don't change the list we are updating
     private LinkedList<GameObject> newGameObjects = new LinkedList<>();
     private LinkedList<GameObject> removeGameObjects = new LinkedList<>();
@@ -111,7 +109,6 @@ public class GameObject {
 
     }
     public void update(){
-        if(colliding != null) onCollisionLeft(colliding);
         addObjects();
         for(Comp c : components){
             c.update();
@@ -145,12 +142,6 @@ public class GameObject {
     }
     public void onMouseLeft(){
         setMouseInside(false);
-    }
-    public void onCollisionEnter(Collider collider) {
-        colliding = collider;
-    }
-    public void onCollisionLeft(Collider collide){
-        colliding = null;
     }
     public void destroy() {
         GameEngine.getSelectedScene().getGameObjectHandler().getRemoveGameObject().add(this);
