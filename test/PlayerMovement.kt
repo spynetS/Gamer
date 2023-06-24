@@ -4,6 +4,7 @@ import com.game.engine.Input.Keys
 import com.game.engine.components.Component
 import com.game.engine.msc.Vector2
 import com.game.engine.physics.Rigidbody
+import com.game.engine.physics2d.components.Rigidbody2D
 
 class PlayerMovement : Component {
 

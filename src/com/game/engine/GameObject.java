@@ -1,13 +1,17 @@
 package com.game.engine;
 
 import com.game.engine.collision.Collider;
+import com.game.engine.components.Comp;
 import com.game.engine.components.Component;
 import com.game.engine.components.EditorComponent;
+import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
+import com.game.engine.physics2d.components.Rigidbody2D;
 import com.game.engine.rendering.Renderer;
 import com.game.engine.components.Transform;
 import lombok.Getter;
 import lombok.Setter;
+import org.jbox2d.dynamics.Body;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,23 +27,23 @@ public class GameObject {
     //this is so we don't change the list we are updating
     private LinkedList<GameObject> newGameObjects = new LinkedList<>();
     private LinkedList<GameObject> removeGameObjects = new LinkedList<>();
-    private LinkedList<Component> newComponents = new LinkedList<>();
-    private LinkedList<Component> removeComponents = new LinkedList<>();
+    private LinkedList<Comp> newComponents = new LinkedList<>();
+    private LinkedList<Comp> removeComponents = new LinkedList<>();
     public Transform transform = new Transform(this);
-    public ArrayList<Component> components = new ArrayList<>();
+    public ArrayList<Comp> components = new ArrayList<>();
     public ArrayList<GameObject> gameObjects = new ArrayList<>();
     @Getter @Setter private boolean isMouseInside = false;
 
-    public void removeComponent(Component component){
+    public void removeComponent(Comp component){
         removeComponents.add(component);
         if (!started) addObjects();
     }
-    public void addComponent(Component component){
+    public void addComponent(Comp component){
         newComponents.add(component);
         if (!started) addObjects();
     }
-    public void addComp(Component component){
-        component.transform = this.transform;
+    public void addComp(Comp component){
+        component.setTransform(this.transform);
         components.add(component);
     }
     public void addChild(GameObject gameObject){
@@ -69,7 +73,7 @@ public class GameObject {
     }
     public <T extends Component> T getComponent(Class<T> type){
 
-        for(Component c : components){
+        for(Comp c : components){
             if(type.isInstance(c)){
                 return (T)c;
             }
@@ -82,7 +86,7 @@ public class GameObject {
         transform.start();
         editorComponent.transform = transform;
         editorComponent.start();
-        for(Component c : components){
+        for(Comp c : components){
             c.start();
         }
         for(GameObject child : gameObjects) child.start();
@@ -97,11 +101,11 @@ public class GameObject {
             removeGameObjects.clear();
         }
         if(newComponents.size() > 0){
-            for(Component g : newComponents) addComp(g);
+            for(Comp g : newComponents) addComp(g);
             newComponents.clear();
         }
         if(removeComponents.size() > 0 ){
-            for(Component c : removeComponents) components.remove(c);
+            for(Comp c : removeComponents) components.remove(c);
             removeComponents.clear();
         }
 
@@ -109,7 +113,7 @@ public class GameObject {
     public void update(){
         if(colliding != null) onCollisionLeft(colliding);
         addObjects();
-        for(Component c : components){
+        for(Comp c : components){
             c.update();
         }
         transform.update();
@@ -129,24 +133,7 @@ public class GameObject {
         }
         if(GameEngine.getSelectedScene().isEditing() && editorComponent.isStarted())
             editorComponent.render(g);
-    }
-    public void updateSecond() {
-        for(Component c : components){
-            c.updateSecond();
-        }
-        transform.update();
-        for(GameObject c : gameObjects){
-            c.updateSecond();
-        }
-    }
-    public void updateMillisecond() {
-        for(Component c : components){
-            c.updateMillisecond();
-        }
-        transform.update();
-        for(GameObject c : gameObjects){
-            c.updateMillisecond();
-        }
+
     }
     public void onMouseOver() {
         if(!isMouseInside)

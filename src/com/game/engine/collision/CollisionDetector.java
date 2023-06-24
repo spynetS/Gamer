@@ -4,13 +4,10 @@ import com.game.engine.GameObject;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
 import com.game.engine.physics.Rigidbody;
-import com.game.engine.rendering.ShapeRender;
+import com.game.engine.physics2d.components.Rigidbody2D;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 
 public class CollisionDetector {
 

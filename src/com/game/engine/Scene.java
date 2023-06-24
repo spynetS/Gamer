@@ -1,16 +1,16 @@
 package com.game.engine;
 
 import com.game.engine.Input.Input;
-import com.game.engine.Input.Keys;
 import com.game.engine.collision.Collider;
 import com.game.engine.collision.CollisionDetector;
 import com.game.engine.components.GameObjectHandler;
-import com.game.engine.msc.Debug;
 import com.game.engine.physics.Rigidbody;
 import com.game.engine.msc.Vector2;
 import com.game.engine.rendering.Renderer;
 import lombok.Getter;
 import lombok.Setter;
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.World;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,13 +29,14 @@ public class Scene extends JPanel {
     @Getter @Setter private GameObject mouseOverGameObject = null;
     @Getter @Setter private Vector2 cameraOffset = new Vector2();
     @Getter @Setter float scaleFactor = 0.001f;
+    @Getter @Setter World physicsWorld = new World(new Vec2(0,-9.82f));
+    @Getter @Setter private boolean started = false;
     Vector2 prevScale = new Vector2();
     AffineTransform transform = new AffineTransform();
     private float time = 0;
     private int lastSec = 0;
     private int lastMili = 0;
     long elapsedTime = 0;
-
     public Scene() {
         setBackground(new Color(30,30,30));
     }
@@ -44,6 +45,7 @@ public class Scene extends JPanel {
         for(GameObject g : gameObjects){
             g.start();
         }
+        started = true;
     }
 
     public GameObject add(GameObject gameObject){
@@ -95,13 +97,16 @@ public class Scene extends JPanel {
         //if no object had mouse over set over to null
         if(!entered) mouseOverGameObject = null;
 
+        physicsWorld.step((float) GameEngine.deltaTime, 8,3);
 
 
         Toolkit.getDefaultToolkit().sync();
         validate();
         repaint();
 
+        scaleFactor += Input.getScrollValue()*scaleFactor/10;
 
+        Input.setScrollValue(0);
         Input.setMousePressed(1000);
 
     }
@@ -153,8 +158,8 @@ public class Scene extends JPanel {
         // Your custom painting code goes here
         Graphics2D graphics2D = (Graphics2D) g;
 
-        //graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        //graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
         drawDebugStats(graphics2D);
 
@@ -186,8 +191,8 @@ public class Scene extends JPanel {
             if(graphics2D.getClip().intersects(new Rectangle(
                     (int) gameObject.transform.getPosition().getX(),
                     (int) gameObject.transform.getPosition().getY(),
-                    (int) gameObject.transform.getScale().getX(),
-                    (int) gameObject.transform.getScale().getY()))){
+                    (int) gameObject.transform.getScale().multiply(100).getX(),
+                    (int) gameObject.transform.getScale().multiply(100).getY()))){
 
                 gameObject.render(graphics2D);
 
@@ -197,6 +202,7 @@ public class Scene extends JPanel {
 
             }
         }
+
 
         long endTime = System.currentTimeMillis();
         elapsedTime = endTime - startTime;

@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameEngine extends JFrame {
-    public static int DELAY = 2;
+    public static int DELAY = 16;
     private static Scene selectedScene;
     private static SceneHolder sceneHolder = new SceneHolder();
 
@@ -45,7 +45,7 @@ public class GameEngine extends JFrame {
         // To cap the fps we just increase the delay if our fps is too high
         // and decrease it when it is too low
         if (now - time >= 100) {
-            fps = counter * 10;
+            fps = counter*10;
             if (fpsCap > 0 && fps > fpsCap) DELAY++;
             if (fpsCap > 0 && fps < fpsCap && DELAY > 5) DELAY--;
 
@@ -53,7 +53,6 @@ public class GameEngine extends JFrame {
             time = now;
         }
         counter++;
-
         // delta time is the time from previous frame (tick speed)
         deltaTime = (now - prevTime)/1000;
         prevTime = now;

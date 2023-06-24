@@ -1,6 +1,7 @@
 package com.game.engine.rendering;
 
 import com.game.engine.msc.Debug;
+import com.game.engine.msc.Vector2;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,7 +24,8 @@ public class ShapeRender extends Renderer{
     @Override
     public void start() {
         super.start();
-        setShape(new Rect(transform.getScale()));
+        setShape(new Rect(transform.getScale().multiply(100)));
+        Debug.log(shape);
     }
 
     @Override
@@ -31,6 +33,7 @@ public class ShapeRender extends Renderer{
 
         Color colorBuffet = g.getColor();
         g.setColor(color);
+        //Debug.log(getShape().getBounds());
         g.fill(getShape());
         g.setColor(colorBuffet);
     }

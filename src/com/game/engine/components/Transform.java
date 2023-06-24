@@ -20,7 +20,7 @@ public class Transform extends Component{
     @Getter @Setter private float rotation = 0f;
     private Vector2 rotationOffset = new Vector2();
     @Getter @Setter private Vector2 localScale = new Vector2(1,1);
-    @Setter private Vector2 globalScale = new Vector2(100,100);
+    @Setter private Vector2 globalScale = new Vector2(1,1);
     @Getter @Setter private GameObject gameObject;
     @Getter @Setter private GameObject parent;
     private Vector2 scalePositionThing = new Vector2(0,0);
@@ -44,7 +44,6 @@ public class Transform extends Component{
     }
     public void setScale(Vector2 scale){
         if(parent == null){
-
             setScaleFactor(scale.divide(globalScale));
         }
         else{
@@ -56,6 +55,7 @@ public class Transform extends Component{
         }
     }
     public void setScaleFactor(Vector2 factor){
+        Debug.log(factor);
         if(factor.getX() > 0 && factor.getY() > 0){
             globalScale = globalScale.multiply(factor);
             //scale children

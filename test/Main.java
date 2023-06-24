@@ -1,67 +1,84 @@
 import com.game.engine.GameEngine;
-import com.game.engine.GameObject;
 import com.game.engine.Input.Input;
+import com.game.engine.Input.Keys;
 import com.game.engine.Scene;
 import com.game.engine.collision.Collider;
 import com.game.engine.components.*;
 import com.game.engine.components.Component;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
-import com.game.engine.physics.Rigidbody;
-import com.game.engine.rendering.Renderer;
+import com.game.engine.physics2d.components.Rigidbody2D;
 import com.game.engine.rendering.ShapeRender;
-import com.game.engine.rendering.Sprite;
-import com.game.engine.rendering.SpriteRenderer;
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.BodyType;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 public class Main {
 
     public static void main (String[] args){
 
         GameEngine gameEngine = new GameEngine();
-
         Scene scene = new Scene();
+         Rigidbody2D r1 = Rigidbody2D.create(scene);
 
+        scene.setScaleFactor(0.001f);
+        GameEngine.fpsCap = 60;
 
-        RectangleGameObject stationary = new RectangleGameObject(Color.RED){
+        RectangleGameObject stationary = new RectangleGameObject(Color.RED);
 
-            @Override
-            public void onCollisionEnter(Collider collider) {
-                super.onCollisionEnter(collider);
-                getComponent(ShapeRender.class).setColor(Color.black);
-            }
+        stationary.transform.setScale(new Vector2(1,1));
+        stationary.transform.setPosition(new Vector2(0.6f,-2));
 
-            @Override
-            public void onCollisionLeft(Collider collide) {
-                super.onCollisionLeft(collide);
-                getComponent(ShapeRender.class).setColor(Color.RED);
-            }
-        };
-        stationary.addComponent(new Rigidbody(){
-            @Override
-            public void start() {
-                super.start();
-                setMass(100);
-                setFreeze(true);
-            }
-        });
-        stationary.addComponent(new Collider());
+        stationary.addComponent(r1);
+
 
         RectangleGameObject player = new RectangleGameObject();
-        player.addComponent(new Collider());
-        player.addComponent(new Component() {
-            @Override
-            public void update() {
-                super.update();
-                transform.translate(Vector2.left);
-            }
-        });
+        Rigidbody2D r2 = Rigidbody2D.create(scene);
+        player.transform.setPosition(new Vector2(0,2));
+        r2.setType(BodyType.DYNAMIC);
 
-        player.transform.setPosition(new Vector2(200,90));
+        player.addComponent(r2);
 
-        scene.add(player);
+
+        //player.addComponent(new Component() {
+        //    @Override
+        //    public void update() {
+        //        super.update();
+        //        Rigidbody2D r2 = getComponent(Rigidbody2D.class);
+        //        if(Input.isKeyDown(Keys.D)){
+        //            //r2.getRawBody().setLinearVelocity(new Vec2(10,0));
+        //            r2.getRawBody().applyForce(new Vec2(50,0), r2.getRawBody().getWorldCenter());
+        //        }
+        //        if(Input.isKeyDown(Keys.A)){
+        //            r2.getRawBody().applyForce(new Vec2(-50,0), r2.getRawBody().getWorldCenter());
+        //            //r2.getRawBody().getPosition().set(transform.getPosition().getX()+1,transform.getPosition().getY());
+        //        }
+        //        //if(Input.isKeyDown(Keys.SPACE)){
+        //        //    r2.getRawBody().applyForce(new Vec2(0,9.82f*10), r2.getRawBody().getWorldCenter());
+        //        //}
+        //        if(Input.isKeyPressed(Keys.SPACE)){
+        //            r2.getRawBody().applyLinearImpulse(new Vec2(0,10),r2.getRawBody().getWorldCenter());
+        //        }
+        //    }
+        //
+        //    /**
+        //     * snaps
+        //     * platta
+        //     *
+        //     */
+        //    @Override
+        //    public void start() {
+        //        super.start();
+        //        //rigidbody2D.getRawBody().applyForceToCenter(new Vec2(1000,0));
+        //    }
+        //});
+
+
+
         scene.add(stationary);
+        scene.add(player);
 
 
 

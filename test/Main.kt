@@ -5,10 +5,9 @@ import com.game.engine.Input.Keys
 import com.game.engine.Scene
 import com.game.engine.collision.CircleCollider
 import com.game.engine.collision.Collider
-import com.game.engine.msc.Debug
 import com.game.engine.msc.Vector2
 import com.game.engine.physics.Rigidbody
-import com.game.engine.rendering.ShapeRender
+import com.game.engine.physics2d.components.Rigidbody2D
 import com.game.engine.rendering.Sprite
 import com.game.engine.rendering.SpriteRenderer
 import java.awt.Color
@@ -116,7 +115,8 @@ class Planet : GameObject {
         if(vel1.magnitude > 2000){
             collider.transform.gameObject.destroy();
             this.transform.setScale(this.transform.getScale()+collider.transform.scale.divide(10))
-            this.getComponent(Rigidbody::class.java).mass += collider.getComponent(Rigidbody::class.java).mass;
+            this.getComponent(Rigidbody::class.java).mass += collider.getComponent(
+                Rigidbody::class.java).mass;
         }
 
     }
