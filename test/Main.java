@@ -1,4 +1,5 @@
 import com.game.engine.GameEngine;
+import com.game.engine.GameObject;
 import com.game.engine.Input.Input;
 import com.game.engine.Input.Keys;
 import com.game.engine.Scene;
@@ -9,6 +10,7 @@ import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
 import com.game.engine.physics2d.components.Rigidbody2D;
 import com.game.engine.rendering.ShapeRender;
+import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyType;
 
@@ -34,7 +36,10 @@ public class Main {
         stationary.addComponent(r1);
 
 
-        RectangleGameObject player = new RectangleGameObject();
+        GameObject player = new GameObject();
+
+        //ShapeRender render = new ShapeRender();
+
         Rigidbody2D r2 = Rigidbody2D.create(scene);
         player.transform.setPosition(new Vector2(0,2));
         r2.setType(BodyType.DYNAMIC);

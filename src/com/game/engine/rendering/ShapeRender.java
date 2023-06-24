@@ -19,13 +19,13 @@ public class ShapeRender extends Renderer{
     }
 
     public ShapeRender() {
+        setShape(new Rect(new Vector2(10,10)));
+        Debug.log(getShape());
     }
 
     @Override
     public void start() {
         super.start();
-        setShape(new Rect(transform.getScale().multiply(100)));
-        Debug.log(shape);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ShapeRender extends Renderer{
         Color colorBuffet = g.getColor();
         g.setColor(color);
         //Debug.log(getShape().getBounds());
-        g.fill(getShape());
+        g.fill(getPolygon());
         g.setColor(colorBuffet);
     }
 }

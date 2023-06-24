@@ -95,7 +95,7 @@ public class Renderer extends Component {
         shapeGlobal = ver;
     }
 
-    public Shape getShape(){
+    public Shape getPolygon(){
 
         int[] x = new int[shapeGlobal.size()];
         int[] y = new int[shapeGlobal.size()];
