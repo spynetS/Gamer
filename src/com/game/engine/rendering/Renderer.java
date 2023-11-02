@@ -2,13 +2,12 @@ package com.game.engine.rendering;
 
 
 import com.game.engine.components.Component;
-import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
+import com.game.engine.rendering.shapes.Rect;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.util.LinkedList;
 
 public class Renderer extends Component {
@@ -29,7 +28,7 @@ public class Renderer extends Component {
 
     private float rotation = 0f;
 
-    protected Vector2 scale = new Vector2(10,10);
+    protected Vector2 scale = new Vector2(1,1);
 
     /**
      * rotates the localc vertices to by the angle

@@ -35,7 +35,7 @@ public class GameEngine extends JFrame {
     /**
      * This caps the amount of frames drawn in a second (0 = uncapped)
      */
-    public static float fpsCap = 60;
+    public static float fpsCap = 0;
     private void update(){
 
 

@@ -1,8 +1,5 @@
 package com.game.engine.msc;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.Objects;
 
 public class Vector2 {
@@ -228,7 +225,7 @@ public class Vector2 {
         this.y += i;
     }
 
-    public void plusAssign(@Nullable Vector2 vec) {
+    public void plusAssign( Vector2 vec) {
         this.x += vec.getX();
         this.y += vec.getY();
     }
@@ -244,7 +241,6 @@ public class Vector2 {
         return new Vector2(x+fl,y+fl);
     }
 
-    @Nullable
     public Vector2 plus( Vector2 scale) {
         return this.add(scale);
     }

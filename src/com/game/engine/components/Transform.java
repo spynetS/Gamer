@@ -36,7 +36,8 @@ public class Transform extends Component{
 
     public Vector2 getGlobalScale() {
         if(localScale.equals(Vector2.zero)) return new Vector2(1,1);
-        return globalScale.add(localScale);
+        if(parent != null) return globalScale.add(localScale);
+        return globalScale;
     }
 
     public Vector2 getScale(){
@@ -55,7 +56,6 @@ public class Transform extends Component{
         }
     }
     public void setScaleFactor(Vector2 factor){
-        Debug.log(factor);
         if(factor.getX() > 0 && factor.getY() > 0){
             globalScale = globalScale.multiply(factor);
             //scale children

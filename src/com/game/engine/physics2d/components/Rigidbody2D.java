@@ -8,6 +8,9 @@ import com.game.engine.components.Component;
 import com.game.engine.components.Transform;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
+import com.game.engine.rendering.Renderer;
+import com.game.engine.rendering.ShapeRender;
+import com.game.engine.rendering.shapes.Rect;
 import lombok.*;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -20,6 +23,7 @@ public class Rigidbody2D extends Body implements Comp {
 
     @Setter Transform transform;
     @Getter @Setter BodyDef bodyDef = new BodyDef();
+    @Getter @Setter PolygonShape shape;
     public Rigidbody2D(BodyDef bd, World world) {
         super(bd, world);
     }
@@ -42,10 +46,30 @@ public class Rigidbody2D extends Body implements Comp {
         return this.transform;
     }
 
+    private Vec2[] getShape(){
+        Vec2[] vertices;
+        Renderer render = getComponent(Renderer.class);
+        if(render != null){
+            Debug.log("Has renderer");
+            vertices = new Vec2[render.getShapeGlobal().size()];
+            int i = 0;
+            for(Vector2 point : render.getShapeGlobal()){
+                vertices[i] = new Vec2(point.getX()-transform.getGlobalPosition().getX()*100, point.getY() - transform.getGlobalPosition().getY()*100);
+                i++;
+            }
+        }else{
+            vertices = new Vec2[]{new Vec2(0,1), new Vec2(1,1), new Vec2(1,0), new Vec2(0,0)};
+        }
+        return vertices;
+    }
+
     @Override
     public void start() {
         PolygonShape shape = new PolygonShape();
+        this.shape = shape;
         shape.setAsBox(transform.getScale().getX()/2,transform.getScale().getY()/2);
+
+
 
         setTransform(new Vec2(transform.getPosition().getX(), transform.getPosition().getY()), (float) Math.toRadians(transform.getRotation()));
 
@@ -57,6 +81,15 @@ public class Rigidbody2D extends Body implements Comp {
     public void update() {
         transform.setRotation((float) Math.toDegrees(getAngle()));
         transform.setPosition(new Vector2(getPosition().x, getPosition().y));
+
+        if(shape.getRadius()*100 != transform.getScale().getX()){
+
+            PolygonShape shape = new PolygonShape();
+            this.shape = shape;
+            shape.setAsBox(transform.getScale().getX()/2,transform.getScale().getY()/2);
+            createFixture(shape, getMass());
+        }
+
     }
     @Override
     public void __update__() {

@@ -3,13 +3,14 @@ import com.game.engine.GameObject;
 import com.game.engine.Input.Input;
 import com.game.engine.Input.Keys;
 import com.game.engine.Scene;
-import com.game.engine.collision.Collider;
 import com.game.engine.components.*;
 import com.game.engine.components.Component;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
 import com.game.engine.physics2d.components.Rigidbody2D;
+import com.game.engine.rendering.CircleRenderer;
 import com.game.engine.rendering.ShapeRender;
+import com.game.engine.rendering.shapes.Circle;
 import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyType;
@@ -21,27 +22,38 @@ public class Main {
 
     public static void main (String[] args){
 
+        Debug.showWhere = true;
+
         GameEngine gameEngine = new GameEngine();
         Scene scene = new Scene();
-         Rigidbody2D r1 = Rigidbody2D.create(scene);
+        Rigidbody2D r1 = Rigidbody2D.create(scene);
 
-        scene.setScaleFactor(0.001f);
+        scene.setScaleFactor(0.0006f);
         GameEngine.fpsCap = 60;
 
-        RectangleGameObject stationary = new RectangleGameObject(Color.RED);
+        GameObject stationary = new GameObject();
+        //stationary.addComponent(new ShapeRender(new Circle(50)));
+        stationary.addComponent(new ShapeRender());
 
         stationary.transform.setScale(new Vector2(1,1));
-        stationary.transform.setPosition(new Vector2(0.6f,-2));
+        stationary.transform.setPosition(new Vector2(0,-5));
 
         stationary.addComponent(r1);
 
 
-        GameObject player = new GameObject();
+        GameObject player = new GameObject(){
+            @Override
+            public void update() {
+                super.update();
+                if(Input.isKeyPressed(Keys.SPACE)) transform.setScaleFactor(new Vector2(2,1));
+            }
+        };
 
-        //ShapeRender render = new ShapeRender();
+        //player.addComponent(new ShapeRender(new Circle(50)));
+        player.addComponent(new ShapeRender());
 
         Rigidbody2D r2 = Rigidbody2D.create(scene);
-        player.transform.setPosition(new Vector2(0,2));
+        player.transform.setPosition(new Vector2(2,2));
         r2.setType(BodyType.DYNAMIC);
 
         player.addComponent(r2);

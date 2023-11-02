@@ -106,6 +106,9 @@ public class Scene extends JPanel {
 
     }
     private void drawDebugStats(Graphics2D g){
+
+        GameObject read = mouseOverGameObject;
+
         Color c = g.getColor();
         g.setColor(Color.WHITE);
         g.drawString("Over: "+ mouseOverGameObject,100,70);
@@ -116,9 +119,9 @@ public class Scene extends JPanel {
         g.drawString("Window height: "+prevScale,100,120);
         g.drawString("Mouse pos: "+Input.getMousePosition(),100,130);
         try{
-            g.drawString(gameObjects.get(0).transform.toString(), 100, 140);
-            g.drawString(gameObjects.get(0).getComponent(Rigidbody.class).toString(), 100, 155);
-            g.drawString(gameObjects.get(0).getChild(0).transform.toString(), 100, 170);
+            g.drawString(read.transform.toString(), 100, 140);
+            g.drawString(read.getComponent(Rigidbody.class).toString(), 100, 155);
+            g.drawString(read.getChild(0).transform.toString(), 100, 170);
         }catch (Exception e){}
         g.setColor(c);
     }

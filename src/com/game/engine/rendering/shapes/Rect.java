@@ -1,4 +1,4 @@
-package com.game.engine.rendering;
+package com.game.engine.rendering.shapes;
 
 
 import com.game.engine.msc.Vector2;
