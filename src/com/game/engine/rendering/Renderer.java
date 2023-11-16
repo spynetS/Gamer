@@ -109,12 +109,6 @@ public class Renderer extends Component {
         return new Polygon(x,y,shapeGlobal.size());
     }
 
-    @Override
-    public void start() {
-        super.start();
-        scale = transform.getScale();
-    }
-
     public void render(Graphics2D g){
 
     }

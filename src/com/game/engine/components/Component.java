@@ -26,6 +26,7 @@ public abstract class Component implements Comp{
 
     public void start(){
         started = true;
+        if (transform != null ) transform.start();
     }
 
     public void update(){}

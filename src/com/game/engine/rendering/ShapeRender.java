@@ -30,13 +30,6 @@ public class ShapeRender extends Renderer{
     }
 
     @Override
-    public void start() {
-        super.start();
-        Debug.log(transform.getScale());
-
-    }
-
-    @Override
     public void render(Graphics2D g) {
 
         Color colorBuffet = g.getColor();

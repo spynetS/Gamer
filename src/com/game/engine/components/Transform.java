@@ -43,6 +43,7 @@ public class Transform extends Component{
     public Vector2 getScale(){
         return globalScale;
     }
+
     public void setScale(Vector2 scale){
         if(parent == null){
             setScaleFactor(scale.divide(globalScale));
@@ -57,11 +58,16 @@ public class Transform extends Component{
     }
     public void setScaleFactor(Vector2 factor){
         if(factor.getX() > 0 && factor.getY() > 0){
+            Debug.log(globalScale);
             globalScale = globalScale.multiply(factor);
+            Debug.log(globalScale);
             //scale children
             for(GameObject g : gameObject.gameObjects){
                 g.transform.setScaleFactor(factor);
             }
+        }
+        else{
+            Debug.log("factor is 0");
         }
     }
 
@@ -130,9 +136,14 @@ public class Transform extends Component{
         }
     }
 
+
     @Override
     public void start() {
-        if(parent != null) globalScale = parent.transform.getGlobalScale().add(localScale);
+        // we have a parent
+        if(parent != null){
+            setGlobalScale(parent.transform.getGlobalScale().add(localScale));
+            Debug.log(getScale());
+        }
         super.start();
     }
 

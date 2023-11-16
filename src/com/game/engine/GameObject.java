@@ -3,14 +3,10 @@ package com.game.engine;
 import com.game.engine.components.Comp;
 import com.game.engine.components.Component;
 import com.game.engine.components.EditorComponent;
-import com.game.engine.msc.Debug;
-import com.game.engine.msc.Vector2;
-import com.game.engine.physics2d.components.Rigidbody2D;
 import com.game.engine.rendering.Renderer;
 import com.game.engine.components.Transform;
 import lombok.Getter;
 import lombok.Setter;
-import org.jbox2d.dynamics.Body;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -76,6 +72,12 @@ public class GameObject {
                 return (T)c;
             }
         }
+        // if not found in components look in newComponents
+        for(Comp c : newComponents){
+            if(type.isInstance(c)){
+                return (T)c;
+            }
+        }
         return null;
     }
     public void start(){
@@ -89,6 +91,9 @@ public class GameObject {
         }
         for(GameObject child : gameObjects) child.start();
     }
+
+    //function to add and remove children and components that are in the lists
+
     private void addObjects(){
         if(newGameObjects.size() > 0){
             for(GameObject g : newGameObjects) addChild__(g);

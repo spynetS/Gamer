@@ -1,5 +1,7 @@
 package com.game.engine.rendering;
 
+import com.game.engine.msc.Debug;
+
 import java.awt.*;
 
 public class CircleRenderer extends Renderer{
@@ -8,6 +10,6 @@ public class CircleRenderer extends Renderer{
     public void render(Graphics2D g) {
         super.render(g);
         g.setColor(Color.white);
-        g.fillOval(0, (int) transform.getGlobalPosition().getY()*100, (int) transform.getScale().getX()*100, (int) transform.getScale().getY()*100);
+        g.fillOval(0, (int) (transform.getGlobalPosition().getY()*100), (int) transform.getScale().getX()*100, (int) transform.getScale().getY()*100);
     }
 }

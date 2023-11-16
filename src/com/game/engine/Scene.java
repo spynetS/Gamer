@@ -7,8 +7,6 @@ import com.game.engine.msc.Vector2;
 import com.game.engine.rendering.Renderer;
 import lombok.Getter;
 import lombok.Setter;
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.World;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +24,6 @@ public class Scene extends JPanel {
     @Getter @Setter private GameObject mouseOverGameObject = null;
     @Getter @Setter private Vector2 cameraOffset = new Vector2();
     @Getter @Setter float scaleFactor = 0.001f;
-    @Getter @Setter World physicsWorld = new World(new Vec2(0,-9.82f));
     @Getter @Setter private boolean started = false;
     Vector2 prevScale = new Vector2();
     AffineTransform transform = new AffineTransform();
@@ -92,7 +89,6 @@ public class Scene extends JPanel {
         //if no object had mouse over set over to null
         if(!entered) mouseOverGameObject = null;
 
-        physicsWorld.step((float) GameEngine.deltaTime, 8,3);
 
 
         Toolkit.getDefaultToolkit().sync();
