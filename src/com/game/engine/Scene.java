@@ -169,18 +169,21 @@ public class Scene extends JPanel {
                         //add the colliders that we checks
                         checked.put(go1,go2);
                         checked.put(go2,go1);
-                        if(c1.collides(c2)){
-                            //Debug.log("Collision");
-                            Rigidbody b = c1.getComponent(Rigidbody.class);
-                            Rigidbody b1 = c2.getComponent(Rigidbody.class);
-                            b.resolveCollision(b1);
+                        if(c1 != null && c2 !=null ){
+                            if(c1.collides(c2)){
+                                //Debug.log("Collision");
+                                Rigidbody b = c1.getComponent(Rigidbody.class);
+                                Rigidbody b1 = c2.getComponent(Rigidbody.class);
+                                b.resolveCollision(b1);
 
-                            c1.setColliding(true);
-                            c2.setColliding(true);
-                        }
-                        else {
-                            if(c1.isColliding()) c1.setColliding(false);
-                            if(c2.isColliding()) c2.setColliding(false);
+
+                                c1.setColliding(true);
+                                c2.setColliding(true);
+                            }
+                            else {
+                                if(c1.isColliding()) c1.setColliding(false);
+                                if(c2.isColliding()) c2.setColliding(false);
+                            }
                         }
                     }
                 }

@@ -28,19 +28,26 @@ public class Main2 {
                     transform.setRotation(transform.getRotation()+10);
                 }
                 if(Input.isKeyPressed(Keys.SPACE)){
-                    getComponent(Rigidbody.class).addForce(Vector2.down.multiply(1));
+                    getComponent(Rigidbody.class).addForce(Vector2.up.multiply(1));
+                }
+                if(Input.isKeyDown(Keys.LEFTARROW)){
+                    getComponent(Rigidbody.class).addForce(Vector2.left.divide(10));
                 }
                 if(Input.isKeyDown(Keys.RIGHTARROW)){
-                    getComponent(Rigidbody.class).addForce(Vector2.right);
+                    getComponent(Rigidbody.class).addForce(Vector2.right.divide(10));
+                }
+                if(Input.isKeyDown(Keys.DOWNARROW)){
+                    transform.translate(Vector2.down.divide(100));
                 }
             }
         };
         player.addComponent(new ShapeRender());
         player.transform.setScale(new Vector2(1,1));
         player.transform.setPosition(new Vector2(0,1.5f));
-        player.addComponent(new Rigidbody(true));
-        player.getComponent(Rigidbody.class).setVelocity(new Vector2(1,0));
-        player.getComponent(Rigidbody.class).setMass(1);
+        Rigidbody playerRigid = new Rigidbody(false);
+        player.addComponent(playerRigid);
+        playerRigid.setVelocity(new Vector2(1,-2));
+        playerRigid.setMass(1);
         player.addComponent(new Collider());
         player.tag = "Player";
         player.getComponent(ShapeRender.class).setColor(Color.RED);
