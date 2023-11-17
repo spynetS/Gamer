@@ -53,20 +53,20 @@ public class SceneHolder extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
-                Input.setMousePositionOnCanvas(new Vector2((float) e.getPoint().getX(), (float) e.getPoint().getY()));
+                Input.setMousePositionOnCanvas(new Vector2((double) e.getPoint().getX(), (double) e.getPoint().getY()));
                 Input.setMouseEvent(e);
 
             }
             @Override
             public void mouseMoved(MouseEvent e) {
                 super.mouseMoved(e);
-                Input.setMousePositionOnCanvas(new Vector2((float) e.getPoint().getX(), (float) e.getPoint().getY()));
+                Input.setMousePositionOnCanvas(new Vector2((double) e.getPoint().getX(), (double) e.getPoint().getY()));
                 Input.setMouseEvent(e);
                 requestFocus();
             }
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-                Input.setScrollValue((float) e.getPreciseWheelRotation());
+                Input.setScrollValue((double) e.getPreciseWheelRotation());
                 Input.setMouseEvent(e);
             }
 

@@ -1,5 +1,7 @@
 package com.game.engine;
 
+import com.game.engine.Input.Input;
+import com.game.engine.Input.Keys;
 import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
 
@@ -30,12 +32,12 @@ public class GameEngine extends JFrame {
     /**
      * this is the amount of frames drawn every second
      */
-    public static float fps = 5;
-    private static float counter = 5;
+    public static double fps = 5;
+    private static double counter = 5;
     /**
      * This caps the amount of frames drawn in a second (0 = uncapped)
      */
-    public static float fpsCap = 0;
+    public static double fpsCap = 0;
     private void update(){
 
 
@@ -58,7 +60,7 @@ public class GameEngine extends JFrame {
         prevTime = now;
 
 
-        getSelectedScene().update();
+            getSelectedScene().update();
     }
 
 
@@ -76,7 +78,7 @@ public class GameEngine extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                update();
+                    update();
             }
 
         });

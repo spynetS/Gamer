@@ -96,19 +96,31 @@ public class GameObject {
 
     private void addObjects(){
         if(newGameObjects.size() > 0){
-            for(GameObject g : newGameObjects) addChild__(g);
+            for(GameObject g : newGameObjects){
+                addChild__(g);
+                g.start();
+            }
             newGameObjects.clear();
         }
         if(removeGameObjects.size() > 0){
-            for(GameObject g : removeGameObjects) gameObjects.remove(g);
+            for(GameObject g : removeGameObjects){
+                gameObjects.remove(g);
+                g.start();
+            }
             removeGameObjects.clear();
         }
         if(newComponents.size() > 0){
-            for(Comp g : newComponents) addComp(g);
+            for(Comp g : newComponents) {
+                addComp(g);
+                g.start();
+            }
             newComponents.clear();
         }
         if(removeComponents.size() > 0 ){
-            for(Comp c : removeComponents) components.remove(c);
+            for(Comp c : removeComponents) {
+                components.remove(c);
+                c.start();
+            }
             removeComponents.clear();
         }
 

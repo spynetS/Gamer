@@ -9,7 +9,7 @@ package com.game.engine.msc;
  * shouldLog = false => no logs at all | true = logs
  */
 public class Debug {
-    static float a = 0;
+    static double a = 0;
     public static boolean shouldLog = true;
     /**
      * This is a handy tool to find where you have placed your logging

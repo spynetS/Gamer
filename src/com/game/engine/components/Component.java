@@ -3,6 +3,7 @@ package com.game.engine.components;
 import com.game.engine.GameEngine;
 import com.game.engine.GameObject;
 import com.game.engine.Scene;
+import com.game.engine.physics.Collider;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -58,7 +59,6 @@ public abstract class Component implements Comp{
 
     public void updateMillisecond() {
     }
-
 
 
 }

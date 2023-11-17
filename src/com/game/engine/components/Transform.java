@@ -16,8 +16,8 @@ public class Transform extends Component{
     @Setter private Vector2 globalPosition = new Vector2();
 
     @Getter @Setter private Vector2 localPosition = new Vector2();
-    @Getter @Setter private float localRotation = 0f;
-    @Getter @Setter private float rotation = 0f;
+    @Getter @Setter private double localRotation = 0f;
+    @Getter @Setter private double rotation = 0f;
     private Vector2 rotationOffset = new Vector2();
     @Getter @Setter private Vector2 localScale = new Vector2(1,1);
     @Setter private Vector2 globalScale = new Vector2(1,1);
@@ -76,7 +76,7 @@ public class Transform extends Component{
      * @param translation the amount to change
      */
     public void translate(Vector2 translation){
-        float factor = 100;
+        double factor = 100;
         setPosition(getPosition().add(translation.multiply(GameEngine.deltaTime).multiply(factor)));
     }
 
@@ -94,10 +94,10 @@ public class Transform extends Component{
         }
     }
 
-    public float getRotation(){
+    public double getRotation(){
         return rotation + localRotation;
     }
-    public void setRotation(float rotation){
+    public void setRotation(double rotation){
         if(parent!=null){
             this.localRotation = rotation;
         }
@@ -124,13 +124,13 @@ public class Transform extends Component{
             double rotation = Math.toRadians(parent.transform.getRotation());
             this.rotation = parent.transform.getRotation();
 
-            float x = localPosition.getX();
-            float y = localPosition.getY();
+            double x = localPosition.getX();
+            double y = localPosition.getY();
 
             //rotationOffset is the localpostion based on the rotation
             rotationOffset = new Vector2(
-                    (float) (x * Math.cos(rotation) - y * Math.sin(rotation)),
-                    (float) (x * Math.sin(rotation) + y * Math.cos(rotation))
+                    (double) (x * Math.cos(rotation) - y * Math.sin(rotation)),
+                    (double) (x * Math.sin(rotation) + y * Math.cos(rotation))
             );
 
         }

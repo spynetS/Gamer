@@ -16,7 +16,7 @@ public class Input {
     public static int mouseIsPressed = 1000;
     private static final LinkedList<Integer> mouseButtonDowns = new LinkedList<>();
     private static Vector2 mousePosition = new Vector2(0, 0);
-    private static float scrollValue = 0;
+    private static double scrollValue = 0;
     private static Vector2 mousePositionOnCanvas = new Vector2(0, 0);
 
     private static MouseEvent mouseEvent = null;
@@ -63,10 +63,10 @@ public class Input {
         Input.mouseEvent = e;
     }
 
-    public static void setScrollValue(float scrollValue1){
+    public static void setScrollValue(double scrollValue1){
         scrollValue = scrollValue1;
     }
-    public static float getScrollValue(){
+    public static double getScrollValue(){
         return scrollValue;
     }
     public static void setMousePosition(Vector2 mousePosition) {

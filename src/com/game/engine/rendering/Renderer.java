@@ -26,7 +26,7 @@ public class Renderer extends Component {
         }
     }
 
-    private float rotation = 0f;
+    private double rotation = 0f;
 
     protected Vector2 scale = new Vector2(1,1);
 
@@ -34,7 +34,7 @@ public class Renderer extends Component {
      * rotates the localc vertices to by the angle
      * @param angle the angle to rate the vertice with
      */
-    public void rotate(float angle,Vector2 pivot){
+    public void rotate(double angle,Vector2 pivot){
         //Vector2 pivot1 = new Vector2(-50,0);
 
         //rotation = angle;
@@ -44,9 +44,9 @@ public class Renderer extends Component {
         for (int i = 0; i < shape.size(); i++) {
             Vector2 vertex = shape.get(i).subtract(pivot);
 
-            float[] matrix = {
-                    (float) (vertex.getX() * Math.cos(radians) - vertex.getY() * Math.sin(radians)),
-                    (float) (vertex.getX() * Math.sin(radians) + vertex.getY() * Math.cos(radians))};
+            double[] matrix = {
+                    (double) (vertex.getX() * Math.cos(radians) - vertex.getY() * Math.sin(radians)),
+                    (double) (vertex.getX() * Math.sin(radians) + vertex.getY() * Math.cos(radians))};
 
             vertices1.add(new Vector2(matrix[0], matrix[1]).add(pivot));
         }
@@ -59,7 +59,7 @@ public class Renderer extends Component {
      * @param angle angle to rotate to
      * @param pivot the povit to rotate around
      */
-    public void rotateTo(float angle, Vector2 pivot){
+    public void rotateTo(double angle, Vector2 pivot){
         rotate(angle-rotation,pivot);
         rotation = angle;
     }

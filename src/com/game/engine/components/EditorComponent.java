@@ -17,7 +17,7 @@ public class EditorComponent extends Component{
     private boolean moveAll = false;
     InputComponent i = new InputComponent();
     private int mode = 1; // 0 pos 1 rot, 2 scale
-    private float scale = 0;
+    private double scale = 0;
     @Override
     public void start() {
         super.start();
@@ -40,7 +40,7 @@ public class EditorComponent extends Component{
 
         }
     }
-    float offset = 0;
+    double offset = 0;
     public void scale(Graphics2D g, Point p){
         Color c = g.getColor();
 
@@ -86,7 +86,7 @@ public class EditorComponent extends Component{
             if(offset == 0)
                 offset = Input.getMousePosition().subtract(transform.getGlobalPosition()).getX();
 
-            float x = Input.getMousePosition().subtract(transform.getPosition()).getX()+scale-offset;
+            double x = Input.getMousePosition().subtract(transform.getPosition()).getX()+scale-offset;
 
             transform.setScale(new Vector2(x,transform.getScale().getY()));
         }
@@ -114,7 +114,7 @@ public class EditorComponent extends Component{
             if(offset == 0)
                 offset = Input.getMousePosition().subtract(transform.getGlobalPosition()).getY();
 
-            float x = -Input.getMousePosition().add(transform.getGlobalPosition()).getY()+scale+offset;
+            double x = -Input.getMousePosition().add(transform.getGlobalPosition()).getY()+scale+offset;
 
             transform.setScale(new Vector2(transform.getScale().getX(), x));
         }

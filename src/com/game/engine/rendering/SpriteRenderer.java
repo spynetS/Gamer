@@ -21,10 +21,10 @@ public class SpriteRenderer extends Renderer{
     /**
  * This chooses how long a sprite is displayed before next sprite is displayed
      */
-    @Getter @Setter private float timeOnEachSprite = 100;
+    @Getter @Setter private double timeOnEachSprite = 100;
 
     private int spriteIndex = 0;
-    private float timeOnLastSprite = 0;
+    private double timeOnLastSprite = 0;
 
     @Getter @Setter private int animationIndex = 0;
 
