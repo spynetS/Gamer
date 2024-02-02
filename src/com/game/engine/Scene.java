@@ -220,7 +220,7 @@ public class Scene extends JPanel {
         graphics2D.translate(-cameraOffset.getX(), -cameraOffset.getY());
 
         int x = (int) ((int) (Input.getMousePositionOnCanvas().getX() / (GameEngine.game.getHeight()*scaleFactor) + graphics2D.getClip().getBounds().getX()));
-        int y = (int) ((int) (Input.getMousePositionOnCanvas().getY() / (GameEngine.game.getHeight()*scaleFactor) + graphics2D.getClip().getBounds().getY() ));
+        int y = -(int) ((int) (Input.getMousePositionOnCanvas().getY() / (GameEngine.game.getHeight()*scaleFactor) + graphics2D.getClip().getBounds().getY() ));
 
         Input.setMousePosition(new Vector2(x,y));
 
