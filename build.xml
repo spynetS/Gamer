@@ -2,7 +2,6 @@
     <!-- Define properties -->
     <property name="src.dir" value="src"/>
     <property name="build.dir" value="build"/>
-    <property name="lombok.jar" value="lib/lombok.jar"/>  <!-- Add Lombok JAR -->
 
     <!-- Clean target: Remove the build directory -->
     <target name="clean">
@@ -14,29 +13,19 @@
         <mkdir dir="${build.dir}"/>
     </target>
 
-    <!-- Compile target: Compile Java files with Lombok -->
+    <!-- Compile target: Compile Java files -->
     <target name="compile" depends="clean,prepare">
-        <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.8" target="1.8">
-            <!-- Add Lombok to the classpath -->
-            <classpath>
-                <pathelement location="${lombok.jar}"/>
-            </classpath>
-
-            <!-- Enable Lombok annotation processing -->
-            <compilerarg value="-processorpath"/>
-            <compilerarg value="${lombok.jar}"/>
-        </javac>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.8" target="1.8"/>
     </target>
 
-    <!-- Run target: Run the compiled code with Lombok -->
-<target name="run" depends="compile">
-    <path id="run.classpath">
-        <pathelement location="${build.dir}"/>
-        <pathelement location="${lombok.jar}"/>
-    </path>
-    <java classname="com.game.engine.test.Main" fork="true">
-        <classpath refid="run.classpath"/>
-    </java>
-</target>
+    <!-- Run target: Run the compiled code -->
+    <target name="run" depends="compile">
+        <path id="run.classpath">
+            <pathelement location="${build.dir}"/>
+        </path>
+        <java classname="com.game.engine.test.Main" fork="true">
+            <classpath refid="run.classpath"/>
+        </java>
+    </target>
 
 </project>
