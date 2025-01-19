@@ -20,7 +20,7 @@ import java.util.ListIterator;
 public class Scene extends JPanel {
 
     @Setter @Getter ArrayList<GameObject> gameObjects = new ArrayList<>();
-    @Getter @Setter private boolean debug = true;
+    @Getter @Setter private boolean debug = false;
     @Getter @Setter CollisionDetector detector = new CollisionDetector();
     @Getter @Setter GameObjectHandler gameObjectHandler = new GameObjectHandler();
     @Getter @Setter private boolean isEditing = false;
@@ -35,7 +35,8 @@ public class Scene extends JPanel {
     long elapsedTime = 0;
 
     public void start(){
-        for(GameObject g : gameObjects){
+        this.setScaleFactor(0.001f);
+for(GameObject g : gameObjects){
             g.start();
         }
     }
@@ -141,7 +142,8 @@ public class Scene extends JPanel {
         //graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         //graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
-        drawDebugStats(graphics2D);
+        if (debug)
+            drawDebugStats(graphics2D);
 
 
         graphics2D.translate(GameEngine.game.getWidth()/2, GameEngine.game.getHeight()/2);

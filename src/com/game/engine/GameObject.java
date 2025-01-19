@@ -35,6 +35,7 @@ public class GameObject {
     public void removeComponent(Component component){
         removeComponents.add(component);
         if (!started) addObjects();
+
     }
     public void addComponent(Component component){
         newComponents.add(component);
