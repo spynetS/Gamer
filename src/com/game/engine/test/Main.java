@@ -13,9 +13,10 @@ import com.game.engine.physics.Rigidbody;
 import com.game.engine.rendering.Renderer;
 import com.game.engine.rendering.ShapeRender;
 import com.game.engine.rendering.Sprite;
-
+import com.game.engine.rendering.SpriteRenderer;
 
 import java.awt.*;
+import java.util.LinkedList;
 
 public class Main {
 
@@ -31,23 +32,28 @@ public class Main {
                 @Override
                 public void update(){
                     super.update();
-                    //this.transform.translate(new Vector2(1,0));
+
                 }
             };
-        player.addComponent(new ShapeRender());
+
+        LinkedList<Rectangle> boxes = new LinkedList<>();
+        for(int i = 0; i < 6; i ++){
+            boxes.add(new Rectangle(48*i,0,48, 48));
+        }
+
+        player.transform.setScale(new Vector2(200,200));
+
+        SpriteRenderer renderer = new SpriteRenderer();
+
+        LinkedList<Sprite> animations = Sprite.getSprites("/res/sprites/characters/player.png", boxes);
+        renderer.addAnimation(animations);
+
         player.addComponent(new PlayerMovement());
-        player.addComponent(new Rigidbody(true));
+        player.addComponent(new Rigidbody(false));
+        player.addComponent(renderer);
         player.addComponent(new Collider());
+
         scene.add(player);
-
-
-        RectangleGameObject floor = new RectangleGameObject();
-        floor.getComponent(ShapeRender.class).setColor(Color.RED);
-        floor.transform.setScale(new Vector2(500,100));
-        floor.transform.setPosition(new Vector2(0,400));
-        floor.addComponent(new Rigidbody(false));
-        floor.addComponent(new Collider());
-        scene.add(floor);
 
 
         GameEngine.setSelectedScene(scene);

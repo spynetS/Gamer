@@ -52,17 +52,15 @@ public class Sprite {
     }
 
     public static LinkedList<Sprite> getSprites(String src, LinkedList<Rectangle> boxes) {
-        BufferedImage sprite = null;
-        try {
-            InputStream in = new Sprite().getClass().getResourceAsStream(src);
-            sprite = ImageIO.read(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         LinkedList<Sprite> animation = new LinkedList<>();
         for (Rectangle r : boxes) {
-            BufferedImage animationSprite = (sprite.getSubimage((int) (r.getX()), (int) (r.getY()), (int) r.getWidth(), (int) r.getHeight()));
-            animation.add(new Sprite(animationSprite));
+            Sprite sprite = new Sprite();
+            sprite.loadSprite(src);
+
+            BufferedImage animationSprite = (sprite.getImage().getSubimage((int) (r.getX()), (int) (r.getY()), (int) r.getWidth(), (int) r.getHeight()));
+            sprite.setImage(animationSprite);
+            animation.add(sprite);
         }
         return animation;
     }

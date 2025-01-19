@@ -53,7 +53,6 @@ public class CollisionDetector {
     public void moveCollider(Collider c1, Collider c2){
         int i = 0;
 
-
         while (c1.collides(c2)){
             c1.transform.setPosition(c1.transform.getPosition().subtract(new Vector2(0,1)));
             c1.update();

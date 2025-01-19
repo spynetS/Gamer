@@ -34,6 +34,7 @@ public class GameObjectHandler {
     }
 
     public ArrayList<GameObject> update(ArrayList<GameObject> gameObjects) {
+        // add new gameobjects and compontents to the scene gameObjects
         if (addGameObject.size() > 0) {
             gameObjects.addAll(addGameObject);
             addGameObject.clear();

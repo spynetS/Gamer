@@ -7,6 +7,16 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
+/**
+ * SpriteRenderer is a renderer that can render images with animation
+ * functionality.
+ *
+ * An animation is a list of sprites which are changed each "timeOnEachSprite". The Sprite Renderer can have
+ * multiple animations which can be changed with the animationIndex property.
+ *
+ * To create a animation from a sprite sheet the Sprite.getSprites(String src, LinkedList<Rectangle> boxes).
+ * Src is the sprite sheet image and the boxes are the boxes around each sprite.
+ */
 public class SpriteRenderer extends Renderer {
     private LinkedList<LinkedList<Sprite>> animations = new LinkedList<>();
     private boolean isInverted = false;

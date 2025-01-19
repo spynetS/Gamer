@@ -42,8 +42,10 @@ public class Scene extends JPanel {
         gameObjects.add(gameObject);
     }
 
+    // optimize this
     public void update() {
         time += GameEngine.deltaTime;
+        // update the game objects based on the seconds and milli
         if ((int) time > lastSec) {
             lastSec = (int) (time);
             for (GameObject g : gameObjects) {
@@ -57,6 +59,7 @@ public class Scene extends JPanel {
             }
         }
         gameObjects = gameObjectHandler.update(gameObjects);
+
         boolean entered = false;
         for (GameObject gameObject : gameObjects) {
             if (!entered) {
@@ -70,6 +73,7 @@ public class Scene extends JPanel {
                     }
                 }
             }
+            // update all objects
             gameObject.update();
             if (gameObject.isMouseInside() && Input.isMousePressed()) {
                 setSelectedGameObject(gameObject);
@@ -100,7 +104,7 @@ public class Scene extends JPanel {
     }
 
     public boolean checkMouseOverObject(GameObject gameObject) {
-        Renderer renderer = gameObject.getComponent(com.game.engine.rendering.Renderer.class);
+        Renderer renderer = gameObject.getComponent(Renderer.class);
         if (renderer != null) {
             Point p = new Point((int) Input.getMousePosition().getX(), (int) Input.getMousePosition().getY());
             if (renderer.getShape().contains(p)) {
@@ -121,16 +125,21 @@ public class Scene extends JPanel {
         super.paintComponent(g);
         // Your custom painting code goes here
         Graphics2D graphics2D = (Graphics2D) g;
-        //graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        //graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
         if (debug) drawDebugStats(graphics2D);
+
         graphics2D.translate(GameEngine.game.getWidth() / 2, GameEngine.game.getHeight() / 2);
+
         if (prevScale.getX() != GameEngine.game.getHeight() && prevScale.getY() != GameEngine.game.getHeight()) {
             graphics2D.scale(GameEngine.game.getHeight() * scaleFactor, GameEngine.game.getHeight() * scaleFactor);
         }
+
         int x = (int) ((int) (Input.getMousePositionOnCanvas().getX() / (GameEngine.game.getHeight() * scaleFactor) + graphics2D.getClip().getBounds().getX()));
         int y = (int) ((int) (Input.getMousePositionOnCanvas().getY() / (GameEngine.game.getHeight() * scaleFactor) + graphics2D.getClip().getBounds().getY()));
         Input.setMousePosition(new Vector2(x, y));
+
         //render gameobjects if they are inside the view
         boolean entered = false;
         ListIterator li = gameObjects.listIterator(gameObjects.size());

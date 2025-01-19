@@ -1,4 +1,4 @@
-<project name="MyProject" default="compile" basedir=".">
+<project name="MyProject" default="run" basedir=".">
     <!-- Define properties -->
     <property name="src.dir" value="src"/>
     <property name="build.dir" value="build"/>
@@ -13,19 +13,24 @@
         <mkdir dir="${build.dir}"/>
     </target>
 
-    <!-- Compile target: Compile Java files -->
+    <!-- Compile target: Compile Java files and copy resources -->
     <target name="compile" depends="clean,prepare">
+        <!-- Compile Java files -->
         <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.8" target="1.8"/>
+
+        <!-- Copy resource files -->
+        <copy todir="${build.dir}/res">
+            <fileset dir="res">
+                <include name="**/*"/> <!-- Include all files and directories -->
+            </fileset>
+        </copy>
     </target>
 
-    <!-- Run target: Run the compiled code -->
+    <!-- Run target: Run the compiled program -->
     <target name="run" depends="compile">
-        <path id="run.classpath">
-            <pathelement location="${build.dir}"/>
-        </path>
-        <java classname="com.game.engine.test.Main" fork="true">
-            <classpath refid="run.classpath"/>
-        </java>
-    </target>
 
+        <java classname="com.game.engine.test.Main" fork="true" classpath="${build.dir}">
+        </java>
+
+    </target>
 </project>
