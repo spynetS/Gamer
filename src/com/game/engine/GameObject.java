@@ -4,6 +4,7 @@ package com.game.engine;
 import com.game.engine.collision.Collider;
 import com.game.engine.components.Component;
 import com.game.engine.components.EditorComponent;
+import com.game.engine.msc.Debug;
 import com.game.engine.msc.Vector2;
 import com.game.engine.physics.Rigidbody;
 import com.game.engine.rendering.Renderer;
@@ -35,7 +36,6 @@ public class GameObject {
     public void addComponent(Component component) {
         // Next update this compnent will be added to the components list
         // check addObjects
-        component.transform = transform;
         newComponents.add(component);
         if (!started) addObjects();
     }
@@ -90,7 +90,6 @@ public class GameObject {
         transform.start();
         editorComponent.transform = transform;
         editorComponent.start();
-
 
         for (Component c : components) {
             c.start();

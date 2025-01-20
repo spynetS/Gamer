@@ -1,5 +1,6 @@
 package com.game.engine.test;
 
+import com.game.engine.GameEngine;
 import com.game.engine.Input.Input;
 import com.game.engine.Input.Keys;
 import com.game.engine.components.Component;
@@ -12,29 +13,22 @@ import com.game.engine.physics.Rigidbody;
  */
 public class PlayerMovement extends Component {
 
-	public void update(){
-		if(this.transform != null){
-			if(Input.isKeyPressed(Keys.SPACE)){
-				this.transform.getComponent(Rigidbody.class).addForce(Vector2.up);
-			}
-			if(Input.isKeyPressed(Keys.D)){
-				this.transform.getComponent(Rigidbody.class).addForce(Vector2.left);
-			}
-			if(Input.isKeyPressed(Keys.A)){
-				this.transform.getComponent(Rigidbody.class).addForce(Vector2.right);
-			}
-		}
-		else{
-			if(Input.isKeyPressed(Keys.SPACE)){
-				this.transform.translate(new Vector2(0,100));
-			}
-			if(Input.isKeyPressed(Keys.D)){
-				this.transform.translate(new Vector2(100,0));
-			}
-			if(Input.isKeyPressed(Keys.A)){
-				this.transform.translate(new Vector2(-100,0));
-			}
-		}
+	public float speed = 4;
 
+	@Override
+	public void update(){
+		super.update();
+		if(Input.isKeyDown(Keys.D)){
+			this.transform.translate(Vector2.right.multiply(speed));
+		}
+		if(Input.isKeyDown(Keys.A)){
+			this.transform.translate(Vector2.left.multiply(speed));
+		}
+		if(Input.isKeyDown(Keys.W)){
+			this.transform.translate(Vector2.up.multiply(speed));
+		}
+		if(Input.isKeyDown(Keys.S)){
+			this.transform.translate(Vector2.down.multiply(speed));
+		}
 	}
 }

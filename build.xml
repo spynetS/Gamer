@@ -19,7 +19,7 @@
         <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.8" target="1.8"/>
 
         <!-- Copy resource files -->
-        <copy todir="${build.dir}/res">
+        <copy todir="${build.dir}">
             <fileset dir="res">
                 <include name="**/*"/> <!-- Include all files and directories -->
             </fileset>

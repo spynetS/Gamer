@@ -25,7 +25,7 @@ public abstract class Component {
     }
 
     public <T extends Component> T getComponent(Class<T> tClass) {
-        return transform.getGameObject().getComponent(tClass);
+        return this.transform.getGameObject().getComponent(tClass);
     }
 
     public void instantiate(GameObject gameObject) {
